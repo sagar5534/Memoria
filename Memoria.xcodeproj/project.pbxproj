@@ -3,23 +3,48 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */; };
-		1B824CBE26BF2FA80070D469 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CBD26BF2FA80070D469 /* ContentView.swift */; };
 		1B824CC026BF2FA90070D469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B824CBF26BF2FA90070D469 /* Assets.xcassets */; };
 		1B824CC326BF2FA90070D469 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B824CC226BF2FA90070D469 /* Preview Assets.xcassets */; };
+		1B824CCC26BF38690070D469 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CCB26BF38690070D469 /* TabBar.swift */; };
+		1B824CCF26BF39960070D469 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CCE26BF39960070D469 /* Photos.swift */; };
+		1B824CD226BF39B10070D469 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD126BF39B10070D469 /* Library.swift */; };
+		1B824CD426BF40BA0070D469 /* Leading Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD326BF40BA0070D469 /* Leading Element.swift */; };
+		1B824CD626BF60380070D469 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD526BF60380070D469 /* UserImage.swift */; };
+		1B824CD826BF6D530070D469 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD726BF6D530070D469 /* Query.swift */; };
+		1B824CDA26BF72970070D469 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD926BF72970070D469 /* Model.swift */; };
+		1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1B824CDC26BF7B020070D469 /* Alamofire */; };
+		1B824CDF26C082C40070D469 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CDE26C082C40070D469 /* Extensions.swift */; };
+		1B824CE626C0C7810070D469 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE126C0C7800070D469 /* ImageLoader.swift */; };
+		1B824CE726C0C7810070D469 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE226C0C7800070D469 /* ContentView.swift */; };
+		1B824CE826C0C7810070D469 /* EnvironmentValues+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE326C0C7800070D469 /* EnvironmentValues+ImageCache.swift */; };
+		1B824CE926C0C7810070D469 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE426C0C7800070D469 /* AsyncImage.swift */; };
+		1B824CEA26C0C7810070D469 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE526C0C7810070D469 /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1B824CB826BF2FA80070D469 /* Memoria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memoria.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriaApp.swift; sourceTree = "<group>"; };
-		1B824CBD26BF2FA80070D469 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1B824CBF26BF2FA90070D469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B824CC226BF2FA90070D469 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1B824CC426BF2FA90070D469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1B824CCB26BF38690070D469 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		1B824CCE26BF39960070D469 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		1B824CD126BF39B10070D469 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
+		1B824CD326BF40BA0070D469 /* Leading Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Leading Element.swift"; sourceTree = "<group>"; };
+		1B824CD526BF60380070D469 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
+		1B824CD726BF6D530070D469 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		1B824CD926BF72970070D469 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		1B824CDE26C082C40070D469 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		1B824CE126C0C7800070D469 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		1B824CE226C0C7800070D469 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1B824CE326C0C7800070D469 /* EnvironmentValues+ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+ImageCache.swift"; sourceTree = "<group>"; };
+		1B824CE426C0C7800070D469 /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
+		1B824CE526C0C7810070D469 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,11 +78,16 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
+				1B824CE026C0C76D0070D469 /* Test */,
+				1B824CD026BF39A40070D469 /* Library */,
+				1B824CCD26BF39170070D469 /* Photos */,
+				1B824CCA26BF384F0070D469 /* Tab Bar */,
 				1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */,
-				1B824CBD26BF2FA80070D469 /* ContentView.swift */,
 				1B824CBF26BF2FA90070D469 /* Assets.xcassets */,
 				1B824CC426BF2FA90070D469 /* Info.plist */,
 				1B824CC126BF2FA90070D469 /* Preview Content */,
+				1B824CD326BF40BA0070D469 /* Leading Element.swift */,
+				1B824CDE26C082C40070D469 /* Extensions.swift */,
 			);
 			path = Memoria;
 			sourceTree = "<group>";
@@ -67,6 +98,45 @@
 				1B824CC226BF2FA90070D469 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1B824CCA26BF384F0070D469 /* Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				1B824CCB26BF38690070D469 /* TabBar.swift */,
+			);
+			path = "Tab Bar";
+			sourceTree = "<group>";
+		};
+		1B824CCD26BF39170070D469 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				1B824CCE26BF39960070D469 /* Photos.swift */,
+				1B824CD526BF60380070D469 /* UserImage.swift */,
+				1B824CD726BF6D530070D469 /* Query.swift */,
+				1B824CD926BF72970070D469 /* Model.swift */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		1B824CD026BF39A40070D469 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				1B824CD126BF39B10070D469 /* Library.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		1B824CE026C0C76D0070D469 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				1B824CE426C0C7800070D469 /* AsyncImage.swift */,
+				1B824CE226C0C7800070D469 /* ContentView.swift */,
+				1B824CE326C0C7800070D469 /* EnvironmentValues+ImageCache.swift */,
+				1B824CE526C0C7810070D469 /* ImageCache.swift */,
+				1B824CE126C0C7800070D469 /* ImageLoader.swift */,
+			);
+			path = Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +155,9 @@
 			dependencies = (
 			);
 			name = Memoria;
+			packageProductDependencies = (
+				1B824CDC26BF7B020070D469 /* Alamofire */,
+			);
 			productName = Memoria;
 			productReference = 1B824CB826BF2FA80070D469 /* Memoria.app */;
 			productType = "com.apple.product-type.application";
@@ -112,6 +185,9 @@
 				Base,
 			);
 			mainGroup = 1B824CAF26BF2FA80070D469;
+			packageReferences = (
+				1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 1B824CB926BF2FA80070D469 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,8 +214,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B824CBE26BF2FA80070D469 /* ContentView.swift in Sources */,
+				1B824CCF26BF39960070D469 /* Photos.swift in Sources */,
+				1B824CE726C0C7810070D469 /* ContentView.swift in Sources */,
+				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
+				1B824CE626C0C7810070D469 /* ImageLoader.swift in Sources */,
+				1B824CE826C0C7810070D469 /* EnvironmentValues+ImageCache.swift in Sources */,
+				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
+				1B824CCC26BF38690070D469 /* TabBar.swift in Sources */,
+				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
+				1B824CD426BF40BA0070D469 /* Leading Element.swift in Sources */,
+				1B824CD226BF39B10070D469 /* Library.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,
+				1B824CE926C0C7810070D469 /* AsyncImage.swift in Sources */,
+				1B824CEA26C0C7810070D469 /* ImageCache.swift in Sources */,
+				1B824CDA26BF72970070D469 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +416,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1B824CDC26BF7B020070D469 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1B824CB026BF2FA80070D469 /* Project object */;
 }
