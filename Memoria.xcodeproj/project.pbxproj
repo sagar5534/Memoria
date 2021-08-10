@@ -78,7 +78,7 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
-				1B824CE026C0C76D0070D469 /* Test */,
+				1B824CE026C0C76D0070D469 /* Async Image */,
 				1B824CD026BF39A40070D469 /* Library */,
 				1B824CCD26BF39170070D469 /* Photos */,
 				1B824CCA26BF384F0070D469 /* Tab Bar */,
@@ -127,7 +127,7 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
-		1B824CE026C0C76D0070D469 /* Test */ = {
+		1B824CE026C0C76D0070D469 /* Async Image */ = {
 			isa = PBXGroup;
 			children = (
 				1B824CE426C0C7800070D469 /* AsyncImage.swift */,
@@ -136,7 +136,7 @@
 				1B824CE526C0C7810070D469 /* ImageCache.swift */,
 				1B824CE126C0C7800070D469 /* ImageLoader.swift */,
 			);
-			path = Test;
+			path = "Async Image";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

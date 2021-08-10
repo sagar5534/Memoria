@@ -11,7 +11,7 @@ struct Collection: Codable, Hashable {
 // MARK: - Datum
 
 struct Media: Codable, Hashable {
-    let id, name, dateCreated, dateModified: String
+    let id, name, dateCreated, dateModified, path: String
     let v: Int
 
     enum CodingKeys: String, CodingKey {
@@ -20,6 +20,7 @@ struct Media: Codable, Hashable {
         case dateCreated = "date_created"
         case dateModified = "date_modified"
         case v = "__v"
+        case path
     }
 }
 

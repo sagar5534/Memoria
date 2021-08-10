@@ -47,10 +47,10 @@ struct Photos: View {
 
                     // Photo Grid
                     LazyVGrid(columns: columns, spacing: 4) {
-                        ForEach(media, id: \.self) { _ in
+                        ForEach(media, id: \.self) { item in
                             AsyncImage(
-                                url: URL(string: "http://192.168.100.107:3000/left.jpg")!,
-                                placeholder: {ProgressView()},
+                                url: URL(string: "http://192.168.100.107:3000/data/\(item.path)")!,
+                                placeholder: { ProgressView() },
                                 image: {
                                     Image(uiImage: $0)
                                         .resizable()
@@ -61,33 +61,6 @@ struct Photos: View {
                             .clipped()
                         }
                     }
-                }
-            }
-
-            // Section - Month
-            Leading {
-                Text("July")
-                    .font(.title)
-                    .padding(.leading)
-                    .padding(.top, 50)
-            }
-            // Section - Month
-            Leading {
-                Text("Fri, Jul 30")
-                    .font(.subheadline)
-                    .padding(.leading)
-                    .padding(.top, 5)
-                    .padding(.bottom, 5)
-            }
-            // Photo Grid - All
-            LazyVGrid(columns: columns, spacing: 4) {
-                ForEach(data, id: \.self) { item in
-                    Image(item)
-                        .resizable()
-                        .interpolation(.none)
-                        .scaledToFill()
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
-                        .clipped()
                 }
             }
         }
