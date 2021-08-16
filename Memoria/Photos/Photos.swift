@@ -48,17 +48,18 @@ struct Photos: View {
                     // Photo Grid
                     LazyVGrid(columns: columns, spacing: 4) {
                         ForEach(media, id: \.self) { item in
-                            AsyncImage(
-                                url: URL(string: "http://192.168.100.107:3000/data/\(item.path)")!,
-                                placeholder: { ProgressView() },
-                                image: {
-                                    Image(uiImage: $0)
-                                        .resizable()
-                                }
-                            )
-                            .scaledToFill()
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
-                            .clipped()
+//                            AsyncImage(
+//                                url: URL(string: "http://192.168.100.107:3000/data/\(item.path)")!,
+//                                placeholder: { ProgressView() },
+//                                image: {
+//                                    Image(uiImage: $0)
+//                                        .resizable()
+//                                }
+//                            )
+//                            .scaledToFill()
+//                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
+//                            .clipped()
+                            Text("")
                         }
                     }
                 }
@@ -68,7 +69,7 @@ struct Photos: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing:
             Button(action: {
-                model.upload()
+//                model.upload()
             }, label: {
                 UserImage()
             })

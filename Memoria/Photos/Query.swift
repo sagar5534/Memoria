@@ -33,42 +33,17 @@ class NetworkManager: ObservableObject {
             }
     }
 
-    func upload() {
-        let image = UIImage(named: "IMG_7")
-        let imageData = image!.jpegData(compressionQuality: 1)
-
+    func upload(group: DispatchGroup, url: URL, fileName: String) {
+        group.enter()
         AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(imageData!, withName: "file", fileName: "fileName.jpg", mimeType: "image/jpeg")
+            multipartFormData.append(url, withName: "file", fileName: fileName, mimeType: "")
         }, to: "http://192.168.100.107:3000/media/upload")
+
             .uploadProgress { progress in
                 print("Upload Progress: \(progress.fractionCompleted)")
             }
-            .responseJSON { response in
-                debugPrint(response)
-            }
-    }
-
-    func upload(url: URL, fileName: String, mimeType: String) {
-        AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(url, withName: "file", fileName: fileName, mimeType: mimeType)
-        }, to: "http://192.168.100.107:3000/media/upload")
-            .uploadProgress { progress in
-                print("Upload Progress: \(progress.fractionCompleted)")
-            }
-            .responseJSON { response in
-                debugPrint(response)
-            }
-    }
-
-    func uploadVideo(url: URL) { // local video file path..
-        AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(url, withName: "file", fileName: "fileName.jpg", mimeType: "image/jpeg")
-        }, to: "http://192.168.100.107:3000/media/upload")
-            .uploadProgress { progress in
-                print("Upload Progress: \(progress.fractionCompleted)")
-            }
-            .responseJSON { response in
-                debugPrint(response)
+            .responseJSON { _ in
+                group.leave()
             }
     }
 }
