@@ -6,9 +6,8 @@
 //
 
 import Kingfisher
-import SwiftUI
 import SDWebImageSwiftUI
-
+import SwiftUI
 
 struct Photos: View {
     let data = (1 ... 8).map { "IMG_\($0)" }
@@ -23,50 +22,59 @@ struct Photos: View {
     var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     let curYear = Calendar.current.component(.year, from: Date())
 
+    init() {
+        UITableView.appearance().separatorStyle = .none
+        UITableView.appearance().backgroundColor = .clear
+    }
+    
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ForEach(model.data, id: \.self) { collection in
+        ScrollView(.vertical, showsIndicators: true) {
+            LazyVStack {
+                ForEach(model.data, id: \.self) { collection in
 
-                // Month Label
-                Leading {
-                    let tempYear = (collection.year == curYear) ? "" : ", \(String(collection.year))"
-                    Text("\(month[collection.month])\(tempYear)")
-                        .font(.title)
-                        .padding(.leading)
-                        .padding(.top, 50)
-                }
-
-                ForEach(collection.data, id: \.self) { media in
-
-                    // Day Label
+                    // Month Label
                     Leading {
-                        let x: Date = media.first!.creationDate.toDate()!
-                        Text(x.toString())
-                            .font(.subheadline)
+                        let tempYear = (collection.year == curYear) ? "" : ", \(String(collection.year))"
+                        Text("\(month[collection.month])\(tempYear)")
+                            .font(.title)
                             .padding(.leading)
-                            .padding(.top, 5)
-                            .padding(.bottom, 5)
+                            .padding(.top, 50)
                     }
+                    
+                    
+                    ForEach(collection.data, id: \.self) { media in
+                    
+                        Leading {
+                            let x: Date = media.first!.creationDate.toDate()!
+                            Text(x.toString())
+                                .font(.subheadline)
+                                .padding(.leading)
+                                .padding(.top, 5)
+                                .padding(.bottom, 5)
+                        }
 
-                    LazyVGrid(columns: columns, spacing: 4) {
-                        ForEach(media, id: \.self) { item in
-                            let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
-                            let url = URL(string: #"http://192.168.100.107:3000/data/\#(path)"#)
-                            
-                            NavigationLink(destination: Details(media: item)) {
-                                WebImage(url: url!)
-                                    .placeholder(content: { ProgressView() })
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
-                                    .clipped()
+                        LazyVGrid(columns: columns, spacing: 4) {
+                            ForEach(media, id: \.self) { item in
+                                let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
+                                let url = URL(string: #"http://192.168.100.107:3000/ddata/\#(path)"#)
+                                NavigationLink(
+                                    destination: Text("Destination"),
+                                    label: {
+                                        WebImage(url: url!)
+                                            .placeholder(content: { ProgressView() })
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
+                                            .clipped()
+                                            .id(url)
+                                    })
                             }
-                            .id(url)
                         }
                     }
                 }
             }
         }
+//        .listStyle(PlainListStyle())
         .navigationTitle("Memoria")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing:
