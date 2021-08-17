@@ -47,7 +47,7 @@ struct Photos: View {
 
                     // Photo Grid
                     LazyVGrid(columns: columns, spacing: 4) {
-                        ForEach(media, id: \.self) { item in
+                        ForEach(media, id: \.self) { _ in
 //                            AsyncImage(
 //                                url: URL(string: "http://192.168.100.107:3000/data/\(item.path)")!,
 //                                placeholder: { ProgressView() },

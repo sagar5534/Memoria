@@ -24,6 +24,8 @@
 		1B824CE826C0C7810070D469 /* EnvironmentValues+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE326C0C7800070D469 /* EnvironmentValues+ImageCache.swift */; };
 		1B824CE926C0C7810070D469 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE426C0C7800070D469 /* AsyncImage.swift */; };
 		1B824CEA26C0C7810070D469 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE526C0C7810070D469 /* ImageCache.swift */; };
+		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
+		1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2126CB593500A598DB /* NavigationBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		1B824CE326C0C7800070D469 /* EnvironmentValues+ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+ImageCache.swift"; sourceTree = "<group>"; };
 		1B824CE426C0C7800070D469 /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		1B824CE526C0C7810070D469 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +82,10 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
-				1B824CE026C0C76D0070D469 /* Async Image */,
-				1B824CD026BF39A40070D469 /* Library */,
+				1BD92C1F26CB388A00A598DB /* SplashScreen.swift */,
 				1B824CCD26BF39170070D469 /* Photos */,
+				1B824CD026BF39A40070D469 /* Library */,
+				1B824CE026C0C76D0070D469 /* Async Image */,
 				1B824CCA26BF384F0070D469 /* Tab Bar */,
 				1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */,
 				1B824CBF26BF2FA90070D469 /* Assets.xcassets */,
@@ -104,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				1B824CCB26BF38690070D469 /* TabBar.swift */,
+				1BD92C2126CB593500A598DB /* NavigationBar.swift */,
 			);
 			path = "Tab Bar";
 			sourceTree = "<group>";
@@ -214,8 +220,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */,
 				1B824CCF26BF39960070D469 /* Photos.swift in Sources */,
 				1B824CE726C0C7810070D469 /* ContentView.swift in Sources */,
+				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
 				1B824CE626C0C7810070D469 /* ImageLoader.swift in Sources */,
 				1B824CE826C0C7810070D469 /* EnvironmentValues+ImageCache.swift in Sources */,

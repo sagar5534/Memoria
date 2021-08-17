@@ -102,11 +102,11 @@ class PhotosModel: ObservableObject {
             // Upload
             for file in allFiles {
                 group.enter()
-                
+
                 let parameters: [String: String] = [
                     "creationDate": String(file.creationDate.timeIntervalSince1970),
                 ]
-                
+
                 AF.upload(multipartFormData: { multipartFormData in
                     for (key, value) in parameters {
                         multipartFormData.append(value.data(using: .utf8)!, withName: key)
