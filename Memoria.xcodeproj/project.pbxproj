@@ -29,6 +29,8 @@
 		1BD92C2526CBFC8C00A598DB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2426CBFC8C00A598DB /* Kingfisher */; };
 		1BD92C2726CC075200A598DB /* NetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2626CC075200A598DB /* NetImage.swift */; };
 		1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */; };
+		48A0065F26CC35D700A88914 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A0065E26CC35D700A88914 /* Test.swift */; };
+		48A0066126CC408B00A88914 /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A0066026CC408B00A88914 /* Details.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		1BD92C2626CC075200A598DB /* NetImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetImage.swift; sourceTree = "<group>"; };
+		48A0065E26CC35D700A88914 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		48A0066026CC408B00A88914 /* Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 				1B824CC126BF2FA90070D469 /* Preview Content */,
 				1B824CD326BF40BA0070D469 /* Leading Element.swift */,
 				1B824CDE26C082C40070D469 /* Extensions.swift */,
+				48A0065E26CC35D700A88914 /* Test.swift */,
+				48A0066026CC408B00A88914 /* Details.swift */,
 			);
 			path = Memoria;
 			sourceTree = "<group>";
@@ -241,7 +247,9 @@
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
 				1B824CCC26BF38690070D469 /* TabBar.swift in Sources */,
 				1BD92C2726CC075200A598DB /* NetImage.swift in Sources */,
+				48A0066126CC408B00A88914 /* Details.swift in Sources */,
 				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
+				48A0065F26CC35D700A88914 /* Test.swift in Sources */,
 				1B824CD426BF40BA0070D469 /* Leading Element.swift in Sources */,
 				1B824CD226BF39B10070D469 /* Library.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,

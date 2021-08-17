@@ -53,15 +53,17 @@ struct Photos: View {
                             let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
                             let url = URL(string: #"http://192.168.100.107:3000/data/\#(path)"#)
                             
-                            WebImage(url: url!)
-                                .placeholder(content: { ProgressView() })
-                                .resizable()
-                                .scaledToFill()
-                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
-                                .clipped()
+                            NavigationLink(destination: Details(media: item)) {
+                                WebImage(url: url!)
+                                    .placeholder(content: { ProgressView() })
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
+                                    .clipped()
+                            }
+                            .id(url)
                         }
                     }
-                    .id(UUID())
                 }
             }
         }
