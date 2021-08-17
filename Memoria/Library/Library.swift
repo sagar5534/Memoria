@@ -105,21 +105,22 @@ class PhotosModel: ObservableObject {
 
                 let parameters: [String: String] = [
                     "creationDate": String(file.creationDate.timeIntervalSince1970),
+                    "user": "610cc064a35f2243803ab48c",
                 ]
 
-                AF.upload(multipartFormData: { multipartFormData in
-                    for (key, value) in parameters {
-                        multipartFormData.append(value.data(using: .utf8)!, withName: key)
-                    }
-                    multipartFormData.append(file.url, withName: "file", fileName: file.filename, mimeType: file.mimeType)
-                }, to: "http://192.168.100.107:3000/media/upload?user:Sagar")
-
-                    .uploadProgress { progress in
-                        print("Upload Progress: \(progress.fractionCompleted)")
-                    }
-                    .responseJSON { _ in
-                        group.leave()
-                    }
+//                AF.upload(multipartFormData: { multipartFormData in
+//                    for (key, value) in parameters {
+//                        multipartFormData.append(value.data(using: .utf8)!, withName: key)
+//                    }
+//                    multipartFormData.append(file.url, withName: "file", fileName: file.filename, mimeType: file.mimeType)
+//                }, to: "http://192.168.100.107:3000/media/upload")
+//
+//                    .uploadProgress { progress in
+//                        print("Upload Progress: \(progress.fractionCompleted)")
+//                    }
+//                    .responseJSON { _ in
+//                        group.leave()
+//                    }
             }
 
             group.notify(queue: DispatchQueue.global()) {

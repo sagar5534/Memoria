@@ -5,7 +5,10 @@
 //  Created by Sagar on 2021-08-07.
 //
 
+import Kingfisher
 import SwiftUI
+import SDWebImageSwiftUI
+
 
 struct Photos: View {
     let data = (1 ... 8).map { "IMG_\($0)" }
@@ -37,7 +40,7 @@ struct Photos: View {
 
                     // Day Label
                     Leading {
-                        let x: Date = media.first!.dateModified.toDate()!
+                        let x: Date = media.first!.creationDate.toDate()!
                         Text(x.toString())
                             .font(.subheadline)
                             .padding(.leading)
@@ -45,23 +48,20 @@ struct Photos: View {
                             .padding(.bottom, 5)
                     }
 
-                    // Photo Grid
                     LazyVGrid(columns: columns, spacing: 4) {
-                        ForEach(media, id: \.self) { _ in
-//                            AsyncImage(
-//                                url: URL(string: "http://192.168.100.107:3000/data/\(item.path)")!,
-//                                placeholder: { ProgressView() },
-//                                image: {
-//                                    Image(uiImage: $0)
-//                                        .resizable()
-//                                }
-//                            )
-//                            .scaledToFill()
-//                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
-//                            .clipped()
-                            Text("")
+                        ForEach(media, id: \.self) { item in
+                            let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
+                            let url = URL(string: #"http://192.168.100.107:3000/data/\#(path)"#)
+                            
+                            WebImage(url: url!)
+                                .placeholder(content: { ProgressView() })
+                                .resizable()
+                                .scaledToFill()
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
+                                .clipped()
                         }
                     }
+                    .id(UUID())
                 }
             }
         }
@@ -80,7 +80,6 @@ struct Photos: View {
 struct Photos_Previews: PreviewProvider {
     static var previews: some View {
         Photos()
-            .previewLayout(.sizeThatFits)
             .previewDevice("iPhone 11")
             .preferredColorScheme(.light)
     }

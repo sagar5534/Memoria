@@ -26,6 +26,9 @@
 		1B824CEA26C0C7810070D469 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CE526C0C7810070D469 /* ImageCache.swift */; };
 		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
 		1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2126CB593500A598DB /* NavigationBar.swift */; };
+		1BD92C2526CBFC8C00A598DB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2426CBFC8C00A598DB /* Kingfisher */; };
+		1BD92C2726CC075200A598DB /* NetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2626CC075200A598DB /* NetImage.swift */; };
+		1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +52,7 @@
 		1B824CE526C0C7810070D469 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		1BD92C2626CC075200A598DB /* NetImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */,
+				1BD92C2526CBFC8C00A598DB /* Kingfisher in Frameworks */,
 				1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +127,7 @@
 				1B824CD526BF60380070D469 /* UserImage.swift */,
 				1B824CD726BF6D530070D469 /* Query.swift */,
 				1B824CD926BF72970070D469 /* Model.swift */,
+				1BD92C2626CC075200A598DB /* NetImage.swift */,
 			);
 			path = Photos;
 			sourceTree = "<group>";
@@ -163,6 +170,8 @@
 			name = Memoria;
 			packageProductDependencies = (
 				1B824CDC26BF7B020070D469 /* Alamofire */,
+				1BD92C2426CBFC8C00A598DB /* Kingfisher */,
+				1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */,
 			);
 			productName = Memoria;
 			productReference = 1B824CB826BF2FA80070D469 /* Memoria.app */;
@@ -193,6 +202,8 @@
 			mainGroup = 1B824CAF26BF2FA80070D469;
 			packageReferences = (
 				1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				1BD92C2326CBFC8B00A598DB /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				1BD92C2826CC161300A598DB /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 1B824CB926BF2FA80070D469 /* Products */;
 			projectDirPath = "";
@@ -229,6 +240,7 @@
 				1B824CE826C0C7810070D469 /* EnvironmentValues+ImageCache.swift in Sources */,
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
 				1B824CCC26BF38690070D469 /* TabBar.swift in Sources */,
+				1BD92C2726CC075200A598DB /* NetImage.swift in Sources */,
 				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
 				1B824CD426BF40BA0070D469 /* Leading Element.swift in Sources */,
 				1B824CD226BF39B10070D469 /* Library.swift in Sources */,
@@ -434,6 +446,22 @@
 				minimumVersion = 5.4.3;
 			};
 		};
+		1BD92C2326CBFC8B00A598DB /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.3.1;
+			};
+		};
+		1BD92C2826CC161300A598DB /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -441,6 +469,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		1BD92C2426CBFC8C00A598DB /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BD92C2326CBFC8B00A598DB /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BD92C2826CC161300A598DB /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

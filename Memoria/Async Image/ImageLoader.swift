@@ -14,7 +14,7 @@ class ImageLoader: ObservableObject {
 
     private(set) var isLoading = false
 
-    private let url: URL
+    let url: URL
     private var cache: ImageCache?
     private var cancellable: AnyCancellable?
 
