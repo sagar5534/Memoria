@@ -15,12 +15,6 @@ struct UserImage: View {
             .scaledToFill()
             .frame(width: 32, height: 32, alignment: .center)
             .clipShape(Circle())
-
-//            .resizable()
-//            .frame(width: 40, height: 40, alignment: .center)
-//            .clipShape(Circle())
-//            .overlay(Circle().stroke(Color.white, lineWidth: 4))
-//            .shadow(radius: 7)
     }
 }
 
