@@ -9,14 +9,8 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct Photos: View {
-    let columns = [
-        GridItem(.flexible(), spacing: 4),
-        GridItem(.flexible(), spacing: 4),
-        GridItem(.flexible(), spacing: 4),
-    ]
 
     @ObservedObject var model = NetworkManager.sharedInstance
-
     @State private var rectPosition: CGFloat = 0
     @State private var currentLevel = 0
 
@@ -102,7 +96,6 @@ private struct MonthView: View {
 
 private struct DayList: View {
     let daywiseData: [Media]
-
     let columns =
         [
             GridItem(.flexible(), spacing: 4),
@@ -156,13 +149,3 @@ struct Photos_Previews: PreviewProvider {
         }
     }
 }
-
-//        .navigationTitle("Memoria")
-//        .navigationBarTitleDisplayMode(.inline)
-//        .navigationBarItems(trailing:
-//            Button(action: {
-////                model.upload()
-//            }, label: {
-//                UserImage()
-//            })
-//        )

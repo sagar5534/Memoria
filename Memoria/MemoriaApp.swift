@@ -11,7 +11,10 @@ import SwiftUI
 struct MemoriaApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashScreen()
+//            SplashScreen()
+//            HeroView(itemArray: mealData)
+            CombinedPhotos()
+
         }
     }
 }

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875226CF6FF800B7FC42 /* Thumbnail.swift */; };
+		1B73875526CF701400B7FC42 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875426CF701400B7FC42 /* ModalView.swift */; };
+		1B73875726CF701B00B7FC42 /* HeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875626CF701B00B7FC42 /* HeroView.swift */; };
+		1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875826CF702300B7FC42 /* VisualEffectView.swift */; };
+		1B73875B26CF703200B7FC42 /* MealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875A26CF703200B7FC42 /* MealData.swift */; };
+		1B73875D26CF708700B7FC42 /* HeroConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875C26CF708700B7FC42 /* HeroConfiguration.swift */; };
+		1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */; };
+		1B73876126CF70CD00B7FC42 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876026CF70CD00B7FC42 /* Animations.swift */; };
+		1B73876326CF70D800B7FC42 /* Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876226CF70D800B7FC42 /* Transitions.swift */; };
+		1B73876526CF793900B7FC42 /* CombinedPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876426CF793900B7FC42 /* CombinedPhotos.swift */; };
 		1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */; };
 		1B824CC026BF2FA90070D469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B824CBF26BF2FA90070D469 /* Assets.xcassets */; };
 		1B824CC326BF2FA90070D469 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B824CC226BF2FA90070D469 /* Preview Assets.xcassets */; };
@@ -39,6 +49,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B73875226CF6FF800B7FC42 /* Thumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
+		1B73875426CF701400B7FC42 /* ModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		1B73875626CF701B00B7FC42 /* HeroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroView.swift; sourceTree = "<group>"; };
+		1B73875826CF702300B7FC42 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		1B73875A26CF703200B7FC42 /* MealData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealData.swift; sourceTree = "<group>"; };
+		1B73875C26CF708700B7FC42 /* HeroConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroConfiguration.swift; sourceTree = "<group>"; };
+		1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
+		1B73876026CF70CD00B7FC42 /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		1B73876226CF70D800B7FC42 /* Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitions.swift; sourceTree = "<group>"; };
+		1B73876426CF793900B7FC42 /* CombinedPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedPhotos.swift; sourceTree = "<group>"; };
 		1B824CB826BF2FA80070D469 /* Memoria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memoria.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriaApp.swift; sourceTree = "<group>"; };
 		1B824CBF26BF2FA90070D469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +90,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B73875126CF6F7600B7FC42 /* ImageNav */ = {
+			isa = PBXGroup;
+			children = (
+				1B73875A26CF703200B7FC42 /* MealData.swift */,
+				1B73875826CF702300B7FC42 /* VisualEffectView.swift */,
+				1B73875C26CF708700B7FC42 /* HeroConfiguration.swift */,
+				1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */,
+				1B73876026CF70CD00B7FC42 /* Animations.swift */,
+				1B73876226CF70D800B7FC42 /* Transitions.swift */,
+				1B73875626CF701B00B7FC42 /* HeroView.swift */,
+				1B73875426CF701400B7FC42 /* ModalView.swift */,
+				1B73875226CF6FF800B7FC42 /* Thumbnail.swift */,
+			);
+			path = ImageNav;
+			sourceTree = "<group>";
+		};
 		1B824CAF26BF2FA80070D469 = {
 			isa = PBXGroup;
 			children = (
@@ -90,7 +126,7 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
-				1BD92C1F26CB388A00A598DB /* SplashScreen.swift */,
+				1B73875126CF6F7600B7FC42 /* ImageNav */,
 				1B824CCD26BF39170070D469 /* Photos */,
 				1B824CD026BF39A40070D469 /* Library */,
 				1B824CCA26BF384F0070D469 /* Tab Bar */,
@@ -123,6 +159,7 @@
 		1B824CCD26BF39170070D469 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				1B73876426CF793900B7FC42 /* CombinedPhotos.swift */,
 				1B824CCE26BF39960070D469 /* Photos.swift */,
 				1B824CD726BF6D530070D469 /* Query.swift */,
 				1B824CD926BF72970070D469 /* Model.swift */,
@@ -141,6 +178,7 @@
 		1BB0A24226CCADD1000BEE3F /* Extras */ = {
 			isa = PBXGroup;
 			children = (
+				1BD92C1F26CB388A00A598DB /* SplashScreen.swift */,
 				1B824CD526BF60380070D469 /* UserImage.swift */,
 				1B824CDE26C082C40070D469 /* Extensions.swift */,
 				1B824CD326BF40BA0070D469 /* Leading Element.swift */,
@@ -227,17 +265,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */,
+				1B73876526CF793900B7FC42 /* CombinedPhotos.swift in Sources */,
 				1B824CCF26BF39960070D469 /* Photos.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
+				1B73875526CF701400B7FC42 /* ModalView.swift in Sources */,
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
+				1B73876126CF70CD00B7FC42 /* Animations.swift in Sources */,
 				1BB0A24426CCAE98000BEE3F /* ScrollBarIcon.swift in Sources */,
+				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
+				1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */,
 				1B824CCC26BF38690070D469 /* TabBar.swift in Sources */,
 				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
 				1B824CD426BF40BA0070D469 /* Leading Element.swift in Sources */,
 				1B824CD226BF39B10070D469 /* Library.swift in Sources */,
+				1B73875D26CF708700B7FC42 /* HeroConfiguration.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,
+				1B73875B26CF703200B7FC42 /* MealData.swift in Sources */,
+				1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */,
+				1B73876326CF70D800B7FC42 /* Transitions.swift in Sources */,
 				1B824CDA26BF72970070D469 /* Model.swift in Sources */,
+				1B73875726CF701B00B7FC42 /* HeroView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
