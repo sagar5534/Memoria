@@ -13,7 +13,8 @@ struct MemoriaApp: App {
         WindowGroup {
 //            SplashScreen()
 //            HeroView(itemArray: mealData)
-            CombinedPhotos()
+//            CombinedPhotos()
+            Tester()
 
         }
     }

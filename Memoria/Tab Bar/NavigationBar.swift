@@ -42,6 +42,16 @@ struct NavigationBarColor: ViewModifier {
         UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
         UINavigationBar.appearance().compactAppearance = coloredAppearance
         UINavigationBar.appearance().tintColor = tintColor
+        
+        let toolbarColor = UIToolbarAppearance()
+        toolbarColor.configureWithOpaqueBackground()
+        toolbarColor.backgroundColor = backgroundColor
+        
+        UIToolbar.appearance().standardAppearance = toolbarColor
+        UIToolbar.appearance().compactAppearance = toolbarColor
+        UIToolbar.appearance().tintColor = tintColor
+        
+
     }
 
     func body(content: Content) -> some View {

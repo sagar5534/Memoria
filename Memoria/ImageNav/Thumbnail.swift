@@ -7,27 +7,28 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 /// This view shows a picture, that may be zoomed and cropped (insetted)
 struct Thumbnail: View {
-    @Environment(\.heroConfig) var config: HeroConfiguration
     
-    let item: ItemData
+    let item: String
     
     var body: some View {
         
-        let w = config.thumbnailSize.width
-        let h = config.thumbnailSize.height
-        let s: CGFloat = 0.75 // makes the title a little smaller in the thumbnail
+//        let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
+//        let url = URL(string: #"http://192.168.100.107:3000/data/\#(path)"#)
         
         return Color.clear.overlay(
-            Image("\(item.id)")
+            Image(item)
+//            WebImage(url: url!)
+//                .placeholder(content: { ProgressView() })
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: (w * config.thumbnailScalingFactor))
+                .scaledToFill()
+//                .frame(width: w, height: h, alignment: .center)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
+                .clipped()
         )
-        .clipShape(RoundedRectangle(cornerRadius: config.thumbnailRadius))
-        .contentShape(RoundedRectangle(cornerRadius: config.thumbnailRadius))
-        .frame(height: h)
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
     }
 }
