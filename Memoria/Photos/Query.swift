@@ -9,6 +9,7 @@ import Alamofire
 import Foundation
 import UIKit
 
+
 class NetworkManager: ObservableObject {
     @Published var data: MediaCollection = []
 
@@ -29,21 +30,30 @@ class NetworkManager: ObservableObject {
             .responseDecodable(of: MediaCollection.self) { response in
                 guard let data = response.value else { return }
                 self.data = data
-                print(data)
             }
     }
 
-    func upload(group: DispatchGroup, url: URL, fileName: String) {
-        group.enter()
-        AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(url, withName: "file", fileName: fileName, mimeType: "")
-        }, to: "http://192.168.100.107:3000/media/upload")
+    func upload(file: FileUpload, completionHandler: @escaping () -> Void)  {
+        
+        let parameters: [String: String] = [
+            "user": "610cc064a35f2243803ab48c",
+            "creationDate": String(file.creationDate.timeIntervalSince1970),
+            "assetId": String(file.assetId),
+            "isFavorite": String(file.isFavorite),
+        ]
 
-            .uploadProgress { progress in
-                print("Upload Progress: \(progress.fractionCompleted)")
+        AF.upload(multipartFormData: { multipartFormData in
+            for (key, value) in parameters {
+                multipartFormData.append(value.data(using: .utf8)!, withName: key)
             }
-            .responseJSON { _ in
-                group.leave()
+            multipartFormData.append(file.url, withName: "file", fileName: file.filename, mimeType: file.mimeType)
+        }, to: "http://192.168.100.107:3000/media/upload")
+            .uploadProgress { progress in
+//                print("Upload Progress: \(progress.fractionCompleted)")
+            }
+            .responseJSON { data in
+//                print(data)
+                completionHandler()
             }
     }
 }

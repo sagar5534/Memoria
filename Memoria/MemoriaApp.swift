@@ -12,10 +12,8 @@ struct MemoriaApp: App {
     var body: some Scene {
         WindowGroup {
 //            SplashScreen()
-//            HeroView(itemArray: mealData)
-//            CombinedPhotos()
-            Tester()
-
+            CombinedPhotos()
+//            Library()
         }
     }
 }

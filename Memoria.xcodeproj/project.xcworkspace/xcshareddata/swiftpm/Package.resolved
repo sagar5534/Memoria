@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "AlamofireImage",
+        "repositoryURL": "https://github.com/Alamofire/AlamofireImage.git",
+        "state": {
+          "branch": null,
+          "revision": "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
+          "version": "4.2.0"
+        }
+      },
+      {
         "package": "SDWebImage",
         "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
         "state": {
@@ -26,6 +35,15 @@
           "branch": null,
           "revision": "cd8625b7cf11a97698e180d28bb7d5d357196678",
           "version": "2.0.2"
+        }
+      },
+      {
+        "package": "UnsplashPhotoPicker",
+        "repositoryURL": "https://github.com/unsplash/unsplash-photopicker-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "c0a1356bd4c5afac920e07c5ac42d1ece27e5c17",
+          "version": "1.2.0"
         }
       }
     ]

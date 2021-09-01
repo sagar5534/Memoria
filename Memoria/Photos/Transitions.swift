@@ -20,22 +20,22 @@ extension AnyTransition {
             identity: ThumbnailExpandedModifier(pct: 1)
         )
     }
-    
+
     struct ThumbnailExpandedModifier: AnimatableModifier {
         var pct: CGFloat
-        
+
         var animatableData: CGFloat {
             get { pct }
             set { pct = newValue }
         }
-        
+
         func body(content: Content) -> some View {
             return content
                 .environment(\.modalTransitionPercent, pct)
                 .opacity(1)
         }
     }
-    
+
     /// This transition will cause the view to disappear,
     /// until the last frame of the animation is reached
     static var invisible: AnyTransition {
@@ -44,16 +44,15 @@ extension AnyTransition {
             identity: InvisibleModifier(pct: 1)
         )
     }
-    
+
     struct InvisibleModifier: AnimatableModifier {
         var pct: Double
-        
+
         var animatableData: Double {
             get { pct }
             set { pct = newValue }
         }
-        
-        
+
         func body(content: Content) -> some View {
             content.opacity(pct == 1.0 ? 1 : 0)
         }

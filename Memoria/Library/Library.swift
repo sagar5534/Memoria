@@ -6,15 +6,18 @@
 //
 
 import Alamofire
+import Combine
 import MobileCoreServices
 import Photos
 import SwiftUI
 
 struct FileUpload {
     let url: URL
+    let assetId: String
     let filename: String
     let mimeType: String
     let creationDate: Date
+    let isFavorite: Bool
 }
 
 struct Library: View {
@@ -23,10 +26,8 @@ struct Library: View {
 
     var body: some View {
         VStack {
-            List(photos.allUrls, id: \.self) { photo in
-                let imageData = NSData(contentsOf: photo)!
-
-                Image(uiImage: UIImage(data: imageData as Data) ?? UIImage())
+            List(photos.images, id: \.self) { photo in
+                Image(uiImage: photo)
                     .resizable()
                     .frame(width: 200, height: 200, alignment: .center)
                     .aspectRatio(1, contentMode: .fit)
@@ -36,9 +37,10 @@ struct Library: View {
 }
 
 class PhotosModel: ObservableObject {
-    @Published var allUrls = [URL]()
+    @Published var images: [UIImage] = []
     @Published var errorString: String = ""
     @ObservedObject var model = NetworkManager.sharedInstance
+    var allImages = [FileUpload]()
 
     init() {
         PHPhotoLibrary.requestAuthorization { status in
@@ -58,82 +60,79 @@ class PhotosModel: ObservableObject {
         }
     }
 
-//    func imageAndMetadataFromImageData(data: NSData)-> (UIImage?,[String: Any]?) {
-//        let options = [kCGImageSourceShouldCache as String: kCFBooleanFalse]
-//        if let imgSrc = CGImageSourceCreateWithData(data, options as CFDictionary) {
-//            let metadata = CGImageSourceCopyPropertiesAtIndex(imgSrc, 0, options as CFDictionary) as! [String: Any]
-//            //print(metadata)
-//            // let image = UIImage(cgImage: imgSrc as! CGImage)
-//            let image = UIImage(data: data as Data)
-//            return (image, metadata)
-//        }
-//        return (nil, nil)
-//    }
+    private func getAllPhotos() {
+        let uploadQueue = DispatchQueue.global(qos: .userInitiated)
+        let uploadGroup = DispatchGroup()
+        let uploadSemaphore = DispatchSemaphore(value: 30)
 
-    fileprivate func getAllPhotos() {
         let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "modificationDate", ascending: false)]
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchOptions.includeAssetSourceTypes = .typeUserLibrary
 
-        let results: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        uploadQueue.async(group: uploadGroup) { [weak self] in
+            guard let self = self else { return }
 
-        if results.count > 0 {
-            var allFiles = [FileUpload]()
+            let fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
 
-            // Get Files
-            for i in 0 ..< results.count {
-                let asset = results.object(at: i)
-                let data = PHAssetResource.assetResources(for: asset)
-
-                let creationDate = asset.creationDate ?? Date()
-                let filename = data.first?.originalFilename
-                let mimeType = UTTypeCopyPreferredTagWithClass(data.first!.uniformTypeIdentifier as CFString, kUTTagClassMIMEType)!.takeRetainedValue()
-
-                asset.getURL { u in
-                    if u != nil {
-                        allFiles.append(FileUpload(url: u!, filename: filename ?? "file", mimeType: mimeType as String, creationDate: creationDate))
-                    }
+            for i in 0 ..< fetchResult.count {
+                uploadGroup.enter()
+                uploadSemaphore.wait()
+                self.getAssetDetails(asset: fetchResult.object(at: i)) {
+                    uploadGroup.leave()
+                    uploadSemaphore.signal()
                 }
             }
+        }
 
-            let start = DispatchTime.now()
-            let group = DispatchGroup()
+        uploadGroup.notify(queue: .main) {
+            print("Done Fetching")
+            self.uploadImages()
+        }
+    }
 
-            // Upload
-            for file in allFiles {
-                group.enter()
+    func getAssetDetails(asset: PHAsset, completionHandler: @escaping () -> Void) {
+        let data = PHAssetResource.assetResources(for: asset)
+        let creationDate = asset.creationDate ?? Date()
+        let isFavorite = asset.isFavorite
+        let assetId = asset.localIdentifier
+        let filename = data.first?.originalFilename
+        let mimeType = UTTypeCopyPreferredTagWithClass(data.first!.uniformTypeIdentifier as CFString, kUTTagClassMIMEType)!.takeRetainedValue()
 
-//                let parameters: [String: String] = [
-//                    "creationDate": String(file.creationDate.timeIntervalSince1970),
-//                    "user": "610cc064a35f2243803ab48c",
-//                ]
-
-//                AF.upload(multipartFormData: { multipartFormData in
-//                    for (key, value) in parameters {
-//                        multipartFormData.append(value.data(using: .utf8)!, withName: key)
-//                    }
-//                    multipartFormData.append(file.url, withName: "file", fileName: file.filename, mimeType: file.mimeType)
-//                }, to: "http://192.168.100.107:3000/media/upload")
-//
-//                    .uploadProgress { progress in
-//                        print("Upload Progress: \(progress.fractionCompleted)")
-//                    }
-//                    .responseJSON { _ in
-//                        group.leave()
-//                    }
+        asset.getURL { u in
+            if u != nil {
+                self.allImages.append(FileUpload(
+                    url: u!,
+                    assetId: assetId,
+                    filename: filename ?? "file",
+                    mimeType: mimeType as String,
+                    creationDate: creationDate,
+                    isFavorite: isFavorite)
+                )
             }
+            completionHandler()
+        }
+    }
 
-            group.notify(queue: DispatchQueue.global()) {
-                print("Done Uploading")
-                let end = DispatchTime.now()
-                let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-                let timeInterval = Double(nanoTime) / 1_000_000_000
+    private func uploadImages() {
+        let uploadQueue = DispatchQueue.global(qos: .userInitiated)
+        let uploadGroup = DispatchGroup()
+        let uploadSemaphore = DispatchSemaphore(value: 30)
 
-                print("Time to upload: \(timeInterval) seconds")
+        uploadQueue.async(group: uploadGroup) { [weak self] in
+            guard let self = self else { return }
+
+            for (_, file) in self.allImages.enumerated() {
+                uploadGroup.enter()
+                uploadSemaphore.wait()
+                NetworkManager.sharedInstance.upload(file: file) {
+                    uploadGroup.leave()
+                    uploadSemaphore.signal()
+                }
             }
+        }
 
-        } else {
-            errorString = "No photos to display"
+        uploadGroup.notify(queue: .main) {
+            print("Done Uploading")
         }
     }
 }

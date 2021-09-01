@@ -15,7 +15,7 @@ struct ScrollBarIcon: View {
     }
 }
 
-struct Test_Previews: PreviewProvider {
+struct ScrollBarIcon_Preview: PreviewProvider {
     static var previews: some View {
         ScrollBarIcon()
     }
