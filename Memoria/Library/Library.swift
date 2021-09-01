@@ -106,7 +106,8 @@ class PhotosModel: ObservableObject {
                     filename: filename ?? "file",
                     mimeType: mimeType as String,
                     creationDate: creationDate,
-                    isFavorite: isFavorite)
+                    isFavorite: isFavorite
+                )
                 )
             }
             completionHandler()

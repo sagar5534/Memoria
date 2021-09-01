@@ -9,7 +9,6 @@ import Alamofire
 import Foundation
 import UIKit
 
-
 class NetworkManager: ObservableObject {
     @Published var data: MediaCollection = []
 
@@ -33,8 +32,7 @@ class NetworkManager: ObservableObject {
             }
     }
 
-    func upload(file: FileUpload, completionHandler: @escaping () -> Void)  {
-        
+    func upload(file: FileUpload, completionHandler: @escaping () -> Void) {
         let parameters: [String: String] = [
             "user": "610cc064a35f2243803ab48c",
             "creationDate": String(file.creationDate.timeIntervalSince1970),
@@ -48,10 +46,10 @@ class NetworkManager: ObservableObject {
             }
             multipartFormData.append(file.url, withName: "file", fileName: file.filename, mimeType: file.mimeType)
         }, to: "http://192.168.100.107:3000/media/upload")
-            .uploadProgress { progress in
+            .uploadProgress { _ in
 //                print("Upload Progress: \(progress.fractionCompleted)")
             }
-            .responseJSON { data in
+            .responseJSON { _ in
 //                print(data)
                 completionHandler()
             }

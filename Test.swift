@@ -10,12 +10,7 @@ import UIKit
 
 struct Test: View {
     var body: some View {
-        
-        VStack {
-            
-            
-        }
-        
+        VStack {}
     }
 }
 

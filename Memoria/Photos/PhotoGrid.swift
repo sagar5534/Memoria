@@ -17,14 +17,14 @@ struct PhotoGrid: View {
     var body: some View {
         GeometryReader { _ in
             ScrollViewReader { _ in
-                    List {
-                        ForEach(model.data.indices, id: \.self) { i in
-                            MonthView(onThumbnailTap: onThumbnailTap, namespace: namespace, monthwiseData: model.data[i])
-                                .id(i)
-                        }
-                        .listRowInsets(EdgeInsets())
+                List {
+                    ForEach(model.data.indices, id: \.self) { i in
+                        MonthView(onThumbnailTap: onThumbnailTap, namespace: namespace, monthwiseData: model.data[i])
+                            .id(i)
                     }
-                    .listStyle(PlainListStyle())
+                    .listRowInsets(EdgeInsets())
+                }
+                .listStyle(PlainListStyle())
             }
         }
     }

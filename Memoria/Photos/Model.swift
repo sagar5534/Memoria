@@ -16,9 +16,9 @@ public struct Media: Decodable, Hashable {
     let thumbnailPath: String
     let user: String
     let v: Int
-    
+
     var resource: UIImage? = nil
-    
+
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case name
@@ -29,10 +29,10 @@ public struct Media: Decodable, Hashable {
         case v = "__v"
         case resource
     }
-    
-    public init(from decoder:Decoder) throws {
+
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         id = try values.decode(String.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
         creationDate = try values.decode(String.self, forKey: .creationDate)
@@ -42,7 +42,6 @@ public struct Media: Decodable, Hashable {
         v = try values.decode(Int.self, forKey: .v)
         resource = nil
     }
-    
 }
 
 // enum User: String, Codable {
