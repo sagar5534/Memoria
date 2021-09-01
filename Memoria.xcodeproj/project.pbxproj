@@ -33,8 +33,8 @@
 		1BD49A5526DDB81D00D504AD /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5026DDB81C00D504AD /* AsyncImage.swift */; };
 		1BD49A5626DDB81D00D504AD /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5126DDB81D00D504AD /* ImageLoader.swift */; };
 		1BD49A5726DDB81D00D504AD /* EnvironmentValues+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5226DDB81D00D504AD /* EnvironmentValues+ImageCache.swift */; };
-		1BD49A5C26DEA42F00D504AD /* UnsplashPhotoPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD49A5B26DEA42F00D504AD /* UnsplashPhotoPicker */; };
 		1BD49A5E26DEA44100D504AD /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5D26DEA44100D504AD /* Test.swift */; };
+		1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */; };
 		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
 		1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2126CB593500A598DB /* NavigationBar.swift */; };
 		1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */; };
@@ -81,6 +81,7 @@
 		1BD49A5126DDB81D00D504AD /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		1BD49A5226DDB81D00D504AD /* EnvironmentValues+ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+ImageCache.swift"; sourceTree = "<group>"; };
 		1BD49A5D26DEA44100D504AD /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridData.swift; sourceTree = "<group>"; };
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,7 +92,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */,
-				1BD49A5C26DEA42F00D504AD /* UnsplashPhotoPicker in Frameworks */,
 				1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */,
 				1BD49A4826DDA45F00D504AD /* AlamofireImage in Frameworks */,
 			);
@@ -114,6 +114,7 @@
 			children = (
 				1B824CCE26BF39960070D469 /* PhotoGrid.swift */,
 				1B73875226CF6FF800B7FC42 /* Thumbnail.swift */,
+				1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */,
 			);
 			name = "Photo Grid";
 			sourceTree = "<group>";
@@ -236,7 +237,6 @@
 				1B824CDC26BF7B020070D469 /* Alamofire */,
 				1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */,
 				1BD49A4726DDA45F00D504AD /* AlamofireImage */,
-				1BD49A5B26DEA42F00D504AD /* UnsplashPhotoPicker */,
 			);
 			productName = Memoria;
 			productReference = 1B824CB826BF2FA80070D469 /* Memoria.app */;
@@ -269,7 +269,6 @@
 				1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				1BD92C2826CC161300A598DB /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				1BD49A4626DDA45F00D504AD /* XCRemoteSwiftPackageReference "AlamofireImage" */,
-				1BD49A5A26DEA42F00D504AD /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */,
 			);
 			productRefGroup = 1B824CB926BF2FA80070D469 /* Products */;
 			projectDirPath = "";
@@ -305,6 +304,7 @@
 				1B824CCF26BF39960070D469 /* PhotoGrid.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
+				1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */,
 				1B73875526CF701400B7FC42 /* ModalView.swift in Sources */,
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
 				1BB0A24426CCAE98000BEE3F /* ScrollBarIcon.swift in Sources */,
@@ -528,14 +528,6 @@
 				minimumVersion = 4.2.0;
 			};
 		};
-		1BD49A5A26DEA42F00D504AD /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/unsplash/unsplash-photopicker-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
 		1BD92C2826CC161300A598DB /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
@@ -556,11 +548,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1BD49A4626DDA45F00D504AD /* XCRemoteSwiftPackageReference "AlamofireImage" */;
 			productName = AlamofireImage;
-		};
-		1BD49A5B26DEA42F00D504AD /* UnsplashPhotoPicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1BD49A5A26DEA42F00D504AD /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */;
-			productName = UnsplashPhotoPicker;
 		};
 		1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -26,7 +26,7 @@ struct CombinedPhotos: View {
             // --------------------------------------------------------
             TabView {
                 NavigationView {
-                    PhotoGrid(onThumbnailTap: tapThumbnail, namespace: nspace)
+                    PhotoGrid(onThumbnailTap: tapThumbnail)
                         .modifier(InlineNavBar(title: "Memoria"))
                         .environmentObject(currentlySelected)
                 }

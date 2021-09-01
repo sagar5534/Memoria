@@ -20,16 +20,6 @@ class NetworkManager: ObservableObject {
 
     init() {
         print("Calling init")
-        getListOfPhotos()
-    }
-
-    func getListOfPhotos() {
-        AF.request("http://192.168.100.107:3000/media")
-            .validate()
-            .responseDecodable(of: MediaCollection.self) { response in
-                guard let data = response.value else { return }
-                self.data = data
-            }
     }
 
     func upload(file: FileUpload, completionHandler: @escaping () -> Void) {
