@@ -28,12 +28,7 @@
 		1B824CDF26C082C40070D469 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CDE26C082C40070D469 /* Extensions.swift */; };
 		1BB0A24426CCAE98000BEE3F /* ScrollBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB0A24326CCAE98000BEE3F /* ScrollBarIcon.swift */; };
 		1BD49A4826DDA45F00D504AD /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD49A4726DDA45F00D504AD /* AlamofireImage */; };
-		1BD49A5326DDB81D00D504AD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A4E26DDB81C00D504AD /* ContentView.swift */; };
-		1BD49A5426DDB81D00D504AD /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A4F26DDB81C00D504AD /* ImageCache.swift */; };
-		1BD49A5526DDB81D00D504AD /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5026DDB81C00D504AD /* AsyncImage.swift */; };
-		1BD49A5626DDB81D00D504AD /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5126DDB81D00D504AD /* ImageLoader.swift */; };
-		1BD49A5726DDB81D00D504AD /* EnvironmentValues+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5226DDB81D00D504AD /* EnvironmentValues+ImageCache.swift */; };
-		1BD49A5E26DEA44100D504AD /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5D26DEA44100D504AD /* Test.swift */; };
+		1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */; };
 		1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */; };
 		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
 		1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2126CB593500A598DB /* NavigationBar.swift */; };
@@ -75,12 +70,7 @@
 		1B824CD926BF72970070D469 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		1B824CDE26C082C40070D469 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1BB0A24326CCAE98000BEE3F /* ScrollBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollBarIcon.swift; sourceTree = "<group>"; };
-		1BD49A4E26DDB81C00D504AD /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		1BD49A4F26DDB81C00D504AD /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
-		1BD49A5026DDB81C00D504AD /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
-		1BD49A5126DDB81D00D504AD /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
-		1BD49A5226DDB81D00D504AD /* EnvironmentValues+ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+ImageCache.swift"; sourceTree = "<group>"; };
-		1BD49A5D26DEA44100D504AD /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageCustom.swift; sourceTree = "<group>"; };
 		1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridData.swift; sourceTree = "<group>"; };
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
@@ -112,6 +102,7 @@
 		1B73876E26DC167000B7FC42 /* Photo Grid */ = {
 			isa = PBXGroup;
 			children = (
+				1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */,
 				1B824CCE26BF39960070D469 /* PhotoGrid.swift */,
 				1B73875226CF6FF800B7FC42 /* Thumbnail.swift */,
 				1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */,
@@ -134,7 +125,6 @@
 		1B824CAF26BF2FA80070D469 = {
 			isa = PBXGroup;
 			children = (
-				1BD49A5D26DEA44100D504AD /* Test.swift */,
 				1B824CBA26BF2FA80070D469 /* Memoria */,
 				1B824CB926BF2FA80070D469 /* Products */,
 			);
@@ -151,7 +141,6 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
-				1BD49A4D26DDB80A00D504AD /* Async */,
 				1B824CCD26BF39170070D469 /* Photos */,
 				1B824CD026BF39A40070D469 /* Library */,
 				1BB0A24226CCADD1000BEE3F /* Extras */,
@@ -202,18 +191,6 @@
 				1B824CD326BF40BA0070D469 /* Leading Element.swift */,
 			);
 			path = Extras;
-			sourceTree = "<group>";
-		};
-		1BD49A4D26DDB80A00D504AD /* Async */ = {
-			isa = PBXGroup;
-			children = (
-				1BD49A5026DDB81C00D504AD /* AsyncImage.swift */,
-				1BD49A4E26DDB81C00D504AD /* ContentView.swift */,
-				1BD49A5226DDB81D00D504AD /* EnvironmentValues+ImageCache.swift */,
-				1BD49A4F26DDB81C00D504AD /* ImageCache.swift */,
-				1BD49A5126DDB81D00D504AD /* ImageLoader.swift */,
-			);
-			path = Async;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,11 +273,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BD49A5426DDB81D00D504AD /* ImageCache.swift in Sources */,
 				1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */,
-				1BD49A5526DDB81D00D504AD /* AsyncImage.swift in Sources */,
+				1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */,
 				1B73876526CF793900B7FC42 /* CombinedPhotos.swift in Sources */,
-				1BD49A5326DDB81D00D504AD /* ContentView.swift in Sources */,
 				1B824CCF26BF39960070D469 /* PhotoGrid.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
@@ -310,7 +285,6 @@
 				1BB0A24426CCAE98000BEE3F /* ScrollBarIcon.swift in Sources */,
 				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
 				1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */,
-				1BD49A5626DDB81D00D504AD /* ImageLoader.swift in Sources */,
 				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
 				1B824CD426BF40BA0070D469 /* Leading Element.swift in Sources */,
 				1B73876C26D5FCDD00B7FC42 /* PhotosToolbar.swift in Sources */,
@@ -319,9 +293,7 @@
 				1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */,
 				1B73876926D4BC7500B7FC42 /* Share Sheet.swift in Sources */,
 				1B73876326CF70D800B7FC42 /* Transitions.swift in Sources */,
-				1BD49A5E26DEA44100D504AD /* Test.swift in Sources */,
 				1B824CDA26BF72970070D469 /* Model.swift in Sources */,
-				1BD49A5726DDB81D00D504AD /* EnvironmentValues+ImageCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -434,7 +406,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -454,7 +426,7 @@
 				DEVELOPMENT_TEAM = LL6476HKHT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Memoria/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -476,7 +448,7 @@
 				DEVELOPMENT_TEAM = LL6476HKHT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Memoria/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

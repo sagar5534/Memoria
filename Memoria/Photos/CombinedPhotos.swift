@@ -25,14 +25,10 @@ struct CombinedPhotos: View {
             // NavigationView with LazyVGrid
             // --------------------------------------------------------
             TabView {
-                NavigationView {
-                    PhotoGrid(onThumbnailTap: tapThumbnail)
-                        .modifier(InlineNavBar(title: "Memoria"))
-                        .environmentObject(currentlySelected)
-                }
+                PhotoGrid(onThumbnailTap: tapThumbnail)
+                .environmentObject(currentlySelected)
                 .tabItem {
-                    Label("Photos", systemImage: "photo.fill")
-                        .accentColor(.accentColor)
+                    Label("Photos", systemImage: "photo.on.rectangle.angled")
                 }
 
 //                NavigationView {
@@ -45,6 +41,7 @@ struct CombinedPhotos: View {
 //                }
             }
             .zIndex(1)
+            .accentColor(.blue)
 
             if currentlySelected.media != nil {
                 // --------------------------------------------------------

@@ -5,7 +5,6 @@
 //  Created by Sagar on 2021-08-07.
 //
 
-import SDWebImageSwiftUI
 import SwiftUI
 
 struct PhotoGrid: View {
@@ -13,19 +12,81 @@ struct PhotoGrid: View {
 
     var onThumbnailTap: (_ item: Media, _ geometry: GeometryProxy) -> Void = { _, _ in }
 //    var namespace: Namespace.ID
-    
+    let columns =
+        [
+            GridItem(.flexible(), spacing: 4),
+            GridItem(.flexible(), spacing: 4),
+            GridItem(.flexible(), spacing: 4),
+        ]
+
     var body: some View {
-        
-        List {
-            ForEach(photoGridData.allMedia.indices, id: \.self) { i in
-                Text(photoGridData.allMedia[i].creationDate)
+        ScrollView(.vertical) {
+            
+            PullToRefresh(coordinateSpaceName: "pullToRefresh") {
+                print("Refresh")
+                photoGridData.fetchAllMedia()
             }
-            .listRowInsets(EdgeInsets())
+            
+            LazyVGrid(columns: columns, spacing: 4) {
+                ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
+                    Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
+                        ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { x in
+                            Thumbnail(item: photoGridData.groupedMedia[i][x])
+                                .id(UUID())
+                        }
+                    }
+                    .id(UUID())
+                }
+            }
         }
-        .listStyle(PlainListStyle())
-        
+        .coordinateSpace(name: "pullToRefresh")
     }
 }
+
+private func titleHeader(with header: String) -> some View {
+    Text(header)
+        .font(.body)
+        .bold()
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+}
+
+struct PullToRefresh: View {
+    
+    var coordinateSpaceName: String
+    var onRefresh: ()->Void
+    
+    @State var needRefresh: Bool = false
+    
+    var body: some View {
+        GeometryReader { geo in
+            if (geo.frame(in: .named(coordinateSpaceName)).midY > 50) {
+                Spacer()
+                    .onAppear {
+                        needRefresh = true
+                    }
+            } else if (geo.frame(in: .named(coordinateSpaceName)).maxY < 10) {
+                Spacer()
+                    .onAppear {
+                        if needRefresh {
+                            needRefresh = false
+                            onRefresh()
+                        }
+                    }
+            }
+            HStack {
+                Spacer()
+                if needRefresh {
+                    ProgressView()
+                } else {
+                    Text("Pull to Refresh⬇️")
+                }
+                Spacer()
+            }
+        }.padding(.top, -50)
+    }
+}
+
 
 struct Photos_Previews: PreviewProvider {
     static var previews: some View {
@@ -38,14 +99,6 @@ struct Photos_Previews: PreviewProvider {
         }
     }
 }
-
-
-
-
-
-
-
-
 
 //    var body: some View {
 //        GeometryReader { _ in
@@ -61,9 +114,9 @@ struct Photos_Previews: PreviewProvider {
 //            }
 //        }
 //    }
-//}
+// }
 //
-//private struct MonthView: View {
+// private struct MonthView: View {
 //    var onThumbnailTap: (_ item: Media, _ geometry: GeometryProxy) -> Void
 //    var namespace: Namespace.ID
 //
@@ -86,9 +139,9 @@ struct Photos_Previews: PreviewProvider {
 //            }
 //        }
 //    }
-//}
+// }
 //
-//private struct DayList: View {
+// private struct DayList: View {
 //    @EnvironmentObject var currentlySelected: CurrentlySelected
 //
 //    let daywiseData: [Media]
@@ -129,4 +182,4 @@ struct Photos_Previews: PreviewProvider {
 //            }
 //        }
 //    }
-//}
+// }
