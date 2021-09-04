@@ -1,13 +1,8 @@
 //
 //  Thumbnail.swift
-//  HeroAnimations
+//  Sagar Patel
 //
 //
-
-import AlamofireImage
-import AVKit
-import Combine
-import SDWebImageSwiftUI
 import SwiftUI
 
 struct Thumbnail: View {
