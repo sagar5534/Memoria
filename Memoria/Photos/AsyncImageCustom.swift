@@ -1,13 +1,13 @@
+import Combine
 import Foundation
 import SwiftUI
 import UIKit
-import Combine
 
 struct AsyncImageCustom<Placeholder: View>: View {
     @StateObject private var loader: ImageLoader
     private let placeholder: Placeholder
     private let image: (UIImage) -> Image
-    
+
     init(
         url: URL,
         @ViewBuilder placeholder: () -> Placeholder,
@@ -18,12 +18,12 @@ struct AsyncImageCustom<Placeholder: View>: View {
 //        _loader = StateObject(wrappedValue: ImageLoader(url: url))
         _loader = StateObject(wrappedValue: ImageLoader(url: url, cache: Environment(\.imageCache).wrappedValue))
     }
-    
+
     var body: some View {
         content
             .onAppear(perform: loader.load)
     }
-    
+
     private var content: some View {
         Group {
             if loader.image != nil {
@@ -36,12 +36,12 @@ struct AsyncImageCustom<Placeholder: View>: View {
 }
 
 protocol ImageCache {
-    subscript(_ url: URL) -> UIImage? { get set }
+    subscript(_: URL) -> UIImage? { get set }
 }
 
 struct TemporaryImageCache: ImageCache {
     private let cache = NSCache<NSURL, UIImage>()
-    
+
     subscript(_ key: URL) -> UIImage? {
         get { cache.object(forKey: key as NSURL) }
         set { newValue == nil ? cache.removeObject(forKey: key as NSURL) : cache.setObject(newValue!, forKey: key as NSURL) }
@@ -50,34 +50,32 @@ struct TemporaryImageCache: ImageCache {
 
 class ImageLoader: ObservableObject {
     @Published var image: UIImage?
-    
+
     private(set) var isLoading = false
-    
+
     private let url: URL
     private var cache: ImageCache?
     private var cancellable: AnyCancellable?
-    
+
     private static let imageProcessingQueue = DispatchQueue(label: "image-processing")
-    
+
     init(url: URL, cache: ImageCache? = nil) {
         self.url = url
         self.cache = cache
     }
-    
+
     deinit {
         cancel()
     }
-    
+
     func load() {
         guard !isLoading else { return }
 
         if let image = cache?[url] {
-//            withAnimation {
-                self.image = image
-//            }
+            self.image = image
             return
         }
-                                    
+
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .map { UIImage(data: $0.data) }
             .replaceError(with: nil)
@@ -88,24 +86,22 @@ class ImageLoader: ObservableObject {
             .subscribe(on: Self.imageProcessingQueue)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] img in
-                withAnimation {
-                    self?.image = img
-                }
+                self?.image = img
             }
     }
-    
+
     func cancel() {
         cancellable?.cancel()
     }
-    
+
     private func onStart() {
         isLoading = true
     }
-    
+
     private func onFinish() {
         isLoading = false
     }
-    
+
     private func cache(_ image: UIImage?) {
         image.map { cache?[url] = $0 }
     }

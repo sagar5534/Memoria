@@ -12,7 +12,8 @@ struct MemoriaApp: App {
     var body: some Scene {
         WindowGroup {
 //            SplashScreen()
-            CombinedPhotos()
+            Navigation()
+//            CombinedPhotos()
 //            Library()
 //            PhotoGrid()
         }

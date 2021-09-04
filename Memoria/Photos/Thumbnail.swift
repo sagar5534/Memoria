@@ -5,6 +5,7 @@
 //
 
 import AlamofireImage
+import AVKit
 import Combine
 import SDWebImageSwiftUI
 import SwiftUI
@@ -13,19 +14,27 @@ struct Thumbnail: View {
     let item: Media
 
     var body: some View {
-        let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
+        let path = item.path.replacingOccurrences(of: "\\", with: #"/"#)
         let url = URL(string: #"http://192.168.100.107:3000/data/\#(path)"#)
 
-        AsyncImageCustom(
-            url: url!,
-            placeholder: { Color.clear },
-            image: {
-                Image(uiImage: $0)
+        ZStack(alignment: .bottomLeading) {
+            AsyncImageCustom(url: url!,
+                             placeholder: { Color(UIColor.secondarySystemBackground) },
+                             image: {
+                                 Image(uiImage: $0)
+                                     .resizable()
+                             })
+                .scaledToFill()
+                .frame(width: 300, height: 300, alignment: .center)
+                .clipped()
+
+            if item.isFavorite {
+                Image(systemName: "heart.fill")
                     .resizable()
-            })
-            .transition(.fade(duration: 0.25))
-            .scaledToFill()
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 150, maxHeight: .infinity, alignment: .center)
-            .clipped()
+                    .frame(width: 16, height: 16, alignment: .center)
+                    .padding()
+            }
+        }
+        .frame(width: 300, height: 300, alignment: .center)
     }
 }

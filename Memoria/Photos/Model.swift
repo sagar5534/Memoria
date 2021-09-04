@@ -16,8 +16,7 @@ public struct Media: Decodable, Hashable {
     let thumbnailPath: String
     let user: String
     let v: Int
-
-    var resource: UIImage? = nil
+    let isFavorite: Bool
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -26,8 +25,8 @@ public struct Media: Decodable, Hashable {
         case path
         case thumbnailPath = "thumbnail_path"
         case user
+        case isFavorite
         case v = "__v"
-        case resource
     }
 
     public init(from decoder: Decoder) throws {
@@ -40,7 +39,7 @@ public struct Media: Decodable, Hashable {
         thumbnailPath = try values.decode(String.self, forKey: .thumbnailPath)
         user = try values.decode(String.self, forKey: .user)
         v = try values.decode(Int.self, forKey: .v)
-        resource = nil
+        isFavorite = try values.decode(Bool.self, forKey: .isFavorite)
     }
 }
 

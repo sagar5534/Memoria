@@ -26,10 +26,10 @@ struct CombinedPhotos: View {
             // --------------------------------------------------------
             TabView {
                 PhotoGrid(onThumbnailTap: tapThumbnail)
-                .environmentObject(currentlySelected)
-                .tabItem {
-                    Label("Photos", systemImage: "photo.on.rectangle.angled")
-                }
+                    .environmentObject(currentlySelected)
+                    .tabItem {
+                        Label("Photos", systemImage: "photo.on.rectangle.angled")
+                    }
 
 //                NavigationView {
 //                    Library()
@@ -66,7 +66,7 @@ struct CombinedPhotos: View {
                 // --------------------------------------------------------
                 PhotosToolbar(onCloseTap: tapBackdrop, showShareSheet: $showShareSheet)
                     .sheet(isPresented: $showShareSheet) {
-                        ShareSheet(activityItems: ["Hello World"])
+                        ShareSheet(activityItems: [])
                     }
                     .zIndex(4)
                     .transition(.opacity)

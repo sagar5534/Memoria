@@ -21,12 +21,11 @@ struct PhotoGrid: View {
 
     var body: some View {
         ScrollView(.vertical) {
-            
             PullToRefresh(coordinateSpaceName: "pullToRefresh") {
                 print("Refresh")
                 photoGridData.fetchAllMedia()
             }
-            
+
             LazyVGrid(columns: columns, spacing: 4) {
                 ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
                     Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
@@ -40,6 +39,7 @@ struct PhotoGrid: View {
             }
         }
         .coordinateSpace(name: "pullToRefresh")
+        .navigationBarHidden(true)
     }
 }
 
@@ -52,24 +52,26 @@ private func titleHeader(with header: String) -> some View {
 }
 
 struct PullToRefresh: View {
-    
     var coordinateSpaceName: String
-    var onRefresh: ()->Void
-    
+    var onRefresh: () -> Void
+    @Namespace private var nspace
     @State var needRefresh: Bool = false
-    
+
     var body: some View {
         GeometryReader { geo in
-            if (geo.frame(in: .named(coordinateSpaceName)).midY > 50) {
+
+            if geo.frame(in: .named(coordinateSpaceName)).midY > 50 {
                 Spacer()
                     .onAppear {
                         needRefresh = true
                     }
-            } else if (geo.frame(in: .named(coordinateSpaceName)).maxY < 10) {
+            } else if geo.frame(in: .named(coordinateSpaceName)).maxY < 10 {
                 Spacer()
                     .onAppear {
                         if needRefresh {
-                            needRefresh = false
+                            withAnimation {
+                                needRefresh = false
+                            }
                             onRefresh()
                         }
                     }
@@ -78,8 +80,16 @@ struct PullToRefresh: View {
                 Spacer()
                 if needRefresh {
                     ProgressView()
+                        .matchedGeometryEffect(id: "reload", in: nspace)
+                        .onAppear {
+                            simpleSuccess()
+                        }
+
                 } else {
-                    Text("Pull to Refresh⬇️")
+                    Image(systemName: "arrow.clockwise")
+                        .rotationEffect(Angle.degrees((geo.frame(in: .named(coordinateSpaceName)).maxY + 40) * 3.789))
+                        .matchedGeometryEffect(id: "reload", in: nspace)
+                        .transition(.fade)
                 }
                 Spacer()
             }
@@ -87,6 +97,10 @@ struct PullToRefresh: View {
     }
 }
 
+func simpleSuccess() {
+    let generator = UINotificationFeedbackGenerator()
+    generator.notificationOccurred(.success)
+}
 
 struct Photos_Previews: PreviewProvider {
     static var previews: some View {
