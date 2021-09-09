@@ -18,16 +18,16 @@ struct SidebarNavigation: View {
 
     var sidebar: some View {
         List {
-            NavigationLink(destination: PhotoGrid(), tag: NavigationItem.photos, selection: $selectedFolder) {
+            NavigationLink(destination: CombinedPhotos(), tag: NavigationItem.photos, selection: $selectedFolder) {
                 Label("Photos", systemImage: "photo.on.rectangle")
             }
 
-            NavigationLink(destination: PhotoGrid(), tag: NavigationItem.library, selection: $selectedFolder) {
+            NavigationLink(destination: Text(""), tag: NavigationItem.library, selection: $selectedFolder) {
                 Label("Library", systemImage: "person.2.square.stack")
             }
 
             Section {
-                NavigationLink(destination: PhotoGrid(), tag: NavigationItem.livePhoto, selection: $selectedFolder) {
+                NavigationLink(destination: Text(""), tag: NavigationItem.livePhoto, selection: $selectedFolder) {
                     Label("Live Photos", systemImage: "livephoto")
                 }
             } header: {

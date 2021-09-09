@@ -25,12 +25,11 @@ struct CombinedPhotos: View {
             // NavigationView with LazyVGrid
             // --------------------------------------------------------
             TabView {
-                PhotoGrid(onThumbnailTap: tapThumbnail)
+                PhotoGrid(onThumbnailTap: tapThumbnail, namespace: nspace)
                     .environmentObject(currentlySelected)
                     .tabItem {
                         Label("Photos", systemImage: "photo.on.rectangle.angled")
                     }
-
 //                NavigationView {
 //                    Library()
 //                        .modifier(InlineNavBar(title: "Memoria"))
@@ -55,7 +54,7 @@ struct CombinedPhotos: View {
                 // --------------------------------------------------------
                 // Modal view
                 // --------------------------------------------------------
-                ModalView(item: currentlySelected.media!, onCloseTap: tapBackdrop, thumbnailGeometry: thumbnailGeometry!)
+                ModalView(item: currentlySelected.media!, onCloseTap: tapBackdrop)
                     .matchedGeometryEffect(id: currentlySelected.media!.id, in: nspace)
                     .zIndex(3)
                     .transition(.modal)
@@ -82,10 +81,9 @@ struct CombinedPhotos: View {
         }
     }
 
-    func tapThumbnail(_ item: Media, _ geometry: GeometryProxy) {
+    func tapThumbnail(_ item: Media) {
         DispatchQueue.main.async {
             withAnimation(.spring()) {
-                self.thumbnailGeometry = geometry
                 currentlySelected.media = item
             }
         }

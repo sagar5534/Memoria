@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabNavigation: View {
     var body: some View {
-        PhotoGrid()
+        CombinedPhotos()
     }
 }
 

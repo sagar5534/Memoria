@@ -15,7 +15,7 @@ struct ModalView: View {
 
     let item: Media
     var onCloseTap: () -> Void
-    var thumbnailGeometry: GeometryProxy
+//    var thumbnailGeometry: GeometryProxy
 
     var body: some View {
         let thumbPath = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
@@ -30,11 +30,17 @@ struct ModalView: View {
             let imgW = geometry.size.width
 
             // Size difference between the modal's image and the thumbnail
-            let d = CGSize(width: imgW - thumbnailGeometry.size.width, height: imgH - thumbnailGeometry.size.height)
-
+//            let d = CGSize(width: imgW - thumbnailGeometry.size.width, height: imgH - thumbnailGeometry.size.height)
             // Interpolate values from thumbnail size, to full modal size, using the pct value from the flight transition
-            let w = thumbnailGeometry.size.width + d.width * pct
-            let h = thumbnailGeometry.size.height + d.height * pct
+//            let w = thumbnailGeometry.size.width + d.width * pct
+//            let h = thumbnailGeometry.size.height + d.height * pct
+            
+            // Size difference between the modal's image and the thumbnail
+            let d = CGSize(width: imgW - 300, height: imgH - 300)
+            // Interpolate values from thumbnail size, to full modal size, using the pct value from the flight transition
+            let w = 300 + d.width * pct
+            let h = 300 + d.height * pct
+            
 
             Color.clear.overlay(
                 WebImage(url: FullUrl!)
@@ -42,7 +48,7 @@ struct ModalView: View {
                         // Testing
                         WebImage(url: thumbUrl!)
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                             .frame(width: w, height: h, alignment: .center)
                             .clipped()
                             .onTapGesture(perform: onCloseTap)

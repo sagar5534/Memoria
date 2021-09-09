@@ -9,9 +9,11 @@ import SwiftUI
 
 struct PhotoGrid: View {
     @ObservedObject var photoGridData = PhotoGridData()
+    @EnvironmentObject var currentlySelected: CurrentlySelected
 
-    var onThumbnailTap: (_ item: Media, _ geometry: GeometryProxy) -> Void = { _, _ in }
-//    var namespace: Namespace.ID
+    @State var selected: Bool = false
+    var onThumbnailTap: (_ item: Media) -> Void = { _ in }
+    var namespace: Namespace.ID
     let columns =
         [
             GridItem(.flexible(), spacing: 4),
@@ -30,8 +32,21 @@ struct PhotoGrid: View {
                 ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
                     Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
                         ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { x in
-                            Thumbnail(item: photoGridData.groupedMedia[i][x])
+                            let media = photoGridData.groupedMedia[i][x]
+                            if media != currentlySelected.media {
+//                                Thumbnail(item: media)
+//                                    .onTapGesture {
+//                                        currentlySelected.media = media
+//                                    }
+                                GeometryReader { geometry in
+                                    Thumbnail(item: media)
+                                        .onTapGesture { currentlySelected.media = media }
+                                }
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
+                                .matchedGeometryEffect(id: media.id, in: namespace)
+                                .transition(.invisible)
                                 .id(UUID())
+                            }
                         }
                     }
                     .id(UUID())
@@ -105,8 +120,7 @@ func simpleSuccess() {
 struct Photos_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-//            PhotoGrid(namespace: Namespace().wrappedValue)
-            PhotoGrid()
+            PhotoGrid(namespace: Namespace().wrappedValue)
                 .previewDevice("iPhone 11")
                 .preferredColorScheme(.light)
                 .modifier(InlineNavBar(title: "Memoria"))

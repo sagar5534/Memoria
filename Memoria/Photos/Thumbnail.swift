@@ -1,15 +1,16 @@
 //
 //  Thumbnail.swift
-//  Sagar Patel
+//  HeroAnimations
 //
 //
+
 import SwiftUI
 
 struct Thumbnail: View {
     let item: Media
 
     var body: some View {
-        let path = item.path.replacingOccurrences(of: "\\", with: #"/"#)
+        let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
         let url = URL(string: #"http://192.168.100.107:3000/data/\#(path)"#)
 
         ZStack(alignment: .bottomLeading) {
