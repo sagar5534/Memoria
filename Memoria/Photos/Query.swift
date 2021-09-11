@@ -7,11 +7,9 @@
 
 import Alamofire
 import Foundation
-import UIKit
 
 class NetworkManager: ObservableObject {
     @Published var data: MediaCollection = []
-
     static let sharedInstance = NetworkManager()
 
     deinit {

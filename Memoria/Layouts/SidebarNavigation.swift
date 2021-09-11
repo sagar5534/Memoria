@@ -51,6 +51,6 @@ struct SidebarNavigation_Previews: PreviewProvider {
 //        NavigationView{
         SidebarNavigation()
 //        }
-            .previewInterfaceOrientation(.landscapeLeft)
+//            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

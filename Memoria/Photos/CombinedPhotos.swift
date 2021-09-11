@@ -18,14 +18,17 @@ struct CombinedPhotos: View {
 
     @State var thumbnailGeometry: GeometryProxy? = nil
     @State private var showShareSheet = false
+    
+    @State var media: Media? = nil
 
     var body: some View {
+        
         ZStack {
             // --------------------------------------------------------
             // NavigationView with LazyVGrid
             // --------------------------------------------------------
             TabView {
-                PhotoGrid(onThumbnailTap: tapThumbnail, namespace: nspace)
+                PhotoGrid(media: $media, onThumbnailTap: tapThumbnail, namespace: nspace)
                     .environmentObject(currentlySelected)
                     .tabItem {
                         Label("Photos", systemImage: "photo.on.rectangle.angled")
@@ -42,23 +45,31 @@ struct CombinedPhotos: View {
             .zIndex(1)
             .accentColor(.blue)
 
-            if currentlySelected.media != nil {
+            if media != nil {
                 // --------------------------------------------------------
                 // Backdrop to blur the grid while the modal is displayed
                 // --------------------------------------------------------
                 Color(UIColor.systemBackground)
                     .zIndex(2)
-                    .transition(.opacity)
+//                    .transition(.opacity)
                     .ignoresSafeArea(.all)
+                    .animation(.easeIn)
 
                 // --------------------------------------------------------
                 // Modal view
                 // --------------------------------------------------------
-                ModalView(item: currentlySelected.media!, onCloseTap: tapBackdrop)
-                    .matchedGeometryEffect(id: currentlySelected.media!.id, in: nspace)
+                Thumbnail(item: media!)
+                    .frame(width: 600, height: 600, alignment: .center)
+                    .matchedGeometryEffect(id: media!.id, in: nspace)
                     .zIndex(3)
-                    .transition(.modal)
                     .ignoresSafeArea(.all)
+                    .animation(Animation.linear)
+                
+//                ModalView(item: currentlySelected.media!, onCloseTap: tapBackdrop)
+//                    .matchedGeometryEffect(id: currentlySelected.media!.id, in: nspace)
+//                    .zIndex(3)
+////                    .transition(.modal)
+//                    .ignoresSafeArea(.all)
 
                 // --------------------------------------------------------
                 // Button View

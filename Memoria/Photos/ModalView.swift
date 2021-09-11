@@ -34,13 +34,12 @@ struct ModalView: View {
             // Interpolate values from thumbnail size, to full modal size, using the pct value from the flight transition
 //            let w = thumbnailGeometry.size.width + d.width * pct
 //            let h = thumbnailGeometry.size.height + d.height * pct
-            
+
             // Size difference between the modal's image and the thumbnail
             let d = CGSize(width: imgW - 300, height: imgH - 300)
             // Interpolate values from thumbnail size, to full modal size, using the pct value from the flight transition
             let w = 300 + d.width * pct
             let h = 300 + d.height * pct
-            
 
             Color.clear.overlay(
                 WebImage(url: FullUrl!)

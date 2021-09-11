@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PhotoGrid: View {
     @ObservedObject var photoGridData = PhotoGridData()
-    @EnvironmentObject var currentlySelected: CurrentlySelected
-
     @State var selected: Bool = false
+    @Binding var media: Media?
+
     var onThumbnailTap: (_ item: Media) -> Void = { _ in }
     var namespace: Namespace.ID
     let columns =
@@ -22,7 +22,6 @@ struct PhotoGrid: View {
         ]
 
     var body: some View {
-        ScrollView(.vertical) {
             PullToRefresh(coordinateSpaceName: "pullToRefresh") {
                 print("Refresh")
                 photoGridData.fetchAllMedia()
@@ -32,33 +31,24 @@ struct PhotoGrid: View {
                 ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
                     Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
                         ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { x in
-                            let media = photoGridData.groupedMedia[i][x]
-                            if media != currentlySelected.media {
-//                                Thumbnail(item: media)
-//                                    .onTapGesture {
-//                                        currentlySelected.media = media
-//                                    }
-                                GeometryReader { geometry in
-                                    Thumbnail(item: media)
-                                        .onTapGesture { currentlySelected.media = media }
+                            let asset = photoGridData.groupedMedia[i][x]
+                                if media?.id != asset.id {
+                                    Thumbnail(item: asset)
+                                        .onTapGesture { self.media = asset }
+                                        .matchedGeometryEffect(id: asset.id, in: namespace)
+                                        .id(UUID())
                                 }
-                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
-                                .matchedGeometryEffect(id: media.id, in: namespace)
-                                .transition(.invisible)
-                                .id(UUID())
-                            }
+
                         }
                     }
                     .id(UUID())
                 }
             }
-        }
-        .coordinateSpace(name: "pullToRefresh")
-        .navigationBarHidden(true)
+//        .coordinateSpace(name: "pullToRefresh")
     }
 }
 
-private func titleHeader(with header: String) -> some View {
+func titleHeader(with header: String) -> some View {
     Text(header)
         .font(.body)
         .bold()
@@ -120,7 +110,7 @@ func simpleSuccess() {
 struct Photos_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PhotoGrid(namespace: Namespace().wrappedValue)
+            PhotoGrid(media: .constant(nil), namespace: Namespace().wrappedValue)
                 .previewDevice("iPhone 11")
                 .preferredColorScheme(.light)
                 .modifier(InlineNavBar(title: "Memoria"))

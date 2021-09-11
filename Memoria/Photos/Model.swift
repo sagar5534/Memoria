@@ -43,8 +43,4 @@ public struct Media: Decodable, Hashable {
     }
 }
 
-// enum User: String, Codable {
-//    case id = ""
-// }
-
 typealias MediaCollection = [Collection]

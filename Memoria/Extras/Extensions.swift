@@ -29,7 +29,7 @@ extension Date {
     }
 }
 
-// Delete after upload is done
+// Delete after upload is done, Needs testing
 extension PHAsset {
     func getURL(completionHandler: @escaping ((_ responseURL: URL?) -> Void)) {
         if mediaType == .image {
