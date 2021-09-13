@@ -22,28 +22,27 @@ struct PhotoGrid: View {
         ]
 
     var body: some View {
-            PullToRefresh(coordinateSpaceName: "pullToRefresh") {
-                print("Refresh")
-                photoGridData.fetchAllMedia()
-            }
+        PullToRefresh(coordinateSpaceName: "pullToRefresh") {
+            print("Refresh")
+            photoGridData.fetchAllMedia()
+        }
 
-            LazyVGrid(columns: columns, spacing: 4) {
-                ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
-                    Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
-                        ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { x in
-                            let asset = photoGridData.groupedMedia[i][x]
-                                if media?.id != asset.id {
-                                    Thumbnail(item: asset)
-                                        .onTapGesture { self.media = asset }
-                                        .matchedGeometryEffect(id: asset.id, in: namespace)
-                                        .id(UUID())
-                                }
-
+        LazyVGrid(columns: columns, spacing: 4) {
+            ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
+                Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
+                    ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { x in
+                        let asset = photoGridData.groupedMedia[i][x]
+                        if media?.id != asset.id {
+                            Thumbnail(item: asset)
+                                .onTapGesture { self.media = asset }
+                                .matchedGeometryEffect(id: asset.id, in: namespace)
+                                .id(UUID())
                         }
                     }
-                    .id(UUID())
                 }
+                .id(UUID())
             }
+        }
 //        .coordinateSpace(name: "pullToRefresh")
     }
 }

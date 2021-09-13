@@ -10,10 +10,11 @@ import SwiftUI
 struct PhotosView: View {
     @Namespace private var PhotoView
     @ObservedObject var photoGridData = PhotoGridData()
-    @State var selected: String? = ""
-    
-    let columns = [GridItem(.flexible(), spacing: 4), GridItem(.flexible(), spacing: 4), GridItem(.flexible(), spacing: 4)]
-    
+    @State private var media: Media?
+    @State private var details = false
+
+    let columns = [GridItem(.flexible(), spacing: 2), GridItem(.flexible(), spacing: 2), GridItem(.flexible(), spacing: 2)]
+
     var body: some View {
         ZStack {
             // 1st
@@ -21,78 +22,91 @@ struct PhotosView: View {
                 PullToRefresh(coordinateSpaceName: "pullToRefresh") {
                     photoGridData.fetchAllMedia()
                 }
-                
+
                 Text("Memoria")
-                    .font(.title2)
-                
+                    .font(.title)
+
                 grid
             }
             .coordinateSpace(name: "pullToRefresh")
-            
+
             // 2nd
             fullscreen
-        }
+
+        }.animation(.spring(response: 0.3, dampingFraction: 0.6), value: details)
     }
-    
+
     @ViewBuilder
     var grid: some View {
-        LazyVGrid(columns: columns, spacing: 4) {
+        LazyVGrid(columns: columns, spacing: 2) {
             ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
                 Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
-                    ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { x in
-                        let asset = photoGridData.groupedMedia[i][x]
-                        if selected != asset.id {
-                            Thumbnail(item: asset)
-                                .matchedGeometryEffect(id: asset.id, in: PhotoView, properties: .size)
-                                .onTapGesture {
-                                    withAnimation(.interactiveSpring(response: 3, dampingFraction: 0.7, blendDuration: 0)) {
-                                        selected = asset.id
+                    ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { index in
+                        ZStack {
+                            Color.clear
+
+                            if media?.id != photoGridData.groupedMedia[i][index].id {
+                                Thumbnail(item: photoGridData.groupedMedia[i][index])
+                                    .onTapGesture {
+                                        DispatchQueue.main.async {
+                                            if !details {
+                                                media = photoGridData.groupedMedia[i][index]
+                                                details.toggle()
+                                            }
+                                        }
+                                    }
+                                    .scaledToFill()
+                                    .layoutPriority(-1)
+                            }
+
+                            if photoGridData.groupedMedia[i][index].isFavorite && !details {
+                                VStack {
+                                    Spacer()
+                                    HStack {
+                                        Image(systemName: "heart.fill")
+                                            .resizable()
+                                            .frame(width: 16, height: 16, alignment: .center)
+                                            .foregroundColor(.white)
+                                            .padding()
+                                        Spacer()
                                     }
                                 }
-                                .id(UUID())
-                        } else {
-                            Color.green
-                                .frame(width: 110, height: 110)
+                            }
                         }
+                        .clipped()
+                        .matchedGeometryEffect(id: photoGridData.groupedMedia[i][index].id, in: PhotoView, isSource: true)
+                        .zIndex(media == photoGridData.groupedMedia[i][index] ? 1000 : 1)
+                        .aspectRatio(1, contentMode: .fit)
+                        .id(photoGridData.groupedMedia[i][index].id)
+                        .transition(.modal)
                     }
                 }
                 .id(UUID())
             }
         }
     }
-    
+
     @ViewBuilder
     var fullscreen: some View {
-        GeometryReader { geo in
+        if details {
+            ZStack {
+                GeometryReader { geo in
 
-            ForEach(photoGridData.allMedia.indices, id: \.self) { index in
-                if photoGridData.allMedia[index].id == selected {
-                    let item = photoGridData.allMedia[index]
-                    let path = item.thumbnailPath.replacingOccurrences(of: "\\", with: #"/"#)
-                    let url = URL(string: #"http://192.168.100.107:3000/data/\#(path)"#)
-                    
-                    VStack {
-                        Spacer()
-                        Image("Logo")
-                            .resizable()
-//                        AsyncImageCustom(url: url!,
-//                                         placeholder: { Color(UIColor.secondarySystemBackground) },
-//                                         image: {
-//                                             Image(uiImage: $0)
-//                                                 .resizable()
-//                                         })
-                            .matchedGeometryEffect(id: photoGridData.allMedia[index].id, in: PhotoView)
-                            .scaledToFit()
-                            .frame(width: geo.size.width, height: geo.size.height, alignment: .center)
-                            .opacity(1)
-//                        .clipped()
-                            .onTapGesture {
-                                selected = ""
+                    Thumbnail(item: media!)
+                        .matchedGeometryEffect(id: media!.id, in: PhotoView)
+                        .scaledToFit()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .onTapGesture {
+                            DispatchQueue.main.async {
+                                if details {
+                                    // media = nil
+                                    details.toggle()
+                                }
                             }
-                        Spacer()
-                    }
+                        }
                 }
             }
+            .transition(.invisible)
         }
     }
 }

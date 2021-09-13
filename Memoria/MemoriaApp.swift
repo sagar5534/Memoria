@@ -12,9 +12,7 @@ struct MemoriaApp: App {
     var body: some Scene {
         WindowGroup {
 //            SplashScreen()
-//            Navigation()
-//            ContentView()
-            Test2()
+            Navigation()
         }
     }
 }

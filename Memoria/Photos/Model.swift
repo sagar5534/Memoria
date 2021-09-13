@@ -41,6 +41,8 @@ public struct Media: Decodable, Hashable {
         v = try values.decode(Int.self, forKey: .v)
         isFavorite = try values.decode(Bool.self, forKey: .isFavorite)
     }
+    
+    
 }
 
 typealias MediaCollection = [Collection]

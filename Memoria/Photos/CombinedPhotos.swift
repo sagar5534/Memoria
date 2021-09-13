@@ -18,11 +18,10 @@ struct CombinedPhotos: View {
 
     @State var thumbnailGeometry: GeometryProxy? = nil
     @State private var showShareSheet = false
-    
+
     @State var media: Media? = nil
 
     var body: some View {
-        
         ZStack {
             // --------------------------------------------------------
             // NavigationView with LazyVGrid
@@ -58,17 +57,17 @@ struct CombinedPhotos: View {
                 // --------------------------------------------------------
                 // Modal view
                 // --------------------------------------------------------
-                Thumbnail(item: media!)
-                    .frame(width: 600, height: 600, alignment: .center)
-                    .matchedGeometryEffect(id: media!.id, in: nspace)
-                    .zIndex(3)
-                    .ignoresSafeArea(.all)
-                    .animation(Animation.linear)
-                
+//                Thumbnail(item: media!)
+//                    .frame(width: 600, height: 600, alignment: .center)
+//                    .matchedGeometryEffect(id: media!.id, in: nspace)
+//                    .zIndex(3)
+//                    .ignoresSafeArea(.all)
+//                    .animation(Animation.linear)
+
 //                ModalView(item: currentlySelected.media!, onCloseTap: tapBackdrop)
 //                    .matchedGeometryEffect(id: currentlySelected.media!.id, in: nspace)
 //                    .zIndex(3)
-////                    .transition(.modal)
+                ////                    .transition(.modal)
 //                    .ignoresSafeArea(.all)
 
                 // --------------------------------------------------------
