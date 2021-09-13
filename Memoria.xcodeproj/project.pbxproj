@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B0F3EF726E9C22800A7BEC6 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0F3EF626E9C22800A7BEC6 /* Test.swift */; };
 		1B1399D126E2E6B000C2559F /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1399D026E2E6B000C2559F /* SidebarNavigation.swift */; };
 		1B1399D326E2E7AD00C2559F /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1399D226E2E7AD00C2559F /* Navigation.swift */; };
 		1B1399D526E2E81700C2559F /* TabNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1399D426E2E81700C2559F /* TabNavigation.swift */; };
 		1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875226CF6FF800B7FC42 /* Thumbnail.swift */; };
-		1B73875526CF701400B7FC42 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875426CF701400B7FC42 /* ModalView.swift */; };
 		1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875826CF702300B7FC42 /* VisualEffectView.swift */; };
 		1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */; };
 		1B73876326CF70D800B7FC42 /* Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876226CF70D800B7FC42 /* Transitions.swift */; };
@@ -30,7 +28,6 @@
 		1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1B824CDC26BF7B020070D469 /* Alamofire */; };
 		1B824CDF26C082C40070D469 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CDE26C082C40070D469 /* Extensions.swift */; };
 		1B97510F26EBDBA600E1C529 /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B97510E26EBDBA600E1C529 /* PhotosView.swift */; };
-		1B97511126EC430400E1C529 /* Test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B97511026EC430400E1C529 /* Test2.swift */; };
 		1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */; };
 		1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */; };
 		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
@@ -52,12 +49,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B0F3EF626E9C22800A7BEC6 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		1B1399D026E2E6B000C2559F /* SidebarNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigation.swift; sourceTree = "<group>"; };
 		1B1399D226E2E7AD00C2559F /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		1B1399D426E2E81700C2559F /* TabNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigation.swift; sourceTree = "<group>"; };
 		1B73875226CF6FF800B7FC42 /* Thumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
-		1B73875426CF701400B7FC42 /* ModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 		1B73875826CF702300B7FC42 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
 		1B73876226CF70D800B7FC42 /* Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitions.swift; sourceTree = "<group>"; };
@@ -76,7 +71,6 @@
 		1B824CD926BF72970070D469 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		1B824CDE26C082C40070D469 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1B97510E26EBDBA600E1C529 /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
-		1B97511026EC430400E1C529 /* Test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test2.swift; sourceTree = "<group>"; };
 		1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageCustom.swift; sourceTree = "<group>"; };
 		1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridData.swift; sourceTree = "<group>"; };
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -129,7 +123,6 @@
 		1B73877026DC169700B7FC42 /* Modal */ = {
 			isa = PBXGroup;
 			children = (
-				1B73875426CF701400B7FC42 /* ModalView.swift */,
 				1B73876B26D5FCDD00B7FC42 /* PhotosToolbar.swift */,
 				1B73876226CF70D800B7FC42 /* Transitions.swift */,
 				1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */,
@@ -165,8 +158,6 @@
 				1B824CBF26BF2FA90070D469 /* Assets.xcassets */,
 				1B824CC426BF2FA90070D469 /* Info.plist */,
 				1B824CC126BF2FA90070D469 /* Preview Content */,
-				1B0F3EF626E9C22800A7BEC6 /* Test.swift */,
-				1B97511026EC430400E1C529 /* Test2.swift */,
 			);
 			path = Memoria;
 			sourceTree = "<group>";
@@ -297,8 +288,6 @@
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
 				1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */,
-				1B73875526CF701400B7FC42 /* ModalView.swift in Sources */,
-				1B97511126EC430400E1C529 /* Test2.swift in Sources */,
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
 				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
 				1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */,
@@ -307,7 +296,6 @@
 				1B73876C26D5FCDD00B7FC42 /* PhotosToolbar.swift in Sources */,
 				1B824CD226BF39B10070D469 /* Library.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,
-				1B0F3EF726E9C22800A7BEC6 /* Test.swift in Sources */,
 				1B1399D326E2E7AD00C2559F /* Navigation.swift in Sources */,
 				1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */,
 				1B1399D126E2E6B000C2559F /* SidebarNavigation.swift in Sources */,

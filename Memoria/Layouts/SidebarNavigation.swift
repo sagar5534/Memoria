@@ -18,7 +18,7 @@ struct SidebarNavigation: View {
 
     var sidebar: some View {
         List {
-            NavigationLink(destination: CombinedPhotos(), tag: NavigationItem.photos, selection: $selectedFolder) {
+            NavigationLink(destination: PhotosView(), tag: NavigationItem.photos, selection: $selectedFolder) {
                 Label("Photos", systemImage: "photo.on.rectangle")
             }
 
@@ -47,10 +47,6 @@ struct SidebarNavigation: View {
 
 struct SidebarNavigation_Previews: PreviewProvider {
     static var previews: some View {
-//
-//        NavigationView{
         SidebarNavigation()
-//        }
-//            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

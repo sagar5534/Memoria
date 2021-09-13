@@ -26,7 +26,7 @@ extension AnyTransition {
 
         var animatableData: CGFloat {
             get { pct }
-            set { pct = newValue}
+            set { pct = newValue }
         }
 
         func body(content: Content) -> some View {

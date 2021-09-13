@@ -13,7 +13,7 @@ struct SplashScreen: View {
     var body: some View {
         VStack {
             if self.isActive {
-                CombinedPhotos()
+                Navigation()
             } else {
                 SplashView()
             }

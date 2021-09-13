@@ -18,17 +18,21 @@ struct PhotosView: View {
     var body: some View {
         ZStack {
             // 1st
-            ScrollView {
-                PullToRefresh(coordinateSpaceName: "pullToRefresh") {
-                    photoGridData.fetchAllMedia()
+            TabView {
+                ScrollView {
+                    PullToRefresh(coordinateSpaceName: "pullToRefresh") {
+                        photoGridData.fetchAllMedia()
+                    }
+                    Text("Memoria")
+                        .font(.title)
+                    grid
                 }
-
-                Text("Memoria")
-                    .font(.title)
-
-                grid
+                .coordinateSpace(name: "pullToRefresh")
+                .tabItem {
+                    Label("Photos", systemImage: "photo.on.rectangle.angled")
+                }
             }
-            .coordinateSpace(name: "pullToRefresh")
+            .accentColor(.blue)
 
             // 2nd
             fullscreen

@@ -21,7 +21,8 @@ struct Thumbnail: View {
                     Image(uiImage: $0)
                         .resizable()
                         .renderingMode(.original)
-                })
+                }
+            )
         }
     }
 }

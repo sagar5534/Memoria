@@ -22,28 +22,7 @@ struct PhotoGrid: View {
         ]
 
     var body: some View {
-        PullToRefresh(coordinateSpaceName: "pullToRefresh") {
-            print("Refresh")
-            photoGridData.fetchAllMedia()
-        }
-
-        LazyVGrid(columns: columns, spacing: 4) {
-            ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
-                Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
-                    ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { x in
-                        let asset = photoGridData.groupedMedia[i][x]
-                        if media?.id != asset.id {
-                            Thumbnail(item: asset)
-                                .onTapGesture { self.media = asset }
-                                .matchedGeometryEffect(id: asset.id, in: namespace)
-                                .id(UUID())
-                        }
-                    }
-                }
-                .id(UUID())
-            }
-        }
-//        .coordinateSpace(name: "pullToRefresh")
+        Text("")
     }
 }
 
@@ -93,7 +72,7 @@ struct PullToRefresh: View {
                     Image(systemName: "arrow.clockwise")
                         .rotationEffect(Angle.degrees((geo.frame(in: .named(coordinateSpaceName)).maxY + 40) * 3.789))
                         .matchedGeometryEffect(id: "reload", in: nspace)
-                        .transition(.fade)
+//                        .transition(.fade)
                 }
                 Spacer()
             }
@@ -116,87 +95,3 @@ struct Photos_Previews: PreviewProvider {
         }
     }
 }
-
-//    var body: some View {
-//        GeometryReader { _ in
-//            ScrollViewReader { _ in
-//                List {
-//                    ForEach(photoGridData.allMedia.indices, id: \.self) { i in
-//                        MonthView(onThumbnailTap: onThumbnailTap, namespace: namespace, monthwiseData: model.data[i])
-//                            .id(i)
-//                    }
-//                    .listRowInsets(EdgeInsets())
-//                }
-//                .listStyle(PlainListStyle())
-//            }
-//        }
-//    }
-// }
-//
-// private struct MonthView: View {
-//    var onThumbnailTap: (_ item: Media, _ geometry: GeometryProxy) -> Void
-//    var namespace: Namespace.ID
-//
-//    let monthwiseData: Collection
-//    let curYear = Calendar.current.component(.year, from: Date())
-//    let month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-//
-//    var body: some View {
-//        let tempYear = (monthwiseData.year == curYear) ? "" : ", \(String(monthwiseData.year))"
-//        let monthStr = month[monthwiseData.month]
-//
-//        VStack(alignment: .leading) {
-//            Text("\(monthStr)\(tempYear)")
-//                .font(.title)
-//                .padding(.leading)
-//                .padding(.top, 50)
-//
-//            ForEach(monthwiseData.data, id: \.self) { daywiseData in
-//                DayList(daywiseData: daywiseData, onThumbnailTap: onThumbnailTap, namespace: namespace)
-//            }
-//        }
-//    }
-// }
-//
-// private struct DayList: View {
-//    @EnvironmentObject var currentlySelected: CurrentlySelected
-//
-//    let daywiseData: [Media]
-//    var onThumbnailTap: (_ item: Media, _ geometry: GeometryProxy) -> Void
-//    var namespace: Namespace.ID
-//
-//    let columns =
-//        [
-//            GridItem(.flexible(), spacing: 4),
-//            GridItem(.flexible(), spacing: 4),
-//            GridItem(.flexible(), spacing: 4),
-//        ]
-//
-//    var body: some View {
-//        let date: Date = daywiseData.first!.creationDate.toDate()!
-//
-//        VStack(alignment: .leading) {
-//            Text(date.toString())
-//                .font(.subheadline)
-//                .padding(.leading)
-//                .padding(.top, 5)
-//                .padding(.bottom, 5)
-//
-//            LazyVGrid(columns: columns, spacing: 4) {
-//                ForEach(daywiseData, id: \.self) { media in
-//                    if media != currentlySelected.media {
-//                        GeometryReader { geometry in
-//                            Thumbnail(item: media)
-//                                .onTapGesture { onThumbnailTap(media, geometry) }
-//                        }
-//                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: 130, maxHeight: .infinity, alignment: .center)
-//                        .matchedGeometryEffect(id: media.path, in: namespace)
-//                        .transition(.invisible)
-//                    } else {
-//                        Color.clear
-//                    }
-//                }
-//            }
-//        }
-//    }
-// }

@@ -14,16 +14,8 @@ extension EnvironmentValues {
         set { self[ModalTransitionKey.self] = newValue }
     }
 
-    var currentlySelectedMedia: Media? {
-        get { self[currentlySelectedMediaKey.self] }
-        set { self[currentlySelectedMediaKey.self] = newValue }
-    }
 }
 
 public struct ModalTransitionKey: EnvironmentKey {
     public static let defaultValue: CGFloat = 0
-}
-
-public struct currentlySelectedMediaKey: EnvironmentKey {
-    public static var defaultValue: Media? = nil
 }

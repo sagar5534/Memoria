@@ -9,7 +9,7 @@ struct Collection: Decodable, Hashable {
     let data: [[Media]]
 }
 
-// MARK: - Datum
+// MARK: - Media
 
 public struct Media: Decodable, Hashable {
     let id, name, creationDate, path: String
@@ -41,8 +41,6 @@ public struct Media: Decodable, Hashable {
         v = try values.decode(Int.self, forKey: .v)
         isFavorite = try values.decode(Bool.self, forKey: .isFavorite)
     }
-    
-    
 }
 
 typealias MediaCollection = [Collection]
