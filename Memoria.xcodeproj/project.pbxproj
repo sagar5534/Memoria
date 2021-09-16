@@ -14,7 +14,6 @@
 		1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875826CF702300B7FC42 /* VisualEffectView.swift */; };
 		1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */; };
 		1B73876326CF70D800B7FC42 /* Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876226CF70D800B7FC42 /* Transitions.swift */; };
-		1B73876526CF793900B7FC42 /* CombinedPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876426CF793900B7FC42 /* CombinedPhotos.swift */; };
 		1B73876926D4BC7500B7FC42 /* Share Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876826D4BC7500B7FC42 /* Share Sheet.swift */; };
 		1B73876C26D5FCDD00B7FC42 /* PhotosToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B73876B26D5FCDD00B7FC42 /* PhotosToolbar.swift */; };
 		1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */; };
@@ -56,7 +55,6 @@
 		1B73875826CF702300B7FC42 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
 		1B73876226CF70D800B7FC42 /* Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitions.swift; sourceTree = "<group>"; };
-		1B73876426CF793900B7FC42 /* CombinedPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedPhotos.swift; sourceTree = "<group>"; };
 		1B73876826D4BC7500B7FC42 /* Share Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Share Sheet.swift"; sourceTree = "<group>"; };
 		1B73876B26D5FCDD00B7FC42 /* PhotosToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosToolbar.swift; sourceTree = "<group>"; };
 		1B824CB826BF2FA80070D469 /* Memoria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memoria.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,7 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				1B97510E26EBDBA600E1C529 /* PhotosView.swift */,
-				1B73876426CF793900B7FC42 /* CombinedPhotos.swift */,
 				1B73876E26DC167000B7FC42 /* Photo Grid */,
 				1B73877026DC169700B7FC42 /* Modal */,
 				1B73876D26DC165500B7FC42 /* Network & Models */,
@@ -283,7 +280,6 @@
 			files = (
 				1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */,
 				1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */,
-				1B73876526CF793900B7FC42 /* CombinedPhotos.swift in Sources */,
 				1B824CCF26BF39960070D469 /* PhotoGrid.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,

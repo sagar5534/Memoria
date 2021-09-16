@@ -7,24 +7,25 @@
 
 import SwiftUI
 
-struct PhotoGrid: View {
-    @ObservedObject var photoGridData = PhotoGridData()
-    @State var selected: Bool = false
-    @Binding var media: Media?
-
-    var onThumbnailTap: (_ item: Media) -> Void = { _ in }
-    var namespace: Namespace.ID
-    let columns =
-        [
-            GridItem(.flexible(), spacing: 4),
-            GridItem(.flexible(), spacing: 4),
-            GridItem(.flexible(), spacing: 4),
-        ]
-
-    var body: some View {
-        Text("")
-    }
-}
+//Maybe in a later impl
+//struct PhotoGrid: View {
+//    @ObservedObject var photoGridData = PhotoGridData()
+//    @State var selected: Bool = false
+//    @Binding var media: Media?
+//
+//    var onThumbnailTap: (_ item: Media) -> Void = { _ in }
+//    var namespace: Namespace.ID
+//    let columns =
+//        [
+//            GridItem(.flexible(), spacing: 4),
+//            GridItem(.flexible(), spacing: 4),
+//            GridItem(.flexible(), spacing: 4),
+//        ]
+//
+//    var body: some View {
+//        Text("")
+//    }
+//}
 
 func titleHeader(with header: String) -> some View {
     Text(header)
@@ -83,15 +84,4 @@ struct PullToRefresh: View {
 func simpleSuccess() {
     let generator = UINotificationFeedbackGenerator()
     generator.notificationOccurred(.success)
-}
-
-struct Photos_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            PhotoGrid(media: .constant(nil), namespace: Namespace().wrappedValue)
-                .previewDevice("iPhone 11")
-                .preferredColorScheme(.light)
-                .modifier(InlineNavBar(title: "Memoria"))
-        }
-    }
 }

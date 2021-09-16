@@ -17,7 +17,7 @@ struct PhotosToolbar: View {
             HStack {
                 Button(action: { onCloseTap() }, label: {
                     Label(
-                        title: {},
+                        title: { Text("Back") },
                         icon: { Image(systemName: "chevron.backward").font(.system(size: size))
                         }
                     )
@@ -44,7 +44,7 @@ struct PhotosToolbar: View {
                         icon: { Image(systemName: "trash").font(.system(size: size)) }
                     )
                 })
-                    .foregroundColor(.primary)
+                    .foregroundColor(.red)
                     .padding()
             }
         }
