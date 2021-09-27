@@ -11,7 +11,8 @@ import Foundation
 class PhotoGridData: ObservableObject {
     @Published var allMedia = [Media]()
     @Published var groupedMedia = [[Media]]()
-
+    @Published var isLoading = true
+    
     let url = URL(string: "http://192.168.100.107:3000/media")!
     private var cancellable: AnyCancellable?
 
@@ -26,6 +27,7 @@ class PhotoGridData: ObservableObject {
             .receive(on: RunLoop.main)
             .catch { _ in Just(self.allMedia) }
             .sink { [weak self] data in
+                print(data)
                 let groupedDic = Dictionary(grouping: data) { media -> String in
                     media.creationDate.toDate()!.toString(withFormat: "ddMMyyyy")
                 }
@@ -44,6 +46,7 @@ class PhotoGridData: ObservableObject {
                     self?.allMedia = data
                     self?.groupedMedia = groupedMedia
                 }
+                self?.isLoading = false
             }
     }
 }

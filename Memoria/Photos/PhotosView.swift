@@ -18,8 +18,7 @@ struct PhotosView: View {
     @State private var showToolbarButtons = true
     
     @State var lastScaleValue: CGFloat = 1.0
-    @State private var scaler: CGFloat = 160
-//    let columns = [GridItem(.adaptive(minimum: scaler), spacing: 2)]
+    @State private var scaler: CGFloat = 120
 
     var body: some View {
         ZStack {
@@ -27,20 +26,21 @@ struct PhotosView: View {
             switch horizontalSizeClass {
             case .compact:
                 TabView {
-                    ScrollGrid
+                    loading
                         .tabItem {
                             Label("Photos", systemImage: "photo.on.rectangle.angled")
                         }
                 }
             default:
-                ScrollGrid
+                loading
             }
 
             if details {
                 // --------------------------------------------------------
                 // Backdrop to blur the grid while the modal is displayed
                 // --------------------------------------------------------
-                VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemThickMaterialDark))
+//                VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemThickMaterialDark))
+                Color.black
                     .edgesIgnoringSafeArea(.all)
                     .transition(.opacity)
                     .onTapGesture(perform: toggleToolbar)
@@ -53,13 +53,15 @@ struct PhotosView: View {
                 if showToolbarButtons {
                     PhotosToolbar(onCloseTap: closeMedia, showShareSheet: $showShareSheet)
                         .sheet(isPresented: $showShareSheet) {
-                            ShareSheet(activityItems: [])
+                            ShareSheet(activityItems: [UIImage(named: "profile")])
                         }
                         .transition(.opacity)
                 }
             }
 
-        }.animation(.spring(response: 0.3, dampingFraction: 0.6), value: details)
+        }
+        .animation(details ? .spring(response: 0.25, dampingFraction: 0.8) :
+                        .spring(response: 0.2, dampingFraction: 0.8), value: details)
     }
 
     @ViewBuilder
@@ -68,7 +70,7 @@ struct PhotosView: View {
 
         LazyVGrid(columns: columns, spacing: 2) {
             ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
-                Section(header: titleHeader(with: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
+                Section(header: titleHeader(header: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
                     ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { index in
                         ZStack {
                             // Background
@@ -130,37 +132,65 @@ struct PhotosView: View {
             .transition(.modal)
         }
     }
-
+    
     @ViewBuilder
     var ScrollGrid: some View {
         ScrollView {
             PullToRefresh(coordinateSpaceName: "pullToRefresh") {
                 photoGridData.fetchAllMedia()
             }
-            Text("Memoria")
-                .font(.title)
-            grid
-                .gesture(
-                    MagnificationGesture()
-                        .onChanged { val in
-                            
-                            let delta = val / self.lastScaleValue
-                            self.lastScaleValue = val
-                            let newScale = self.scaler * delta
-                            
-                            withAnimation {
-                            self.scaler = newScale
+            
+            ZStack (alignment: .trailing) {
+                HStack {
+                    Spacer()
+                    Text("Memoria")
+                        .font(.custom("Pacifico-Regular", size: 30))
+                        .foregroundColor(Color("PhotoLoading"))
+                    Spacer()
+                }
+                UserImage()
+            }
+            .padding(.horizontal)
+            
+
+                grid
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { val in
+                                
+                                let delta = val / self.lastScaleValue
+                                self.lastScaleValue = val
+                                let newScale = self.scaler * delta
+                                
+                                withAnimation {
+                                self.scaler = newScale
+                                }
+    //                            self.scaler = self.scaler + (1 * val)
+                                print(newScale)
                             }
-//                            self.scaler = self.scaler + (1 * val)
-                            print(newScale)
-                        }
-                        .onEnded({ val in
-                            self.lastScaleValue = 1
-                            print("Ended: \(val)")
-                        })
-                )
+                            .onEnded({ val in
+                                self.lastScaleValue = 1
+                                print("Ended: \(val)")
+                            })
+                    )
+            
         }
         .coordinateSpace(name: "pullToRefresh")
+    }
+    
+    @ViewBuilder
+    var loading: some View {
+        
+        if photoGridData.isLoading {
+            VStack {
+                Spacer()
+                Loader()
+                Spacer()
+            }
+        } else {
+            ScrollGrid
+        }
+            
     }
 
     private func closeMedia() {
@@ -176,6 +206,18 @@ struct PhotosView: View {
                 showToolbarButtons.toggle()
             }
         }
+    }
+}
+
+struct titleHeader: View {
+    var header: String
+    
+    var body: some View {
+        Text(header)
+            .font(.custom("OpenSans-SemiBold", size: 15))
+            .foregroundColor(.primary)
+            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

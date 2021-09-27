@@ -19,7 +19,7 @@
 		1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */; };
 		1B824CC026BF2FA90070D469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B824CBF26BF2FA90070D469 /* Assets.xcassets */; };
 		1B824CC326BF2FA90070D469 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B824CC226BF2FA90070D469 /* Preview Assets.xcassets */; };
-		1B824CCF26BF39960070D469 /* PhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CCE26BF39960070D469 /* PhotoGrid.swift */; };
+		1B824CCF26BF39960070D469 /* ScrollRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CCE26BF39960070D469 /* ScrollRefresh.swift */; };
 		1B824CD226BF39B10070D469 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD126BF39B10070D469 /* Library.swift */; };
 		1B824CD626BF60380070D469 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD526BF60380070D469 /* UserImage.swift */; };
 		1B824CD826BF6D530070D469 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD726BF6D530070D469 /* Query.swift */; };
@@ -27,6 +27,16 @@
 		1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1B824CDC26BF7B020070D469 /* Alamofire */; };
 		1B824CDF26C082C40070D469 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CDE26C082C40070D469 /* Extensions.swift */; };
 		1B97510F26EBDBA600E1C529 /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B97510E26EBDBA600E1C529 /* PhotosView.swift */; };
+		1BAD6E582700396000618A08 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E572700392E00618A08 /* Pacifico-Regular.ttf */; };
+		1BAD6E5F270042C800618A08 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E5A2700429B00618A08 /* OpenSans-Bold.ttf */; };
+		1BAD6E60270042CA00618A08 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E5E270042B800618A08 /* OpenSans-Light.ttf */; };
+		1BAD6E61270042CC00618A08 /* OpenSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E5B270042B800618A08 /* OpenSans-Medium.ttf */; };
+		1BAD6E62270042CE00618A08 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E5C270042B800618A08 /* OpenSans-Regular.ttf */; };
+		1BAD6E63270042D000618A08 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E5D270042B800618A08 /* OpenSans-SemiBold.ttf */; };
+		1BAD6E6627004DC500618A08 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1BAD6E6527004DC500618A08 /* Lottie */; };
+		1BAD6E6827004DE600618A08 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6727004DE600618A08 /* LottieView.swift */; };
+		1BAD6E6A27004ECF00618A08 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6927004ECF00618A08 /* Loader.swift */; };
+		1BAD6E6C27004F1300618A08 /* airplane-loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6B27004F1300618A08 /* airplane-loading.json */; };
 		1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */; };
 		1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */; };
 		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
@@ -62,13 +72,22 @@
 		1B824CBF26BF2FA90070D469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B824CC226BF2FA90070D469 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1B824CC426BF2FA90070D469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1B824CCE26BF39960070D469 /* PhotoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGrid.swift; sourceTree = "<group>"; };
+		1B824CCE26BF39960070D469 /* ScrollRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollRefresh.swift; sourceTree = "<group>"; };
 		1B824CD126BF39B10070D469 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		1B824CD526BF60380070D469 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
 		1B824CD726BF6D530070D469 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		1B824CD926BF72970070D469 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		1B824CDE26C082C40070D469 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1B97510E26EBDBA600E1C529 /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
+		1BAD6E572700392E00618A08 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
+		1BAD6E5A2700429B00618A08 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		1BAD6E5B270042B800618A08 /* OpenSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Medium.ttf"; sourceTree = "<group>"; };
+		1BAD6E5C270042B800618A08 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		1BAD6E5D270042B800618A08 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		1BAD6E5E270042B800618A08 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		1BAD6E6727004DE600618A08 /* LottieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		1BAD6E6927004ECF00618A08 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		1BAD6E6B27004F1300618A08 /* airplane-loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "airplane-loading.json"; sourceTree = "<group>"; };
 		1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageCustom.swift; sourceTree = "<group>"; };
 		1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridData.swift; sourceTree = "<group>"; };
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -82,6 +101,7 @@
 			files = (
 				1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */,
 				1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */,
+				1BAD6E6627004DC500618A08 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,10 +130,11 @@
 		1B73876E26DC167000B7FC42 /* Photo Grid */ = {
 			isa = PBXGroup;
 			children = (
-				1B824CCE26BF39960070D469 /* PhotoGrid.swift */,
 				1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */,
 				1B73875226CF6FF800B7FC42 /* Thumbnail.swift */,
 				1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */,
+				1B824CCE26BF39960070D469 /* ScrollRefresh.swift */,
+				1BAD6E6927004ECF00618A08 /* Loader.swift */,
 			);
 			name = "Photo Grid";
 			sourceTree = "<group>";
@@ -151,6 +172,7 @@
 				1B1399CF26E2E5BF00C2559F /* Layouts */,
 				1B824CCD26BF39170070D469 /* Photos */,
 				1B824CD026BF39A40070D469 /* Library */,
+				1BAD6E552700391C00618A08 /* Fonts */,
 				1BB0A24226CCADD1000BEE3F /* Extras */,
 				1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */,
 				1B824CBF26BF2FA90070D469 /* Assets.xcassets */,
@@ -187,9 +209,24 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		1BAD6E552700391C00618A08 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1BAD6E5A2700429B00618A08 /* OpenSans-Bold.ttf */,
+				1BAD6E5E270042B800618A08 /* OpenSans-Light.ttf */,
+				1BAD6E5B270042B800618A08 /* OpenSans-Medium.ttf */,
+				1BAD6E5C270042B800618A08 /* OpenSans-Regular.ttf */,
+				1BAD6E5D270042B800618A08 /* OpenSans-SemiBold.ttf */,
+				1BAD6E572700392E00618A08 /* Pacifico-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		1BB0A24226CCADD1000BEE3F /* Extras */ = {
 			isa = PBXGroup;
 			children = (
+				1BAD6E6B27004F1300618A08 /* airplane-loading.json */,
+				1BAD6E6727004DE600618A08 /* LottieView.swift */,
 				1BD92C1F26CB388A00A598DB /* SplashScreen.swift */,
 				1BD92C2126CB593500A598DB /* NavigationBar.swift */,
 				1B73875826CF702300B7FC42 /* VisualEffectView.swift */,
@@ -219,6 +256,7 @@
 			packageProductDependencies = (
 				1B824CDC26BF7B020070D469 /* Alamofire */,
 				1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */,
+				1BAD6E6527004DC500618A08 /* Lottie */,
 			);
 			productName = Memoria;
 			productReference = 1B824CB826BF2FA80070D469 /* Memoria.app */;
@@ -251,6 +289,7 @@
 				1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				1BD92C2826CC161300A598DB /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				1BD49A4626DDA45F00D504AD /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				1BAD6E6427004DC500618A08 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 1B824CB926BF2FA80070D469 /* Products */;
 			projectDirPath = "";
@@ -266,7 +305,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BAD6E61270042CC00618A08 /* OpenSans-Medium.ttf in Resources */,
+				1BAD6E582700396000618A08 /* Pacifico-Regular.ttf in Resources */,
 				1B824CC326BF2FA90070D469 /* Preview Assets.xcassets in Resources */,
+				1BAD6E62270042CE00618A08 /* OpenSans-Regular.ttf in Resources */,
+				1BAD6E63270042D000618A08 /* OpenSans-SemiBold.ttf in Resources */,
+				1BAD6E5F270042C800618A08 /* OpenSans-Bold.ttf in Resources */,
+				1BAD6E6C27004F1300618A08 /* airplane-loading.json in Resources */,
+				1BAD6E60270042CA00618A08 /* OpenSans-Light.ttf in Resources */,
 				1B824CC026BF2FA90070D469 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,13 +326,15 @@
 			files = (
 				1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */,
 				1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */,
-				1B824CCF26BF39960070D469 /* PhotoGrid.swift in Sources */,
+				1B824CCF26BF39960070D469 /* ScrollRefresh.swift in Sources */,
+				1BAD6E6A27004ECF00618A08 /* Loader.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
 				1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */,
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
 				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
 				1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */,
+				1BAD6E6827004DE600618A08 /* LottieView.swift in Sources */,
 				1B97510F26EBDBA600E1C529 /* PhotosView.swift in Sources */,
 				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
 				1B73876C26D5FCDD00B7FC42 /* PhotosToolbar.swift in Sources */,
@@ -497,6 +545,14 @@
 				minimumVersion = 5.4.3;
 			};
 		};
+		1BAD6E6427004DC500618A08 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		1BD49A4626DDA45F00D504AD /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/AlamofireImage.git";
@@ -520,6 +576,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1B824CDB26BF7B020070D469 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		1BAD6E6527004DC500618A08 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BAD6E6427004DC500618A08 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

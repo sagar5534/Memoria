@@ -21,9 +21,9 @@ struct PhotosToolbar: View {
                         icon: { Image(systemName: "chevron.backward").font(.system(size: size))
                         }
                     )
+                        .padding()
                 })
-                    .foregroundColor(.primary)
-                    .padding()
+                    .contentShape(Rectangle())
                 Spacer()
             }
             Spacer()
@@ -34,18 +34,18 @@ struct PhotosToolbar: View {
                         title: {},
                         icon: { Image(systemName: "square.and.arrow.up").font(.system(size: size)) }
                     )
+                        .padding()
                 })
-                    .foregroundColor(.primary)
-                    .padding()
+                    .foregroundColor(.white)
                 Spacer()
                 Button(action: {}, label: {
                     Label(
                         title: {},
                         icon: { Image(systemName: "trash").font(.system(size: size)) }
                     )
+                        .padding()
                 })
                     .foregroundColor(.red)
-                    .padding()
             }
         }
     }

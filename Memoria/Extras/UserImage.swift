@@ -9,11 +9,11 @@ import SwiftUI
 
 struct UserImage: View {
     var body: some View {
-        Image("IMG_2")
+        Image("profile")
             .resizable()
             .interpolation(.none)
             .scaledToFill()
-            .frame(width: 32, height: 32, alignment: .center)
+            .frame(width: 38, height: 38, alignment: .center)
             .clipShape(Circle())
     }
 }

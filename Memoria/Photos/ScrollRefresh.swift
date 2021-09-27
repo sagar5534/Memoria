@@ -7,34 +7,6 @@
 
 import SwiftUI
 
-//Maybe in a later impl
-//struct PhotoGrid: View {
-//    @ObservedObject var photoGridData = PhotoGridData()
-//    @State var selected: Bool = false
-//    @Binding var media: Media?
-//
-//    var onThumbnailTap: (_ item: Media) -> Void = { _ in }
-//    var namespace: Namespace.ID
-//    let columns =
-//        [
-//            GridItem(.flexible(), spacing: 4),
-//            GridItem(.flexible(), spacing: 4),
-//            GridItem(.flexible(), spacing: 4),
-//        ]
-//
-//    var body: some View {
-//        Text("")
-//    }
-//}
-
-func titleHeader(with header: String) -> some View {
-    Text(header)
-        .font(.body)
-        .bold()
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-}
-
 struct PullToRefresh: View {
     var coordinateSpaceName: String
     var onRefresh: () -> Void
@@ -44,7 +16,7 @@ struct PullToRefresh: View {
     var body: some View {
         GeometryReader { geo in
 
-            if geo.frame(in: .named(coordinateSpaceName)).midY > 50 {
+            if geo.frame(in: .named(coordinateSpaceName)).midY > 80 {
                 Spacer()
                     .onAppear {
                         needRefresh = true
@@ -73,15 +45,14 @@ struct PullToRefresh: View {
                     Image(systemName: "arrow.clockwise")
                         .rotationEffect(Angle.degrees((geo.frame(in: .named(coordinateSpaceName)).maxY + 40) * 3.789))
                         .matchedGeometryEffect(id: "reload", in: nspace)
-//                        .transition(.fade)
                 }
                 Spacer()
             }
-        }.padding(.top, -50)
+        }.padding(.top, -80)
     }
-}
-
-func simpleSuccess() {
-    let generator = UINotificationFeedbackGenerator()
-    generator.notificationOccurred(.success)
+    
+    func simpleSuccess() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+    }
 }
