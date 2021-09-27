@@ -15,7 +15,7 @@ struct SplashScreen: View {
             if self.isActive {
                 Navigation()
             } else {
-                SplashView()
+                FullScreenLoader()
             }
         }
         .onAppear {
@@ -24,20 +24,6 @@ struct SplashScreen: View {
                     self.isActive = true
                 }
             }
-        }
-    }
-}
-
-private struct SplashView: View {
-    var body: some View {
-        ZStack {
-            Color.white
-                .ignoresSafeArea()
-            Image("Logo")
-                .resizable()
-                .scaledToFit()
-                .offset(x: 0, y: -50.0)
-                .padding(50)
         }
     }
 }

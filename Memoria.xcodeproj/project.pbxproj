@@ -35,8 +35,10 @@
 		1BAD6E63270042D000618A08 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E5D270042B800618A08 /* OpenSans-SemiBold.ttf */; };
 		1BAD6E6627004DC500618A08 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1BAD6E6527004DC500618A08 /* Lottie */; };
 		1BAD6E6827004DE600618A08 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6727004DE600618A08 /* LottieView.swift */; };
-		1BAD6E6A27004ECF00618A08 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6927004ECF00618A08 /* Loader.swift */; };
-		1BAD6E6C27004F1300618A08 /* airplane-loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6B27004F1300618A08 /* airplane-loading.json */; };
+		1BAD6E6A27004ECF00618A08 /* Loading Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6927004ECF00618A08 /* Loading Screens.swift */; };
+		1BAD6E6E2701493200618A08 /* loading-dots.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6D2701493200618A08 /* loading-dots.json */; };
+		1BAD6E7027014B3C00618A08 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD6E6F27014B3C00618A08 /* TabBar.swift */; };
+		1BAD6E7327014DF100618A08 /* PhotoDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD6E7227014DF100618A08 /* PhotoDetail.swift */; };
 		1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */; };
 		1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */; };
 		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
@@ -86,8 +88,10 @@
 		1BAD6E5D270042B800618A08 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		1BAD6E5E270042B800618A08 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		1BAD6E6727004DE600618A08 /* LottieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
-		1BAD6E6927004ECF00618A08 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
-		1BAD6E6B27004F1300618A08 /* airplane-loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "airplane-loading.json"; sourceTree = "<group>"; };
+		1BAD6E6927004ECF00618A08 /* Loading Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Loading Screens.swift"; sourceTree = "<group>"; };
+		1BAD6E6D2701493200618A08 /* loading-dots.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "loading-dots.json"; sourceTree = "<group>"; };
+		1BAD6E6F27014B3C00618A08 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		1BAD6E7227014DF100618A08 /* PhotoDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetail.swift; sourceTree = "<group>"; };
 		1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageCustom.swift; sourceTree = "<group>"; };
 		1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridData.swift; sourceTree = "<group>"; };
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -111,9 +115,11 @@
 		1B1399CF26E2E5BF00C2559F /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
+				1BD92C1F26CB388A00A598DB /* SplashScreen.swift */,
 				1B1399D226E2E7AD00C2559F /* Navigation.swift */,
 				1B1399D026E2E6B000C2559F /* SidebarNavigation.swift */,
 				1B1399D426E2E81700C2559F /* TabNavigation.swift */,
+				1BAD6E6F27014B3C00618A08 /* TabBar.swift */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -125,29 +131,19 @@
 				1B824CD726BF6D530070D469 /* Query.swift */,
 			);
 			name = "Network & Models";
+			path = Photos;
 			sourceTree = "<group>";
 		};
 		1B73876E26DC167000B7FC42 /* Photo Grid */ = {
 			isa = PBXGroup;
 			children = (
+				1B97510E26EBDBA600E1C529 /* PhotosView.swift */,
 				1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */,
 				1B73875226CF6FF800B7FC42 /* Thumbnail.swift */,
 				1BD49A5026DDB81C00D504AD /* AsyncImageCustom.swift */,
 				1B824CCE26BF39960070D469 /* ScrollRefresh.swift */,
-				1BAD6E6927004ECF00618A08 /* Loader.swift */,
 			);
 			name = "Photo Grid";
-			sourceTree = "<group>";
-		};
-		1B73877026DC169700B7FC42 /* Modal */ = {
-			isa = PBXGroup;
-			children = (
-				1B73876B26D5FCDD00B7FC42 /* PhotosToolbar.swift */,
-				1B73876226CF70D800B7FC42 /* Transitions.swift */,
-				1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */,
-				1B73876826D4BC7500B7FC42 /* Share Sheet.swift */,
-			);
-			name = Modal;
 			sourceTree = "<group>";
 		};
 		1B824CAF26BF2FA80070D469 = {
@@ -172,7 +168,7 @@
 				1B1399CF26E2E5BF00C2559F /* Layouts */,
 				1B824CCD26BF39170070D469 /* Photos */,
 				1B824CD026BF39A40070D469 /* Library */,
-				1BAD6E552700391C00618A08 /* Fonts */,
+				1B73876D26DC165500B7FC42 /* Network & Models */,
 				1BB0A24226CCADD1000BEE3F /* Extras */,
 				1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */,
 				1B824CBF26BF2FA90070D469 /* Assets.xcassets */,
@@ -193,10 +189,8 @@
 		1B824CCD26BF39170070D469 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
-				1B97510E26EBDBA600E1C529 /* PhotosView.swift */,
 				1B73876E26DC167000B7FC42 /* Photo Grid */,
-				1B73877026DC169700B7FC42 /* Modal */,
-				1B73876D26DC165500B7FC42 /* Network & Models */,
+				1BAD6E7127014DD900618A08 /* PhotoDetail */,
 			);
 			path = Photos;
 			sourceTree = "<group>";
@@ -222,12 +216,25 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		1BAD6E7127014DD900618A08 /* PhotoDetail */ = {
+			isa = PBXGroup;
+			children = (
+				1BAD6E7227014DF100618A08 /* PhotoDetail.swift */,
+				1B73876B26D5FCDD00B7FC42 /* PhotosToolbar.swift */,
+				1B73876826D4BC7500B7FC42 /* Share Sheet.swift */,
+				1B73876226CF70D800B7FC42 /* Transitions.swift */,
+				1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */,
+			);
+			name = PhotoDetail;
+			sourceTree = "<group>";
+		};
 		1BB0A24226CCADD1000BEE3F /* Extras */ = {
 			isa = PBXGroup;
 			children = (
-				1BAD6E6B27004F1300618A08 /* airplane-loading.json */,
+				1BAD6E552700391C00618A08 /* Fonts */,
+				1BAD6E6927004ECF00618A08 /* Loading Screens.swift */,
+				1BAD6E6D2701493200618A08 /* loading-dots.json */,
 				1BAD6E6727004DE600618A08 /* LottieView.swift */,
-				1BD92C1F26CB388A00A598DB /* SplashScreen.swift */,
 				1BD92C2126CB593500A598DB /* NavigationBar.swift */,
 				1B73875826CF702300B7FC42 /* VisualEffectView.swift */,
 				1B824CD526BF60380070D469 /* UserImage.swift */,
@@ -311,7 +318,7 @@
 				1BAD6E62270042CE00618A08 /* OpenSans-Regular.ttf in Resources */,
 				1BAD6E63270042D000618A08 /* OpenSans-SemiBold.ttf in Resources */,
 				1BAD6E5F270042C800618A08 /* OpenSans-Bold.ttf in Resources */,
-				1BAD6E6C27004F1300618A08 /* airplane-loading.json in Resources */,
+				1BAD6E6E2701493200618A08 /* loading-dots.json in Resources */,
 				1BAD6E60270042CA00618A08 /* OpenSans-Light.ttf in Resources */,
 				1B824CC026BF2FA90070D469 /* Assets.xcassets in Resources */,
 			);
@@ -325,9 +332,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */,
+				1BAD6E7327014DF100618A08 /* PhotoDetail.swift in Sources */,
 				1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */,
 				1B824CCF26BF39960070D469 /* ScrollRefresh.swift in Sources */,
-				1BAD6E6A27004ECF00618A08 /* Loader.swift in Sources */,
+				1BAD6E7027014B3C00618A08 /* TabBar.swift in Sources */,
+				1BAD6E6A27004ECF00618A08 /* Loading Screens.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
 				1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */,

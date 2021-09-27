@@ -16,21 +16,16 @@ struct PhotosView: View {
     @State private var details = false
     @State private var showShareSheet = false
     @State private var showToolbarButtons = true
-    
+
     @State var lastScaleValue: CGFloat = 1.0
     @State private var scaler: CGFloat = 120
 
     var body: some View {
         ZStack {
-            // TODO: Might need to change to a parent
+
             switch horizontalSizeClass {
             case .compact:
-                TabView {
-                    loading
-                        .tabItem {
-                            Label("Photos", systemImage: "photo.on.rectangle.angled")
-                        }
-                }
+                loading
             default:
                 loading
             }
@@ -53,15 +48,14 @@ struct PhotosView: View {
                 if showToolbarButtons {
                     PhotosToolbar(onCloseTap: closeMedia, showShareSheet: $showShareSheet)
                         .sheet(isPresented: $showShareSheet) {
-                            ShareSheet(activityItems: [UIImage(named: "profile")])
+                            ShareSheet(activityItems: [UIImage(named: "profile") as Any])
                         }
                         .transition(.opacity)
                 }
             }
-
         }
         .animation(details ? .spring(response: 0.25, dampingFraction: 0.8) :
-                        .spring(response: 0.2, dampingFraction: 0.8), value: details)
+            .spring(response: 0.2, dampingFraction: 0.8), value: details)
     }
 
     @ViewBuilder
@@ -132,15 +126,15 @@ struct PhotosView: View {
             .transition(.modal)
         }
     }
-    
+
     @ViewBuilder
     var ScrollGrid: some View {
         ScrollView {
             PullToRefresh(coordinateSpaceName: "pullToRefresh") {
                 photoGridData.fetchAllMedia()
             }
-            
-            ZStack (alignment: .trailing) {
+
+            ZStack(alignment: .trailing) {
                 HStack {
                     Spacer()
                     Text("Memoria")
@@ -151,36 +145,33 @@ struct PhotosView: View {
                 UserImage()
             }
             .padding(.horizontal)
-            
 
-                grid
-                    .gesture(
-                        MagnificationGesture()
-                            .onChanged { val in
-                                
-                                let delta = val / self.lastScaleValue
-                                self.lastScaleValue = val
-                                let newScale = self.scaler * delta
-                                
-                                withAnimation {
+            grid
+                .gesture(
+                    MagnificationGesture()
+                        .onChanged { val in
+
+                            let delta = val / self.lastScaleValue
+                            self.lastScaleValue = val
+                            let newScale = self.scaler * delta
+
+                            withAnimation {
                                 self.scaler = newScale
-                                }
-    //                            self.scaler = self.scaler + (1 * val)
-                                print(newScale)
                             }
-                            .onEnded({ val in
-                                self.lastScaleValue = 1
-                                print("Ended: \(val)")
-                            })
-                    )
-            
+                            //                            self.scaler = self.scaler + (1 * val)
+                            print(newScale)
+                        }
+                        .onEnded { val in
+                            self.lastScaleValue = 1
+                            print("Ended: \(val)")
+                        }
+                )
         }
         .coordinateSpace(name: "pullToRefresh")
     }
-    
+
     @ViewBuilder
     var loading: some View {
-        
         if photoGridData.isLoading {
             VStack {
                 Spacer()
@@ -190,7 +181,6 @@ struct PhotosView: View {
         } else {
             ScrollGrid
         }
-            
     }
 
     private func closeMedia() {
@@ -211,7 +201,7 @@ struct PhotosView: View {
 
 struct titleHeader: View {
     var header: String
-    
+
     var body: some View {
         Text(header)
             .font(.custom("OpenSans-SemiBold", size: 15))

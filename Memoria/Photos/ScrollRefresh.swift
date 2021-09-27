@@ -50,7 +50,7 @@ struct PullToRefresh: View {
             }
         }.padding(.top, -80)
     }
-    
+
     func simpleSuccess() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)

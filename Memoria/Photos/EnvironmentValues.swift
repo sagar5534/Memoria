@@ -13,7 +13,6 @@ extension EnvironmentValues {
         get { return self[ModalTransitionKey.self] }
         set { self[ModalTransitionKey.self] = newValue }
     }
-
 }
 
 public struct ModalTransitionKey: EnvironmentKey {

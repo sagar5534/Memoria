@@ -21,7 +21,7 @@ struct PhotosToolbar: View {
                         icon: { Image(systemName: "chevron.backward").font(.system(size: size))
                         }
                     )
-                        .padding()
+                    .padding()
                 })
                     .contentShape(Rectangle())
                 Spacer()
@@ -34,7 +34,7 @@ struct PhotosToolbar: View {
                         title: {},
                         icon: { Image(systemName: "square.and.arrow.up").font(.system(size: size)) }
                     )
-                        .padding()
+                    .padding()
                 })
                     .foregroundColor(.white)
                 Spacer()
@@ -43,7 +43,7 @@ struct PhotosToolbar: View {
                         title: {},
                         icon: { Image(systemName: "trash").font(.system(size: size)) }
                     )
-                        .padding()
+                    .padding()
                 })
                     .foregroundColor(.red)
             }
