@@ -10,25 +10,30 @@ import SwiftUI
 struct SidebarNavigation: View {
     enum NavigationItem {
         case photos
+        case foryou
         case library
-        case livePhoto
+        case livephotos
     }
 
     @State var selectedFolder: NavigationItem? = .photos
 
     var sidebar: some View {
         List {
-            NavigationLink(destination: PhotosView(), tag: NavigationItem.photos, selection: $selectedFolder) {
-                Label("Photos", systemImage: "photo.on.rectangle")
+            NavigationLink(destination: PhotosView(showTabbar: false), tag: NavigationItem.photos, selection: $selectedFolder) {
+                Label("Photos", systemImage: "photo.fill.on.rectangle.fill")
+            }
+
+            NavigationLink(destination: Text(""), tag: NavigationItem.foryou, selection: $selectedFolder) {
+                Label("For You", systemImage: "rectangle.stack.person.crop.fill")
             }
 
             NavigationLink(destination: Text(""), tag: NavigationItem.library, selection: $selectedFolder) {
-                Label("Library", systemImage: "person.2.square.stack")
+                Label("Library", systemImage: "books.vertical.fill")
             }
 
             Section {
-                NavigationLink(destination: Text(""), tag: NavigationItem.livePhoto, selection: $selectedFolder) {
-                    Label("Live Photos", systemImage: "livephoto")
+                NavigationLink(destination: Text(""), tag: NavigationItem.livephotos, selection: $selectedFolder) {
+                    Label("Live", systemImage: "livephoto")
                 }
             } header: {
                 Text("Media Types")
