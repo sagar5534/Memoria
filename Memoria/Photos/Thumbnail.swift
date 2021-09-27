@@ -32,10 +32,9 @@ struct Thumbnail: View {
     var blurBackdrop: some View {
         switch colorScheme {
         case .dark:
-            VisualEffectView(uiVisualEffect: UIBlurEffect(style: .dark))
+            VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemMaterialDark))
         default:
-            Color("PhotoLoading")
+            VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemMaterialLight))
         }
-        VisualEffectView(uiVisualEffect: UIBlurEffect(style: colorScheme == .dark ? .dark : .regular))
     }
 }

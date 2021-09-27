@@ -86,7 +86,9 @@ class ImageLoader: ObservableObject {
             .subscribe(on: Self.imageProcessingQueue)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] img in
-                self?.image = img
+                withAnimation(Animation.easeOut(duration: 0.1)) {
+                    self?.image = img
+                }
             }
     }
 

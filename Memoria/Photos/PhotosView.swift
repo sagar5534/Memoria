@@ -49,7 +49,6 @@ struct PhotosView: View {
     @ViewBuilder
     var ScrollGrid: some View {
         ScrollView {
-
             ZStack(alignment: .trailing) {
                 HStack {
                     Spacer()
