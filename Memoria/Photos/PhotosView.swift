@@ -49,19 +49,39 @@ struct PhotosView: View {
     @ViewBuilder
     var ScrollGrid: some View {
         ScrollView {
-            ZStack(alignment: .trailing) {
-                HStack {
-                    Spacer()
-                    Text("Memoria")
-                        .font(.custom("Pacifico-Regular", size: 30))
-                        .foregroundColor(Color("PhotoLoading"))
-                    Spacer()
+
+            HStack(alignment: .center) {
+                Text("Memoria")
+                    .font(.custom("Pacifico-Regular", size: 26, relativeTo: .title2))
+                Spacer()
+                
+                
+                HStack(alignment: .center, spacing: 18.0) {
+                    
+                    
+                    Button(action: {}, label: {
+                        Image(systemName: "checkmark.icloud")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                    })
+                    .foregroundColor(.primary)
+                    
+                    Button(action: {}, label: {
+                        Image(systemName: "gearshape")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 22)
+                    })
+                    .foregroundColor(.primary)
+                    
                 }
-                UserImage()
             }
-            .padding(.horizontal)
+            .padding([.horizontal, .top])
 
             PhotoGrid(namespace: namespace, groupedMedia: photoGridData.groupedMedia, details: $details, media: $media)
+                .offset(x: 0, y: -20)
+
         }
     }
 }

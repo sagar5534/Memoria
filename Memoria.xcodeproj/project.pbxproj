@@ -43,6 +43,9 @@
 		1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C1F26CB388A00A598DB /* SplashScreen.swift */; };
 		1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2126CB593500A598DB /* NavigationBar.swift */; };
 		1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */; };
+		E552FD3127041C0D0004C21E /* DancingScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E552FD3027041C070004C21E /* DancingScript-Medium.ttf */; };
+		E552FD3227041C110004C21E /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E552FD2F27041C070004C21E /* DancingScript-SemiBold.ttf */; };
+		E552FD34270425260004C21E /* FullResImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FD33270425260004C21E /* FullResImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -94,6 +97,9 @@
 		1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridData.swift; sourceTree = "<group>"; };
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		E552FD2F27041C070004C21E /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
+		E552FD3027041C070004C21E /* DancingScript-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-Medium.ttf"; sourceTree = "<group>"; };
+		E552FD33270425260004C21E /* FullResImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullResImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				1BAD6E7227014DF100618A08 /* PhotoDetail.swift */,
+				E552FD33270425260004C21E /* FullResImage.swift */,
 				1B73876B26D5FCDD00B7FC42 /* PhotosToolbar.swift */,
 				1B73876826D4BC7500B7FC42 /* Share Sheet.swift */,
 				1B73876226CF70D800B7FC42 /* Transitions.swift */,
@@ -228,6 +235,8 @@
 		1BB0A24226CCADD1000BEE3F /* Extras */ = {
 			isa = PBXGroup;
 			children = (
+				E552FD3027041C070004C21E /* DancingScript-Medium.ttf */,
+				E552FD2F27041C070004C21E /* DancingScript-SemiBold.ttf */,
 				1BAD6E552700391C00618A08 /* Fonts */,
 				1BAD6E6927004ECF00618A08 /* Loading Screens.swift */,
 				1BAD6E6D2701493200618A08 /* loading-dots.json */,
@@ -312,12 +321,14 @@
 				1BAD6E61270042CC00618A08 /* OpenSans-Medium.ttf in Resources */,
 				1BAD6E582700396000618A08 /* Pacifico-Regular.ttf in Resources */,
 				1B824CC326BF2FA90070D469 /* Preview Assets.xcassets in Resources */,
+				E552FD3127041C0D0004C21E /* DancingScript-Medium.ttf in Resources */,
 				1BAD6E62270042CE00618A08 /* OpenSans-Regular.ttf in Resources */,
 				1BAD6E63270042D000618A08 /* OpenSans-SemiBold.ttf in Resources */,
 				1BAD6E5F270042C800618A08 /* OpenSans-Bold.ttf in Resources */,
 				1BAD6E6E2701493200618A08 /* loading-dots.json in Resources */,
 				1BAD6E60270042CA00618A08 /* OpenSans-Light.ttf in Resources */,
 				1B824CC026BF2FA90070D469 /* Assets.xcassets in Resources */,
+				E552FD3227041C110004C21E /* DancingScript-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +345,7 @@
 				1BAD6E6A27004ECF00618A08 /* Loading Screens.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
+				E552FD34270425260004C21E /* FullResImage.swift in Sources */,
 				1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */,
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
 				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
@@ -409,7 +421,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -464,7 +476,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -484,7 +496,7 @@
 				DEVELOPMENT_TEAM = LL6476HKHT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Memoria/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -506,7 +518,7 @@
 				DEVELOPMENT_TEAM = LL6476HKHT;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Memoria/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

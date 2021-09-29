@@ -10,6 +10,8 @@
 		<string>OpenSans-Medium.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
 		<string>OpenSans-SemiBold.ttf</string>
+		<string>DancingScript-Medium.ttf</string>
+		<string>DancingScript-SemiBold.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access to backup media</string>

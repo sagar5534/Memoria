@@ -16,7 +16,7 @@ struct SidebarNavigation: View {
     }
 
     @State var selectedFolder: NavigationItem? = .photos
-
+    
     var sidebar: some View {
         List {
             NavigationLink(destination: PhotosView(showTabbar: false), tag: NavigationItem.photos, selection: $selectedFolder) {
@@ -30,14 +30,13 @@ struct SidebarNavigation: View {
             NavigationLink(destination: Text(""), tag: NavigationItem.library, selection: $selectedFolder) {
                 Label("Library", systemImage: "books.vertical.fill")
             }
-
-            Section {
+            
+            Section (header: Text("Media Types")) {
                 NavigationLink(destination: Text(""), tag: NavigationItem.livephotos, selection: $selectedFolder) {
                     Label("Live", systemImage: "livephoto")
                 }
-            } header: {
-                Text("Media Types")
             }
+
         }
         .listStyle(SidebarListStyle())
         .navigationTitle("Memoria")

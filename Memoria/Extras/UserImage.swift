@@ -13,7 +13,7 @@ struct UserImage: View {
             .resizable()
             .interpolation(.none)
             .scaledToFill()
-            .frame(width: 38, height: 38, alignment: .center)
+            .frame(width: 32, height: 32, alignment: .center)
             .clipShape(Circle())
     }
 }

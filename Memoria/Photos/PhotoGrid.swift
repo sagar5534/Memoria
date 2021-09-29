@@ -77,7 +77,7 @@ struct titleHeader: View {
 
     var body: some View {
         Text(header)
-            .font(.custom("OpenSans-SemiBold", size: 15))
+            .font(.custom("OpenSans-SemiBold", size: 14))
             .foregroundColor(.primary)
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)

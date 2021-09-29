@@ -22,7 +22,11 @@ struct PhotoDetail: View {
         Color.black
             .edgesIgnoringSafeArea(.all)
             .transition(.opacity)
-//                .onTapGesture(perform: toggleToolbar)
+            .onTapGesture(count: 1) {
+                withAnimation {
+                    showToolbarButtons.toggle()
+                }
+            }
 
         // --------------------------------------------------------
         // Photo View
