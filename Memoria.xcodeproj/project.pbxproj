@@ -46,6 +46,8 @@
 		E552FD3127041C0D0004C21E /* DancingScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E552FD3027041C070004C21E /* DancingScript-Medium.ttf */; };
 		E552FD3227041C110004C21E /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E552FD2F27041C070004C21E /* DancingScript-SemiBold.ttf */; };
 		E5EEA847270966D600B0FE58 /* FullResImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA846270966D600B0FE58 /* FullResImage.swift */; };
+		E5EEA84A270967B500B0FE58 /* OBOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA849270967B500B0FE58 /* OBOverview.swift */; };
+		E5EEA84C27096A3200B0FE58 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA84B27096A3200B0FE58 /* PageControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -100,6 +102,8 @@
 		E552FD2F27041C070004C21E /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
 		E552FD3027041C070004C21E /* DancingScript-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-Medium.ttf"; sourceTree = "<group>"; };
 		E5EEA846270966D600B0FE58 /* FullResImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullResImage.swift; sourceTree = "<group>"; };
+		E5EEA849270967B500B0FE58 /* OBOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBOverview.swift; sourceTree = "<group>"; };
+		E5EEA84B27096A3200B0FE58 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +172,7 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
+				E5EEA8482709675F00B0FE58 /* Onboarding */,
 				1B1399CF26E2E5BF00C2559F /* Layouts */,
 				1B824CCD26BF39170070D469 /* Photos */,
 				1B824CD026BF39A40070D469 /* Library */,
@@ -247,6 +252,15 @@
 				1B824CDE26C082C40070D469 /* Extensions.swift */,
 			);
 			path = Extras;
+			sourceTree = "<group>";
+		};
+		E5EEA8482709675F00B0FE58 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E5EEA849270967B500B0FE58 /* OBOverview.swift */,
+				E5EEA84B27096A3200B0FE58 /* PageControl.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,10 +366,12 @@
 				1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */,
 				1BAD6E6827004DE600618A08 /* LottieView.swift in Sources */,
 				1B97510F26EBDBA600E1C529 /* PhotosView.swift in Sources */,
+				E5EEA84A270967B500B0FE58 /* OBOverview.swift in Sources */,
 				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
 				1B73876C26D5FCDD00B7FC42 /* PhotosToolbar.swift in Sources */,
 				1B824CD226BF39B10070D469 /* Library.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,
+				E5EEA84C27096A3200B0FE58 /* PageControl.swift in Sources */,
 				1B1399D326E2E7AD00C2559F /* Navigation.swift in Sources */,
 				1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */,
 				1BAD6E7527015F3F00618A08 /* PhotoGrid.swift in Sources */,
