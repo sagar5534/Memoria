@@ -15,36 +15,66 @@ struct PhotoDetail: View {
     @State private var showShareSheet = false
     @State private var showToolbarButtons = true
 
-    var body: some View {
-        // --------------------------------------------------------
-        // Backdrop to blur the grid while the modal is displayed
-        // --------------------------------------------------------
-        Color.black
-            .edgesIgnoringSafeArea(.all)
-            .transition(.opacity)
-            .onTapGesture(count: 1) {
-                withAnimation {
-                    showToolbarButtons.toggle()
-                }
-            }
+    @State private var offset = CGSize.zero
 
-        // --------------------------------------------------------
-        // Photo View
-        // --------------------------------------------------------
-        ZStack {
-            GeometryReader { geo in
-                Thumbnail(item: media!)
-                    .matchedGeometryEffect(id: media!.id, in: namespace)
-                    .scaledToFit()
-                    .frame(width: geo.size.width, height: geo.size.height)
-                    .onTapGesture(count: 1) {
-                        withAnimation {
-                            showToolbarButtons.toggle()
-                        }
+    var body: some View {
+        Group {
+            // --------------------------------------------------------
+            // Backdrop to blur the grid while the modal is displayed
+            // --------------------------------------------------------
+            Color.black
+                .edgesIgnoringSafeArea(.all)
+                .transition(.opacity)
+                .opacity(offset.height < 50 ?
+                    Double(1 - ((offset.height / 100) / 3)) :
+                    0.8333)
+                .onTapGesture(count: 1) {
+                    withAnimation {
+                        showToolbarButtons.toggle()
                     }
+                }
+
+            // --------------------------------------------------------
+            // Photo View
+            // --------------------------------------------------------
+            ZStack {
+                GeometryReader { geo in
+                    Thumbnail(item: media!)
+                        .matchedGeometryEffect(id: media!.id, in: namespace)
+                        .scaledToFit()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .scaleEffect(
+                            offset.height < 50 ?
+                                1 - ((offset.height / 100) / 3) :
+                                0.8333
+                        )
+                        .offset(x: offset.width * 2, y: offset.height * 2)
+                        .onTapGesture(count: 1) {
+                            withAnimation {
+                                showToolbarButtons.toggle()
+                            }
+                        }
+                }
+                .transition(.modal)
             }
-            .transition(.modal)
         }
+        .gesture(
+            DragGesture()
+                .onChanged { gesture in
+                    if gesture.translation.height >= 0 {
+                        self.offset = gesture.translation
+                    }
+                }
+                .onEnded { gesture in
+                    if gesture.translation.height > 50 {
+                        withAnimation {
+                            details.toggle()
+                        }
+                    } else {
+                        self.offset = .zero
+                    }
+                }
+        )
 
         // --------------------------------------------------------
         // Toolbar View
