@@ -45,7 +45,7 @@
 		1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */; };
 		E552FD3127041C0D0004C21E /* DancingScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E552FD3027041C070004C21E /* DancingScript-Medium.ttf */; };
 		E552FD3227041C110004C21E /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E552FD2F27041C070004C21E /* DancingScript-SemiBold.ttf */; };
-		E552FD34270425260004C21E /* FullResImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FD33270425260004C21E /* FullResImage.swift */; };
+		E5EEA847270966D600B0FE58 /* FullResImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA846270966D600B0FE58 /* FullResImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -99,7 +99,7 @@
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		E552FD2F27041C070004C21E /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
 		E552FD3027041C070004C21E /* DancingScript-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DancingScript-Medium.ttf"; sourceTree = "<group>"; };
-		E552FD33270425260004C21E /* FullResImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullResImage.swift; sourceTree = "<group>"; };
+		E5EEA846270966D600B0FE58 /* FullResImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullResImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,11 +223,11 @@
 			isa = PBXGroup;
 			children = (
 				1BAD6E7227014DF100618A08 /* PhotoDetail.swift */,
-				E552FD33270425260004C21E /* FullResImage.swift */,
 				1B73876B26D5FCDD00B7FC42 /* PhotosToolbar.swift */,
 				1B73876826D4BC7500B7FC42 /* Share Sheet.swift */,
 				1B73876226CF70D800B7FC42 /* Transitions.swift */,
 				1B73875E26CF709E00B7FC42 /* EnvironmentValues.swift */,
+				E5EEA846270966D600B0FE58 /* FullResImage.swift */,
 			);
 			name = PhotoDetail;
 			sourceTree = "<group>";
@@ -345,7 +345,7 @@
 				1BAD6E6A27004ECF00618A08 /* Loading Screens.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
-				E552FD34270425260004C21E /* FullResImage.swift in Sources */,
+				E5EEA847270966D600B0FE58 /* FullResImage.swift in Sources */,
 				1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */,
 				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
 				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
