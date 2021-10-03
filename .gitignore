@@ -1,3 +1,5 @@
 
 Memoria.xcodeproj/xcuserdata/sagar.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 .DS_Store
+BuildTools/.build
+BuildTools/.swiftpm

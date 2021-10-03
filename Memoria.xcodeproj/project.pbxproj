@@ -270,6 +270,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1B824CC726BF2FA90070D469 /* Build configuration list for PBXNativeTarget "Memoria" */;
 			buildPhases = (
+				E5EEA84D270A667B00B0FE58 /* ShellScript */,
 				1B824CB426BF2FA80070D469 /* Sources */,
 				1B824CB526BF2FA80070D469 /* Frameworks */,
 				1B824CB626BF2FA80070D469 /* Resources */,
@@ -347,6 +348,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E5EEA84D270A667B00B0FE58 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftformat \"$SRCROOT\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1B824CB426BF2FA80070D469 /* Sources */ = {

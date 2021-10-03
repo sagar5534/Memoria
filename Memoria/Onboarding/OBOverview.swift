@@ -24,36 +24,32 @@ private let data: [OnboardingModel] = [
         title: "Lorem Ipsum",
         detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a nibh nec justo convallis semper. Morbi pretium erat felis, id suscipit arcu tincidunt",
         asset: "TEST"
-    )
+    ),
 ]
 
 struct OBOverview: View {
-    
     @State private var selectedPage = 0
-    
+
     var body: some View {
-        
         ScrollView {
             VStack {
                 TabView(selection: $selectedPage.animation()) {
-                    
                     ForEach(data.indices) { index in
                         OBOverview_View(data: data[index])
                             .tag(index)
                     }
-                    
+
                     Login()
                         .tag(data.count + 1)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                
-                
+
                 HStack(alignment: .center) {
                     PageControl(currentPage: $selectedPage, numberOfPages: 3)
                         .frame(width: 40)
                     Spacer()
-                    
-                    if (selectedPage != data.count + 1) {
+
+                    if selectedPage != data.count + 1 {
                         Button(action: {
                             withAnimation {
                                 selectedPage = data.count + 1
@@ -64,43 +60,38 @@ struct OBOverview: View {
                         })
                         .foregroundColor(.secondary)
                     }
-                    
                 }
                 .padding(.horizontal, 30)
                 .padding(.top)
             }
         }
         .edgesIgnoringSafeArea(.top)
-        
     }
 }
 
 private struct OBOverview_View: View {
-    
     let data: OnboardingModel
-    
+
     var body: some View {
-        
         ZStack(alignment: .bottom) {
-            
             Image(data.asset)
                 .resizable()
                 .scaledToFill()
                 .frame(
-                    width: UIScreen.main.bounds.width ,
+                    width: UIScreen.main.bounds.width,
                     height: UIScreen.main.bounds.height - 100
                 )
                 .clipped()
-            
+
             LinearGradient(gradient: Gradient(
                 colors: [
                     Color(UIColor.systemBackground).opacity(0),
                     Color(UIColor.systemBackground).opacity(0.3),
                     Color(UIColor.systemBackground).opacity(0.5),
-                    Color(UIColor.systemBackground).opacity(1)
+                    Color(UIColor.systemBackground).opacity(1),
                 ]
             ), startPoint: .top, endPoint: .bottom)
-            
+
             HStack {
                 VStack(alignment: .leading, spacing: 15.0) {
                     Text(data.title)
@@ -108,7 +99,7 @@ private struct OBOverview_View: View {
                         .multilineTextAlignment(.leading)
                         .font(.system(size: 50))
                         .lineSpacing(-10)
-                    
+
                     Text(data.detail)
                         .multilineTextAlignment(.leading)
                         .font(.body)
@@ -122,31 +113,26 @@ private struct OBOverview_View: View {
 }
 
 private struct Login: View {
-    
     var body: some View {
-        
         ZStack(alignment: .bottom) {
-            
             Image("TEST3")
                 .resizable()
                 .scaledToFill()
                 .frame(
-                    width: UIScreen.main.bounds.width ,
+                    width: UIScreen.main.bounds.width,
                     height: UIScreen.main.bounds.height - 100
                 )
                 .clipped()
-            
-            
+
             LinearGradient(gradient: Gradient(
                 colors: [
                     Color(UIColor.systemBackground).opacity(0),
                     Color(UIColor.systemBackground).opacity(0.3),
                     Color(UIColor.systemBackground).opacity(0.5),
-                    Color(UIColor.systemBackground).opacity(1)
+                    Color(UIColor.systemBackground).opacity(1),
                 ]
             ), startPoint: .top, endPoint: .bottom)
-            
-            
+
             HStack {
                 VStack(alignment: .leading, spacing: 15.0) {
                     Text("Login")
@@ -154,29 +140,24 @@ private struct Login: View {
                         .multilineTextAlignment(.leading)
                         .font(.system(size: 50))
                         .lineSpacing(-10)
-                    
+
                     Text("Sign into your account to access your library")
                         .multilineTextAlignment(.leading)
                         .font(.body)
-                    
+
                     Button(action: {
-                        withAnimation {
-                            
-                        }
+                        withAnimation {}
                     }, label: {
                         Text("Go To App")
                             .bold()
                     })
                     .foregroundColor(.secondary)
-                    
                 }
                 Spacer()
             }
             .padding(.horizontal, 30)
             .padding(.bottom)
-            
         }
-        
     }
 }
 

@@ -23,7 +23,7 @@ struct PhotosToolbar: View {
                     )
                     .padding()
                 })
-                    .contentShape(Rectangle())
+                .contentShape(Rectangle())
                 Spacer()
             }
             Spacer()
@@ -36,7 +36,7 @@ struct PhotosToolbar: View {
                     )
                     .padding()
                 })
-                    .foregroundColor(.white)
+                .foregroundColor(.white)
                 Spacer()
                 Button(action: {}, label: {
                     Label(
@@ -45,7 +45,7 @@ struct PhotosToolbar: View {
                     )
                     .padding()
                 })
-                    .foregroundColor(.red)
+                .foregroundColor(.red)
             }
         }
     }
