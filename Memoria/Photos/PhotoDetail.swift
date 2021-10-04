@@ -15,6 +15,7 @@ struct PhotoDetail: View {
     @State private var showShareSheet = false
     @State private var showToolbarButtons = true
 
+    @State private var scale = CGSize.zero
     @State private var offset = CGSize.zero
 
     var body: some View {
@@ -25,9 +26,6 @@ struct PhotoDetail: View {
             Color.black
                 .edgesIgnoringSafeArea(.all)
                 .transition(.opacity)
-                .opacity(offset.height < 50 ?
-                    Double(1 - ((offset.height / 100) / 3)) :
-                    0.8333)
                 .onTapGesture(count: 1) {
                     withAnimation {
                         showToolbarButtons.toggle()
@@ -44,11 +42,12 @@ struct PhotoDetail: View {
                         .scaledToFit()
                         .frame(width: geo.size.width, height: geo.size.height)
                         .scaleEffect(
-                            offset.height < 50 ?
-                                1 - ((offset.height / 100) / 3) :
-                                0.8333
+                            scale.height < 50 ?
+                                1 - ((scale.height / 100) / 3) :
+                                0.866
                         )
-                        .offset(x: offset.width * 2, y: offset.height * 2)
+                        .animation(.linear(duration: 0.1), value: scale)
+                        .offset(x: offset.width, y: offset.height)
                         .onTapGesture(count: 1) {
                             withAnimation {
                                 showToolbarButtons.toggle()
@@ -62,8 +61,9 @@ struct PhotoDetail: View {
             DragGesture()
                 .onChanged { gesture in
                     if gesture.translation.height >= 0 {
-                        self.offset = gesture.translation
+                        self.scale = gesture.translation
                     }
+                    self.offset = gesture.translation
                 }
                 .onEnded { gesture in
                     if gesture.translation.height > 50 {
@@ -71,6 +71,7 @@ struct PhotoDetail: View {
                             details.toggle()
                         }
                     } else {
+                        self.scale = .zero
                         self.offset = .zero
                     }
                 }
