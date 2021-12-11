@@ -26,12 +26,13 @@ struct Library: View {
 
     var body: some View {
         VStack {
-            List(photos.images, id: \.self) { photo in
-                Image(uiImage: photo)
-                    .resizable()
-                    .frame(width: 200, height: 200, alignment: .center)
-                    .aspectRatio(1, contentMode: .fit)
-            }
+            Text("WORKED")
+//            List(photos.images, id: \.self) { photo in
+//                Image(uiImage: photo)
+//                    .resizable()
+//                    .frame(width: 200, height: 200, alignment: .center)
+//                    .aspectRatio(1, contentMode: .fit)
+//            }
         }
     }
 }

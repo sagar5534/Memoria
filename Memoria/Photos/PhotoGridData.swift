@@ -13,7 +13,7 @@ class PhotoGridData: ObservableObject {
     @Published var groupedMedia = [[Media]]()
     @Published var isLoading = true
 
-    let url = URL(string: "http://192.168.100.107:3000/media")!
+    let url = URL(string: "http://192.168.100.35:8080/media")!
     private var cancellable: AnyCancellable?
 
     init() {

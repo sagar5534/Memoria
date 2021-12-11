@@ -27,7 +27,7 @@ struct SidebarNavigation: View {
                 Label("For You", systemImage: "rectangle.stack.person.crop.fill")
             }
 
-            NavigationLink(destination: Text(""), tag: NavigationItem.library, selection: $selectedFolder) {
+            NavigationLink(destination: Library(), tag: NavigationItem.library, selection: $selectedFolder) {
                 Label("Library", systemImage: "books.vertical.fill")
             }
 

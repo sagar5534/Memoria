@@ -16,7 +16,7 @@ public struct Media: Decodable, Hashable {
     let thumbnailPath: String
     let user: String
     let v: Int
-    let isFavorite: Bool
+    var isFavorite: Bool
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"

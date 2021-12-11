@@ -33,7 +33,7 @@ class NetworkManager: ObservableObject {
                 multipartFormData.append(value.data(using: .utf8)!, withName: key)
             }
             multipartFormData.append(file.url, withName: "file", fileName: file.filename, mimeType: file.mimeType)
-        }, to: "http://192.168.100.107:3000/media/upload")
+        }, to: "http://192.168.100.35:8080/media/upload")
             .uploadProgress { _ in
 //                print("Upload Progress: \(progress.fractionCompleted)")
             }

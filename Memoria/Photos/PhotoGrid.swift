@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PhotoGrid: View {
     let namespace: Namespace.ID
-    let groupedMedia: [[Media]]
+    var groupedMedia: [[Media]]
 
     @Binding var details: Bool
     @Binding var media: Media?

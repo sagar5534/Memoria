@@ -29,7 +29,7 @@ struct PhotosView: View {
                             Label("For You", systemImage: "rectangle.stack.person.crop.fill")
                         }
 
-                    Text("Library")
+                    Library()
                         .tabItem {
                             Label("Library", systemImage: "books.vertical.fill")
                         }
@@ -59,7 +59,7 @@ struct PhotosView: View {
                         Image(systemName: "checkmark.icloud")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 20)
+                            .frame(height: 18)
                     })
                     .foregroundColor(.primary)
 
@@ -67,12 +67,15 @@ struct PhotosView: View {
                         Image(systemName: "gearshape")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 22)
+                            .frame(height: 20)
                     })
                     .foregroundColor(.primary)
                 }
             }
             .padding([.horizontal, .top])
+
+            Divider()
+                .offset(x: 0, y: -20)
 
             PhotoGrid(namespace: namespace, groupedMedia: photoGridData.groupedMedia, details: $details, media: $media)
                 .offset(x: 0, y: -20)
