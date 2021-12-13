@@ -27,7 +27,7 @@ class PhotoGridData: ObservableObject {
             .receive(on: RunLoop.main)
             .catch { _ in Just(self.allMedia) }
             .sink { [weak self] data in
-                print(data)
+//                print(data)
                 let groupedDic = Dictionary(grouping: data) { media -> String in
                     media.creationDate.toDate()!.toString(withFormat: "ddMMyyyy")
                 }
