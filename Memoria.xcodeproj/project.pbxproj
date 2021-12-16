@@ -168,12 +168,12 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
-				E5BB83E6276AE9C2004B0EE4 /* Lotties */,
 				E5EEA8482709675F00B0FE58 /* Onboarding */,
 				1B1399CF26E2E5BF00C2559F /* Layouts */,
 				1B824CCD26BF39170070D469 /* Photos */,
-				1B824CD026BF39A40070D469 /* AutoUpload */,
+				1B824CD026BF39A40070D469 /* AutoUploadServices */,
 				1B73876D26DC165500B7FC42 /* Network & Models */,
+				E5BB83E6276AE9C2004B0EE4 /* Lotties */,
 				1BB0A24226CCADD1000BEE3F /* Extras */,
 				1B824CBB26BF2FA80070D469 /* MemoriaApp.swift */,
 				1B824CBF26BF2FA90070D469 /* Assets.xcassets */,
@@ -200,13 +200,13 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
-		1B824CD026BF39A40070D469 /* AutoUpload */ = {
+		1B824CD026BF39A40070D469 /* AutoUploadServices */ = {
 			isa = PBXGroup;
 			children = (
 				1B824CD126BF39B10070D469 /* AutoUploadService.swift */,
 				E51527982766DF5700882881 /* LivePhoto.swift */,
 			);
-			path = AutoUpload;
+			path = AutoUploadServices;
 			sourceTree = "<group>";
 		};
 		1BAD6E552700391C00618A08 /* Fonts */ = {
