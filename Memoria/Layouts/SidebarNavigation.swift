@@ -27,10 +27,6 @@ struct SidebarNavigation: View {
                 Label("For You", systemImage: "rectangle.stack.person.crop.fill")
             }
 
-            NavigationLink(destination: Library(), tag: NavigationItem.library, selection: $selectedFolder) {
-                Label("Library", systemImage: "books.vertical.fill")
-            }
-
             Section(header: Text("Media Types")) {
                 NavigationLink(destination: Text(""), tag: NavigationItem.livephotos, selection: $selectedFolder) {
                     Label("Live", systemImage: "livephoto")

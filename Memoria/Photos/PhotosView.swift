@@ -11,9 +11,10 @@ struct PhotosView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     let showTabbar: Bool
     @Namespace private var namespace
-    @ObservedObject var photoGridData = PhotoGridData()
     @State private var media: Media?
     @State private var details = false
+    @ObservedObject var photoGridData = PhotoGridData()
+    @ObservedObject var autoUploadService = AutoUploadService.sharedInstance
 
     var body: some View {
         ZStack {
@@ -27,11 +28,6 @@ struct PhotosView: View {
                     Text("For You")
                         .tabItem {
                             Label("For You", systemImage: "rectangle.stack.person.crop.fill")
-                        }
-
-                    Library()
-                        .tabItem {
-                            Label("Library", systemImage: "books.vertical.fill")
                         }
                 }
             } else {
@@ -60,6 +56,11 @@ struct PhotosView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 18)
+                            .onAppear {
+                                autoUploadService.initiateAutoUpload { items in
+                                    print(items)
+                                }
+                            }
                     })
                     .foregroundColor(.primary)
 

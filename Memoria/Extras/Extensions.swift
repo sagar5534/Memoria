@@ -29,7 +29,6 @@ extension Date {
     }
 }
 
-// Delete after upload is done, Needs testing
 extension PHAsset {
     func getURL(completionHandler: @escaping ((_ responseURL: URL?) -> Void)) {
         if mediaType == .image {
@@ -37,13 +36,13 @@ extension PHAsset {
             options.canHandleAdjustmentData = { (_: PHAdjustmentData) -> Bool in
                 true
             }
-            requestContentEditingInput(with: options, completionHandler: { (contentEditingInput: PHContentEditingInput?, _: [AnyHashable: Any]) -> Void in
+            requestContentEditingInput(with: options, completionHandler: { (contentEditingInput: PHContentEditingInput?, _: [AnyHashable: Any]) in
                 completionHandler(contentEditingInput!.fullSizeImageURL as URL?)
             })
         } else if mediaType == .video {
             let options = PHVideoRequestOptions()
             options.version = .original
-            PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: { (asset: AVAsset?, _: AVAudioMix?, _: [AnyHashable: Any]?) -> Void in
+            PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: { (asset: AVAsset?, _: AVAudioMix?, _: [AnyHashable: Any]?) in
                 if let urlAsset = asset as? AVURLAsset {
                     let localVideoUrl: URL = urlAsset.url as URL
                     completionHandler(localVideoUrl)

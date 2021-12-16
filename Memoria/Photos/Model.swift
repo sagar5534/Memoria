@@ -2,16 +2,18 @@
 import Foundation
 import UIKit
 
-// MARK: - MediaElement
+// MARK: - Collection
 
 struct Collection: Decodable, Hashable {
     let month, year: Int
     let data: [[Media]]
 }
 
+typealias MediaCollection = [Collection]
+
 // MARK: - Media
 
-public struct Media: Decodable, Hashable {
+struct Media: Decodable, Hashable {
     let id, name, creationDate, path: String
     let thumbnailPath: String
     let user: String
@@ -43,61 +45,17 @@ public struct Media: Decodable, Hashable {
     }
 }
 
-// public struct tableMetadata: Decodable, Hashable {
-//    let id = ""
-//    dynamic var account = ""
-//    dynamic var assetLocalIdentifier = ""
-//    dynamic var checksums = ""
-//    dynamic var chunk: Bool = false
-//    dynamic var classFile = ""
-//    dynamic var commentsUnread: Bool = false
-//    dynamic var contentType = ""
-//    dynamic var creationDate = NSDate()
-//    dynamic var dataFingerprint = ""
-//    dynamic var date = NSDate()
-//    dynamic var directory: Bool = false
-//    dynamic var deleteAssetLocalIdentifier: Bool = false
-//    dynamic var downloadURL = ""
-//    dynamic var e2eEncrypted: Bool = false
-//    dynamic var edited: Bool = false
-//    dynamic var etag = ""
-//    dynamic var etagResource = ""
-//    dynamic var ext = ""
-//    dynamic var favorite: Bool = false
-//    dynamic var fileId = ""
-//    dynamic var fileName = ""
-//    dynamic var fileNameView = ""
-//    dynamic var fileNameWithoutExt = ""
-//    dynamic var hasPreview: Bool = false
-//    dynamic var iconName = ""
-//    dynamic var livePhoto: Bool = false
-//    dynamic var mountType = ""
-//    dynamic var note = ""
-//    dynamic var ocId = ""
-//    dynamic var ownerId = ""
-//    dynamic var ownerDisplayName = ""
-//    dynamic var path = ""
-//    dynamic var permissions = ""
-//    dynamic var quotaUsedBytes: Int64 = 0
-//    dynamic var quotaAvailableBytes: Int64 = 0
-//    dynamic var resourceType = ""
-//    dynamic var richWorkspace: String?
-//    dynamic var serverUrl = ""
-//    dynamic var session = ""
-//    dynamic var sessionError = ""
-//    dynamic var sessionSelector = ""
-//    dynamic var sessionTaskIdentifier: Int = 0
-//    dynamic var sharePermissionsCollaborationServices: Int = 0
-//    dynamic var size: Int64 = 0
-//    dynamic var status: Int = 0
-//    dynamic var trashbinFileName = ""
-//    dynamic var trashbinOriginalLocation = ""
-//    dynamic var trashbinDeletionTime = NSDate()
-//    dynamic var uploadDate = NSDate()
-//    dynamic var url = ""
-//    dynamic var urlBase = ""
-//    dynamic var user = ""
-//    dynamic var userId = ""
-// }
+// MARK: - FileUpload
 
-typealias MediaCollection = [Collection]
+struct FileUpload {
+    var url: URL?
+    var livePhotoUrl: URL?
+    var isLivePhoto: Bool
+    var assetId: String
+    var filename: String
+    var mimeType: String
+    var creationDate: Date
+    var isFavorite: Bool
+    var mediaType: Int
+    var mediaSubType: Int
+}

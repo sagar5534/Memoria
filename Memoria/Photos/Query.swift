@@ -21,6 +21,8 @@ class NetworkManager: ObservableObject {
     }
 
     func upload(file: FileUpload, completionHandler: @escaping () -> Void) {
+        guard file.url != nil else { return }
+
         let parameters: [String: String] = [
             "user": "610cc064a35f2243803ab48c",
             "creationDate": String(file.creationDate.timeIntervalSince1970),
@@ -32,7 +34,7 @@ class NetworkManager: ObservableObject {
             for (key, value) in parameters {
                 multipartFormData.append(value.data(using: .utf8)!, withName: key)
             }
-            multipartFormData.append(file.url, withName: "file", fileName: file.filename, mimeType: file.mimeType)
+            multipartFormData.append(file.url!, withName: "file", fileName: file.filename, mimeType: file.mimeType)
         }, to: "http://192.168.100.35:8080/media/upload")
             .uploadProgress { _ in
 //                print("Upload Progress: \(progress.fractionCompleted)")
