@@ -21,7 +21,7 @@
 		1B824CC326BF2FA90070D469 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B824CC226BF2FA90070D469 /* Preview Assets.xcassets */; };
 		1B824CD226BF39B10070D469 /* AutoUploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD126BF39B10070D469 /* AutoUploadService.swift */; };
 		1B824CD626BF60380070D469 /* UserImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD526BF60380070D469 /* UserImage.swift */; };
-		1B824CD826BF6D530070D469 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD726BF6D530070D469 /* Query.swift */; };
+		1B824CD826BF6D530070D469 /* MNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD726BF6D530070D469 /* MNetworking.swift */; };
 		1B824CDA26BF72970070D469 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CD926BF72970070D469 /* Model.swift */; };
 		1B824CDD26BF7B020070D469 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1B824CDC26BF7B020070D469 /* Alamofire */; };
 		1B824CDF26C082C40070D469 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B824CDE26C082C40070D469 /* Extensions.swift */; };
@@ -44,6 +44,9 @@
 		1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2126CB593500A598DB /* NavigationBar.swift */; };
 		1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */; };
 		E51527992766DF5700882881 /* LivePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51527982766DF5700882881 /* LivePhoto.swift */; };
+		E5BB83E9276AEEC3004B0EE4 /* NCCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB83E8276AEEC2004B0EE4 /* NCCommunication.swift */; };
+		E5BB83EB276AEF71004B0EE4 /* NCCommunicationCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB83EA276AEF71004B0EE4 /* NCCommunicationCommon.swift */; };
+		E5BB83ED276AEFC6004B0EE4 /* NCCommunicationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB83EC276AEFC6004B0EE4 /* NCCommunicationError.swift */; };
 		E5EEA84A270967B500B0FE58 /* OBOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA849270967B500B0FE58 /* OBOverview.swift */; };
 		E5EEA84C27096A3200B0FE58 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA84B27096A3200B0FE58 /* PageControl.swift */; };
 /* End PBXBuildFile section */
@@ -78,7 +81,7 @@
 		1B824CC426BF2FA90070D469 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B824CD126BF39B10070D469 /* AutoUploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoUploadService.swift; sourceTree = "<group>"; };
 		1B824CD526BF60380070D469 /* UserImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImage.swift; sourceTree = "<group>"; };
-		1B824CD726BF6D530070D469 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		1B824CD726BF6D530070D469 /* MNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MNetworking.swift; sourceTree = "<group>"; };
 		1B824CD926BF72970070D469 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		1B824CDE26C082C40070D469 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1B97510E26EBDBA600E1C529 /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
@@ -98,6 +101,9 @@
 		1BD92C1F26CB388A00A598DB /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		E51527982766DF5700882881 /* LivePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePhoto.swift; sourceTree = "<group>"; };
+		E5BB83E8276AEEC2004B0EE4 /* NCCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NCCommunication.swift; sourceTree = "<group>"; };
+		E5BB83EA276AEF71004B0EE4 /* NCCommunicationCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NCCommunicationCommon.swift; sourceTree = "<group>"; };
+		E5BB83EC276AEFC6004B0EE4 /* NCCommunicationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NCCommunicationError.swift; sourceTree = "<group>"; };
 		E5EEA849270967B500B0FE58 /* OBOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBOverview.swift; sourceTree = "<group>"; };
 		E5EEA84B27096A3200B0FE58 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,8 +136,8 @@
 		1B73876D26DC165500B7FC42 /* Network & Models */ = {
 			isa = PBXGroup;
 			children = (
+				1B824CD726BF6D530070D469 /* MNetworking.swift */,
 				1B824CD926BF72970070D469 /* Model.swift */,
-				1B824CD726BF6D530070D469 /* Query.swift */,
 			);
 			name = "Network & Models";
 			path = Photos;
@@ -168,6 +174,7 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
+				E5BB83E7276AEE99004B0EE4 /* Communications */,
 				E5EEA8482709675F00B0FE58 /* Onboarding */,
 				1B1399CF26E2E5BF00C2559F /* Layouts */,
 				1B824CCD26BF39170070D469 /* Photos */,
@@ -256,6 +263,16 @@
 			path = Lotties;
 			sourceTree = "<group>";
 		};
+		E5BB83E7276AEE99004B0EE4 /* Communications */ = {
+			isa = PBXGroup;
+			children = (
+				E5BB83E8276AEEC2004B0EE4 /* NCCommunication.swift */,
+				E5BB83EA276AEF71004B0EE4 /* NCCommunicationCommon.swift */,
+				E5BB83EC276AEFC6004B0EE4 /* NCCommunicationError.swift */,
+			);
+			path = Communications;
+			sourceTree = "<group>";
+		};
 		E5EEA8482709675F00B0FE58 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,7 +289,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1B824CC726BF2FA90070D469 /* Build configuration list for PBXNativeTarget "Memoria" */;
 			buildPhases = (
-				E5EEA84D270A667B00B0FE58 /* ShellScript */,
 				1B824CB426BF2FA80070D469 /* Sources */,
 				1B824CB526BF2FA80070D469 /* Frameworks */,
 				1B824CB626BF2FA80070D469 /* Resources */,
@@ -349,26 +365,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		E5EEA84D270A667B00B0FE58 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftformat \"$SRCROOT\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		1B824CB426BF2FA80070D469 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -376,12 +372,14 @@
 			files = (
 				1BD92C2026CB388A00A598DB /* SplashScreen.swift in Sources */,
 				1BAD6E7327014DF100618A08 /* PhotoDetail.swift in Sources */,
+				E5BB83ED276AEFC6004B0EE4 /* NCCommunicationError.swift in Sources */,
 				1BD49A5526DDB81D00D504AD /* AsyncImageCustom.swift in Sources */,
 				1BAD6E6A27004ECF00618A08 /* Loading Screens.swift in Sources */,
 				1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */,
+				E5BB83EB276AEF71004B0EE4 /* NCCommunicationCommon.swift in Sources */,
 				1B824CDF26C082C40070D469 /* Extensions.swift in Sources */,
 				1BD49A6026DF04F600D504AD /* PhotoGridData.swift in Sources */,
-				1B824CD826BF6D530070D469 /* Query.swift in Sources */,
+				1B824CD826BF6D530070D469 /* MNetworking.swift in Sources */,
 				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
 				1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */,
 				1BAD6E6827004DE600618A08 /* LottieView.swift in Sources */,
@@ -393,6 +391,7 @@
 				1B824CD226BF39B10070D469 /* AutoUploadService.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,
 				E5EEA84C27096A3200B0FE58 /* PageControl.swift in Sources */,
+				E5BB83E9276AEEC3004B0EE4 /* NCCommunication.swift in Sources */,
 				1B1399D326E2E7AD00C2559F /* Navigation.swift in Sources */,
 				1B73875926CF702300B7FC42 /* VisualEffectView.swift in Sources */,
 				1BAD6E7527015F3F00618A08 /* PhotoGrid.swift in Sources */,
@@ -462,6 +461,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -516,6 +516,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
