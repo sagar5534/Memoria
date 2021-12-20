@@ -50,12 +50,19 @@ struct Media: Decodable, Hashable {
 struct FileUpload {
     var url: URL?
     var livePhotoUrl: URL?
-    var isLivePhoto: Bool
+
     var assetId: String
     var filename: String
-    var mimeType: String
-    var creationDate: Date
-    var isFavorite: Bool
+
     var mediaType: Int
     var mediaSubType: Int
+
+    var creationDate: Date
+    var modificationDate: Date
+
+    var duration: Double
+
+    var isFavorite: Bool
+    var isHidden: Bool
+    var isLivePhoto: Bool
 }

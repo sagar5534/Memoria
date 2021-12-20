@@ -23,7 +23,7 @@ class AutoUploadService: ObservableObject {
             print("Automatic upload: Already Running")
             return
         }
-        running.toggle()
+        running = true
 
         if autoUpload {
             askAuthorizationPhotoLibrary { hasPermission in
@@ -32,16 +32,20 @@ class AutoUploadService: ObservableObject {
                         guard uploadList != nil else { return }
 
                         if uploadList!.count > 0 {
-                            print(uploadList)
-                            // Start upload
-//                          self.appDelegate.networkingProcessUpload?.startProcess()
+                            MNetworking.sharedInstance.upload(uploadList: uploadList!) {
+                                print("Starting")
+                            } completion: { _, _ in
+                                print("Uploading Finished")
+                                self.running = false
+                                completion(uploadList!.count)
+                            }
+                        } else {
+                            completion(0)
                         }
-                        self.running.toggle()
-                        completion(uploadList!.count)
                     }
                 } else {
                     self.autoUpload = false
-                    self.running.toggle()
+                    self.running = false
                     completion(0)
                 }
             }
@@ -75,13 +79,15 @@ class AutoUploadService: ObservableObject {
                 let assetResources = PHAssetResource.assetResources(for: asset)
                 var fileUpload = self.createFileUpload()
 
-                fileUpload.creationDate = asset.creationDate ?? Date()
-                fileUpload.isFavorite = asset.isFavorite
                 fileUpload.assetId = asset.localIdentifier
-                fileUpload.filename = assetResources.first?.originalFilename ?? "file"
-                fileUpload.mimeType = UTTypeCopyPreferredTagWithClass(assetResources.first!.uniformTypeIdentifier as CFString, kUTTagClassMIMEType)!.takeRetainedValue() as String
+                fileUpload.filename = ((assetResources.first?.originalFilename ?? "File") as NSString).deletingPathExtension
                 fileUpload.mediaType = asset.mediaType.rawValue
                 fileUpload.mediaSubType = Int(asset.mediaSubtypes.rawValue)
+                fileUpload.creationDate = asset.creationDate ?? Date()
+                fileUpload.modificationDate = asset.modificationDate ?? fileUpload.creationDate
+                fileUpload.duration = asset.duration
+                fileUpload.isFavorite = asset.isFavorite
+                fileUpload.isHidden = asset.isHidden
 
                 switch asset.mediaType {
                 case .video:
@@ -192,14 +198,16 @@ class AutoUploadService: ObservableObject {
 
     private func createFileUpload() -> FileUpload {
         return FileUpload(
-            isLivePhoto: false,
-            assetId: "",
-            filename: "file",
-            mimeType: "",
-            creationDate: Date(),
-            isFavorite: false,
+            assetId: UUID().uuidString,
+            filename: "File",
             mediaType: PHAssetMediaType.unknown.rawValue,
-            mediaSubType: -1
+            mediaSubType: -1,
+            creationDate: Date(),
+            modificationDate: Date(),
+            duration: 0,
+            isFavorite: false,
+            isHidden: false,
+            isLivePhoto: false
         )
     }
 }

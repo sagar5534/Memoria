@@ -32,89 +32,105 @@ public class NCCommunication: SessionDelegate {
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         return Alamofire.Session(configuration: configuration, delegate: self, rootQueue: DispatchQueue(label: "com.memoria.sessionManagerData.rootQueue"), startRequestsImmediately: true, requestQueue: nil, serializationQueue: nil, interceptor: nil, serverTrustManager: nil, redirectHandler: nil, cachedResponseHandler: nil, eventMonitors: [AlamofireLogger()])
     }()
-    
+
     private let reachabilityManager = Alamofire.NetworkReachabilityManager()
-    
+
     override public init(fileManager: FileManager = .default) {
+        print("Starting Communication Service")
+
         super.init(fileManager: fileManager)
         startNetworkReachabilityObserver()
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "changeUser"), object: nil)
         stopNetworkReachabilityObserver()
     }
-    
+
     public func isNetworkReachable() -> Bool {
         return reachabilityManager?.isReachable ?? false
     }
-    
+
     private func startNetworkReachabilityObserver() {
         reachabilityManager?.startListening(onUpdatePerforming: { status in
+            print("Reachability", status)
             switch status {
             case .unknown:
                 NCCommunicationCommon.shared.delegate?.networkReachabilityObserver?(NCCommunicationCommon.typeReachability.unknown)
-                
+
             case .notReachable:
                 NCCommunicationCommon.shared.delegate?.networkReachabilityObserver?(NCCommunicationCommon.typeReachability.notReachable)
-                
+
             case .reachable(.ethernetOrWiFi):
                 NCCommunicationCommon.shared.delegate?.networkReachabilityObserver?(NCCommunicationCommon.typeReachability.reachableEthernetOrWiFi)
-                
+
             case .reachable(.cellular):
                 NCCommunicationCommon.shared.delegate?.networkReachabilityObserver?(NCCommunicationCommon.typeReachability.reachableCellular)
             }
         })
     }
-    
+
     private func stopNetworkReachabilityObserver() {
         reachabilityManager?.stopListening()
     }
-    
+
     func upload(file: FileUpload, serverUrl: String, queue: DispatchQueue = .main,
-        requestHandler: @escaping (_ request: UploadRequest) -> Void = { _ in },
-        taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
-        progressHandler: @escaping (_ progress: Progress) -> Void = { _ in },
-        completionHandler: @escaping (_ account: String, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void)
+                requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
+                taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
+                progressHandler: @escaping (_ progress: Progress) -> Void = { _ in },
+                completionHandler: @escaping (_ account: String, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void)
     {
         guard serverUrl != "" else { return }
-        let account = NCCommunicationCommon.shared.account
-        
+//        let account = NCCommunicationCommon.shared.account
+
         let parameters: [String: String] = [
-            "user": "610cc064a35f2243803ab48c",
-            "creationDate": String(file.creationDate.timeIntervalSince1970),
+            // TODO: user account
+            "user": "61bfc7c7c58be9e15101870b",
             "assetId": String(file.assetId),
-            "isFavorite": String(file.isFavorite),
+            "filename": String(file.filename),
+            "mediaType": String(file.mediaType),
+            "mediaSubType": String(file.mediaSubType),
+            "creationDate": String(file.creationDate.timeIntervalSince1970),
+            "modificationDate": String(file.modificationDate.timeIntervalSince1970),
+            "duration": String(file.duration),
+            "isFavorite": file.isFavorite.description,
+            "isHidden": file.isHidden.description,
+            "isLivePhoto": file.isLivePhoto.description,
         ]
-        
+
         AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in parameters {
                 multipartFormData.append(value.data(using: .utf8)!, withName: key)
             }
-            
-            multipartFormData.append(file.url!, withName: "file", fileName: file.filename, mimeType: file.mimeType)
-        }, to: serverUrl, method: .put)
-        .validate(statusCode: 200 ..< 300)
-        .onURLSessionTaskCreation(perform: { task in
-            queue.async { taskHandler(task) }
-        })
-        .uploadProgress { progress in
-            queue.async { progressHandler(progress) }
-        }
-        .response(queue: NCCommunicationCommon.shared.backgroundQueue) { response in
-            switch response.result {
-            case let .failure(error):
-                let resultError = NCCommunicationError().getError(error: error, httResponse: response.response)
-                queue.async { completionHandler(account, error, resultError.errorCode, resultError.description ?? "") }
-            case .success:
-                queue.async { completionHandler(account, nil, nil, nil) }
+
+            if (file.url?.isFileURL) != nil {
+                multipartFormData.append(file.url!, withName: "files")
             }
-        }
+            if (file.livePhotoUrl?.isFileURL) != nil {
+                multipartFormData.append(file.livePhotoUrl!, withName: "files")
+            }
+
+        }, to: serverUrl, method: .post)
+            .validate(statusCode: 200 ..< 300)
+            .onURLSessionTaskCreation(perform: { task in
+                queue.async { taskHandler(task) }
+            })
+            .uploadProgress { progress in
+                queue.async { progressHandler(progress) }
+            }
+            .response(queue: DispatchQueue.main) { response in
+                switch response.result {
+                case let .failure(error):
+                    let resultError = NCCommunicationError().getError(error: error, httResponse: response.response)
+                    queue.async { completionHandler("nil", error, resultError.errorCode, resultError.description ?? "") }
+                case .success:
+                    queue.async { completionHandler("nil", nil, nil, nil) }
+                }
+            }
     }
-    
-    
+
     // MARK: - SessionDelegate
-    
+
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if NCCommunicationCommon.shared.delegate == nil {
             completionHandler(URLSession.AuthChallengeDisposition.performDefaultHandling, nil)
@@ -130,23 +146,23 @@ final class AlamofireLogger: EventMonitor {
     func requestDidResume(_ request: Request) {
         if NCCommunicationCommon.shared.levelLog > 0 {
             NCCommunicationCommon.shared.writeLog("Network request started: \(request)")
-            
+
             if NCCommunicationCommon.shared.levelLog > 1 {
                 let allHeaders = request.request.flatMap { $0.allHTTPHeaderFields.map { $0.description } } ?? "None"
                 let body = request.request.flatMap { $0.httpBody.map { String(decoding: $0, as: UTF8.self) } } ?? "None"
-                
+
                 NCCommunicationCommon.shared.writeLog("Network request headers: \(allHeaders)")
                 NCCommunicationCommon.shared.writeLog("Network request body: \(body)")
             }
         }
     }
-    
+
     func request<Value>(_ request: DataRequest, didParseResponse response: AFDataResponse<Value>) {
         guard let date = NCCommunicationCommon.shared.convertDate(Date(), format: "yyyy-MM-dd' 'HH:mm:ss") else { return }
         let responseResultString = String("\(response.result)")
         let responseDebugDescription = String("\(response.debugDescription)")
         let responseAllHeaderFields = String("\(String(describing: response.response?.allHeaderFields))")
-        
+
         if NCCommunicationCommon.shared.levelLog > 0 {
             if NCCommunicationCommon.shared.levelLog == 1 {
                 if let request = response.request {
@@ -155,7 +171,7 @@ final class AlamofireLogger: EventMonitor {
                 } else {
                     NCCommunicationCommon.shared.writeLog("Network response result: " + responseResultString)
                 }
-                
+
             } else {
                 NCCommunicationCommon.shared.writeLog("Network response result: \(date) " + responseDebugDescription)
                 NCCommunicationCommon.shared.writeLog("Network response all headers: \(date) " + responseAllHeaderFields)
