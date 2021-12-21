@@ -25,15 +25,43 @@ class MNetworking: ObservableObject {
 
     // MARK: - Upload
 
-    func upload(uploadList: [FileUpload], start: @escaping () -> Void, completion: @escaping (_ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        for file in uploadList {
-            // TODO: Handle background tasks here?
-            // TODO: Fix completion and start to be for group. Not each file
-            uploadFile(file: file, start: { start() }, completion: completion)
+    func upload(uploadList: [FileUpload], completion: @escaping (_ success: Int, _ failed: Int) -> Void) {
+        
+        let uploadQueue = DispatchQueue.global(qos: .userInitiated)
+        let uploadGroup = DispatchGroup()
+        let uploadSemaphore = DispatchSemaphore(value: 1)
+        var success = 0
+        var failed = 0
+        
+        uploadQueue.async(group: uploadGroup) { [weak self] in
+            guard let self = self else {return}
+            
+            for file in uploadList {
+                uploadGroup.enter()
+                uploadSemaphore.wait()
+                
+                self.uploadFile(file: file) {
+                    print("Upload Started:", file.filename)
+                } completion: { (file, errorCode, errorDesc) in
+                    if errorCode != nil {
+//                        print("Upload Failed:", file, errorCode, errorDesc)
+                        failed += 1
+                    } else {
+//                        print("Upload Success:", file)
+                        success += 1
+                    }
+                    uploadGroup.leave()
+                    uploadSemaphore.signal()
+                }
+            }
+        }
+        
+        uploadGroup.notify(queue: .main) {
+            completion(success, failed)
         }
     }
 
-    private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ errorCode: Int?, _ errorDescription: String?) -> Void) {
+    private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ file: String,_ errorCode: Int?, _ errorDescription: String?) -> Void) {
         let serverUrl = "http://192.168.100.35:8080/media/uploads"
         let fileName = file.filename
         var uploadTask: URLSessionTask?
@@ -47,9 +75,7 @@ class MNetworking: ObservableObject {
             // Notification Center
         } completionHandler: { _, _, errorCode, errorDescription in
             self.uploadRequest[fileName] = nil
-            print(errorCode, errorDescription)
-//            self.uploadComplete(fileName: metadata.filename, serverUrl: serverUrl, task: uploadTask!, errorCode: errorCode, errorDescription: errorDescription)
-            completion(errorCode, errorDescription)
+            completion(fileName, errorCode, errorDescription)
         }
     }
 

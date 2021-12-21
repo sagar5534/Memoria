@@ -17,10 +17,10 @@ class AutoUploadService: ObservableObject {
 
     private var running: Bool = false
 
-    func initiateAutoUpload(completion: @escaping (_ items: Int) -> Void) {
+    func initiateAutoUpload() {
         // TODO: Perhaps find a better way to make this safe??
         if running {
-            print("Automatic upload: Already Running")
+            print("Automatic Upload: Already Running")
             return
         }
         running = true
@@ -29,29 +29,22 @@ class AutoUploadService: ObservableObject {
             askAuthorizationPhotoLibrary { hasPermission in
                 if hasPermission {
                     self.createUploadList { uploadList in
-                        guard uploadList != nil else { return }
-
-                        if uploadList!.count > 0 {
-                            MNetworking.sharedInstance.upload(uploadList: uploadList!) {
-                                print("Starting")
-                            } completion: { _, _ in
-                                print("Uploading Finished")
-                                self.running = false
-                                completion(uploadList!.count)
-                            }
-                        } else {
-                            completion(0)
+                        guard uploadList != nil && uploadList!.count > 0 else {
+                            self.running = false
+                            return
+                        }
+                        MNetworking.sharedInstance.upload(uploadList: uploadList!) { (success, failed) in
+                            print("Uploading Finished:", success, "Uploaded /", failed, "Failed")
+                            self.running = false
                         }
                     }
                 } else {
                     self.autoUpload = false
                     self.running = false
-                    completion(0)
                 }
             }
         } else {
-            running.toggle()
-            completion(0)
+            running = false
         }
     }
 

@@ -57,9 +57,8 @@ struct PhotosView: View {
                             .scaledToFit()
                             .frame(height: 18)
                             .onAppear {
-                                autoUploadService.initiateAutoUpload { items in
-                                    print("Uploaded ", items, " items")
-                                }
+                                //TODO Move to a better location
+                                autoUploadService.initiateAutoUpload()
                             }
                     })
                     .foregroundColor(.primary)
