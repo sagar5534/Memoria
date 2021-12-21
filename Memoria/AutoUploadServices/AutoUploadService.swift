@@ -29,11 +29,11 @@ class AutoUploadService: ObservableObject {
             askAuthorizationPhotoLibrary { hasPermission in
                 if hasPermission {
                     self.createUploadList { uploadList in
-                        guard uploadList != nil && uploadList!.count > 0 else {
+                        guard uploadList != nil, uploadList!.count > 0 else {
                             self.running = false
                             return
                         }
-                        MNetworking.sharedInstance.upload(uploadList: uploadList!) { (success, failed) in
+                        MNetworking.sharedInstance.upload(uploadList: uploadList!) { success, failed in
                             print("Uploading Finished:", success, "Uploaded /", failed, "Failed")
                             self.running = false
                         }

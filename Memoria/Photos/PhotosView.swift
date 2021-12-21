@@ -57,7 +57,7 @@ struct PhotosView: View {
                             .scaledToFit()
                             .frame(height: 18)
                             .onAppear {
-                                //TODO Move to a better location
+                                // TODO: Move to a better location
                                 autoUploadService.initiateAutoUpload()
                             }
                     })

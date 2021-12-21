@@ -26,23 +26,22 @@ class MNetworking: ObservableObject {
     // MARK: - Upload
 
     func upload(uploadList: [FileUpload], completion: @escaping (_ success: Int, _ failed: Int) -> Void) {
-        
         let uploadQueue = DispatchQueue.global(qos: .userInitiated)
         let uploadGroup = DispatchGroup()
         let uploadSemaphore = DispatchSemaphore(value: 1)
         var success = 0
         var failed = 0
-        
+
         uploadQueue.async(group: uploadGroup) { [weak self] in
-            guard let self = self else {return}
-            
+            guard let self = self else { return }
+
             for file in uploadList {
                 uploadGroup.enter()
                 uploadSemaphore.wait()
-                
+
                 self.uploadFile(file: file) {
                     print("Upload Started:", file.filename)
-                } completion: { (file, errorCode, errorDesc) in
+                } completion: { _, errorCode, _ in
                     if errorCode != nil {
 //                        print("Upload Failed:", file, errorCode, errorDesc)
                         failed += 1
@@ -55,13 +54,13 @@ class MNetworking: ObservableObject {
                 }
             }
         }
-        
+
         uploadGroup.notify(queue: .main) {
             completion(success, failed)
         }
     }
 
-    private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ file: String,_ errorCode: Int?, _ errorDescription: String?) -> Void) {
+    private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ file: String, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
         let serverUrl = "http://192.168.100.35:8080/media/uploads"
         let fileName = file.filename
         var uploadTask: URLSessionTask?
