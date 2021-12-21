@@ -61,7 +61,7 @@ class MNetworking: ObservableObject {
     }
 
     private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ file: String, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = "http://192.168.100.35:8080/media/uploads"
+        let serverUrl = "http://192.168.100.35:12480/media/uploads"
         let fileName = file.filename
         var uploadTask: URLSessionTask?
 
@@ -79,7 +79,7 @@ class MNetworking: ObservableObject {
     }
 
     func downloadSavedAssets(start: @escaping () -> Void, completion: @escaping (_ result: AssetCollection?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = "http://192.168.100.35:8080/media/assets"
+        let serverUrl = "http://192.168.100.35:12480/media/assets"
         var downloadTask: URLSessionTask?
 
         NCCommunication.sharedInstance.downloadSavedAssets(serverUrl: serverUrl) { _ in
