@@ -59,6 +59,7 @@ class AutoUploadService: ObservableObject {
         getCameraRollAssets { assets in
 
             if assets == nil {
+                print("Automatic upload: Assets Error")
             } else if assets!.count == 0 {
                 DispatchQueue.main.async {
                     print("Automatic upload: no new assets found")
@@ -117,6 +118,16 @@ class AutoUploadService: ObservableObject {
                             }
                             myGroup.leave()
                         }
+                    } else {
+                        asset.getURL { url in
+                            if url != nil {
+                                fileUpload.url = url
+                                uploadList.append(fileUpload)
+                            } else {
+                                print("Failed to extract resource from Photo", asset)
+                            }
+                            myGroup.leave()
+                        }
                     }
 
                 default:
@@ -125,7 +136,6 @@ class AutoUploadService: ObservableObject {
             }
 
             myGroup.notify(queue: .main) {
-                print("Automatic upload: Created upload queue")
                 completion(uploadList)
             }
         }
@@ -147,24 +157,21 @@ class AutoUploadService: ObservableObject {
                     var pendingAssets: [PHAsset] = []
                     let assets: PHFetchResult<PHAsset> = PHAsset.fetchAssets(in: assetCollection.firstObject!, options: fetchOptions)
 
-                    // Get all uploaded images fresh from server
-                    // let uploadedAssets = NCManageDatabase.shared.getPhotoLibraryIdAsset(image: account.autoUploadImage, video: account.autoUploadVideo, account: account.account)
-                    let uploadedAssets: [String]? = [""]
-
-                    assets.enumerateObjects { asset, _, _ in
-                        var creationDate = ""
-                        var assetId = ""
-
-                        if asset.creationDate != nil { creationDate = String(describing: asset.creationDate!) }
-                        assetId = asset.localIdentifier + creationDate
-
-                        // Check if already uploaded
-                        if !(uploadedAssets?.contains(assetId) ?? false) {
-                            pendingAssets.append(asset)
+                    MNetworking.sharedInstance.downloadSavedAssets {
+                        // Start
+                    } completion: { uploadedAssets, _, _ in
+                        guard uploadedAssets != nil else {
+                            completion(pendingAssets)
+                            return
                         }
+                        let uploadedAssets = uploadedAssets
+                        assets.enumerateObjects { asset, _, _ in
+                            if !(uploadedAssets?.contains(asset.localIdentifier) ?? false) {
+                                pendingAssets.append(asset)
+                            }
+                        }
+                        completion(pendingAssets)
                     }
-
-                    completion(pendingAssets)
 
                 } else {
                     completion(nil)

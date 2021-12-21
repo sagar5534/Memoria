@@ -58,7 +58,7 @@ struct PhotosView: View {
                             .frame(height: 18)
                             .onAppear {
                                 autoUploadService.initiateAutoUpload { items in
-                                    print(items)
+                                    print("Uploaded ", items, " items")
                                 }
                             }
                     })

@@ -52,4 +52,22 @@ class MNetworking: ObservableObject {
             completion(errorCode, errorDescription)
         }
     }
+
+    func downloadSavedAssets(start: @escaping () -> Void, completion: @escaping (_ result: AssetCollection?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
+        let serverUrl = "http://192.168.100.35:8080/media/assets"
+        var downloadTask: URLSessionTask?
+
+        NCCommunication.sharedInstance.downloadSavedAssets(serverUrl: serverUrl) { _ in
+            // Track download task here?
+        } taskHandler: { URLSessionTask in
+            downloadTask = URLSessionTask
+            start()
+        } completionHandler: { data, _, errorCode, errorDescription in
+            guard data != nil else {
+                completion(nil, errorCode, errorDescription)
+                return
+            }
+            completion(data, errorCode, errorDescription)
+        }
+    }
 }

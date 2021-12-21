@@ -53,7 +53,7 @@ public class NCCommunication: SessionDelegate {
 
     private func startNetworkReachabilityObserver() {
         reachabilityManager?.startListening(onUpdatePerforming: { status in
-            print("Reachability", status)
+//            print("Reachability", status)
             switch status {
             case .unknown:
                 NCCommunicationCommon.shared.delegate?.networkReachabilityObserver?(NCCommunicationCommon.typeReachability.unknown)
@@ -81,7 +81,7 @@ public class NCCommunication: SessionDelegate {
                 completionHandler: @escaping (_ account: String, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void)
     {
         guard serverUrl != "" else { return }
-//        let account = NCCommunicationCommon.shared.account
+        //        let account = NCCommunicationCommon.shared.account
 
         let parameters: [String: String] = [
             // TODO: user account
@@ -111,7 +111,7 @@ public class NCCommunication: SessionDelegate {
             }
 
         }, to: serverUrl, method: .post)
-            .validate(statusCode: 200 ..< 300)
+            .validate()
             .onURLSessionTaskCreation(perform: { task in
                 queue.async { taskHandler(task) }
             })
@@ -125,6 +125,35 @@ public class NCCommunication: SessionDelegate {
                     queue.async { completionHandler("nil", error, resultError.errorCode, resultError.description ?? "") }
                 case .success:
                     queue.async { completionHandler("nil", nil, nil, nil) }
+                }
+            }
+    }
+
+    func downloadSavedAssets(serverUrl: String, queue: DispatchQueue = .main,
+                             requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
+                             taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
+                             completionHandler: @escaping (_ res: AssetCollection?, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void)
+    {
+        guard serverUrl != "" else { return }
+        // let account = NCCommunicationCommon.shared.account
+
+        let parameters: [String: String] = [
+            // TODO: user account
+            "user": "61bfc7c7c58be9e15101870b",
+        ]
+
+        AF.request(serverUrl, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default)
+            .validate()
+            .onURLSessionTaskCreation(perform: { task in
+                queue.async { taskHandler(task) }
+            })
+            .responseDecodable(of: AssetCollection.self) { response in
+                switch response.result {
+                case let .failure(error):
+                    let resultError = NCCommunicationError().getError(error: error, httResponse: response.response)
+                    queue.async { completionHandler(nil, error, resultError.errorCode, resultError.description ?? "") }
+                case .success:
+                    queue.async { completionHandler(response.value, nil, nil, nil) }
                 }
             }
     }

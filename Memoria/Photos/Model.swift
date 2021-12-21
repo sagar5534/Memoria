@@ -45,6 +45,10 @@ struct Media: Decodable, Hashable {
     }
 }
 
+// MARK: - AssetIds
+
+typealias AssetCollection = [String]
+
 // MARK: - FileUpload
 
 struct FileUpload {
