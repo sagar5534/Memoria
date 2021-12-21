@@ -11,11 +11,10 @@ import SwiftUI
 
 class AutoUploadService: ObservableObject {
     static let sharedInstance = AutoUploadService()
-
-    @Published var uploadList: [FileUpload] = []
     @AppStorage("autoUpload") private var autoUpload = true
 
-    private var running: Bool = false
+    private var uploadList: [FileUpload] = []
+    @Published var running: Bool = false
 
     func initiateAutoUpload() {
         // TODO: Perhaps find a better way to make this safe??

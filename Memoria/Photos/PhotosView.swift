@@ -52,14 +52,20 @@ struct PhotosView: View {
 
                 HStack(alignment: .center, spacing: 18.0) {
                     Button(action: {}, label: {
-                        Image(systemName: "checkmark.icloud")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 18)
-                            .onAppear {
-                                // TODO: Move to a better location
-                                autoUploadService.initiateAutoUpload()
-                            }
+                        if autoUploadService.running {
+                            Image(systemName: "arrow.clockwise.icloud")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 18)
+                        } else {
+                            Image(systemName: "checkmark.icloud")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 18)
+                                .onTapGesture {
+                                    autoUploadService.initiateAutoUpload()
+                                }
+                        }
                     })
                     .foregroundColor(.primary)
 
