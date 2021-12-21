@@ -2,16 +2,18 @@
 import Foundation
 import UIKit
 
-// MARK: - MediaElement
+// MARK: - Collection
 
 struct Collection: Decodable, Hashable {
     let month, year: Int
     let data: [[Media]]
 }
 
+typealias MediaCollection = [Collection]
+
 // MARK: - Media
 
-public struct Media: Decodable, Hashable {
+struct Media: Decodable, Hashable {
     let id, name, creationDate, path: String
     let thumbnailPath: String
     let user: String
@@ -43,4 +45,28 @@ public struct Media: Decodable, Hashable {
     }
 }
 
-typealias MediaCollection = [Collection]
+// MARK: - AssetIds
+
+typealias AssetCollection = [String]
+
+// MARK: - FileUpload
+
+struct FileUpload {
+    var url: URL?
+    var livePhotoUrl: URL?
+
+    var assetId: String
+    var filename: String
+
+    var mediaType: Int
+    var mediaSubType: Int
+
+    var creationDate: Date
+    var modificationDate: Date
+
+    var duration: Double
+
+    var isFavorite: Bool
+    var isHidden: Bool
+    var isLivePhoto: Bool
+}
