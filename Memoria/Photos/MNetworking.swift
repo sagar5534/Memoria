@@ -61,7 +61,7 @@ class MNetworking: ObservableObject {
     }
 
     private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ file: String, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = "http://192.168.100.35:12480/media/uploads"
+        let serverUrl = "http://192.168.100.35:12480/media/upload"
         let fileName = file.filename
         var uploadTask: URLSessionTask?
 
