@@ -13,7 +13,6 @@ class MNetworking: ObservableObject {
     static let sharedInstance = MNetworking()
 
     var lastReachability: Bool = true
-    var networkReachability: NCCommunicationCommon.typeReachability?
     var downloadRequest: [String: DownloadRequest] = [:]
     var uploadRequest: [String: UploadRequest] = [:]
     var uploadMetadataInBackground: [String: FileUpload] = [:]
@@ -65,7 +64,7 @@ class MNetworking: ObservableObject {
         let fileName = file.filename
         var uploadTask: URLSessionTask?
 
-        NCCommunication.sharedInstance.upload(file: file, serverUrl: serverUrl) { UploadRequest in
+        MComm.shared.upload(file: file, serverUrl: serverUrl) { UploadRequest in
             self.uploadRequest[fileName] = UploadRequest
         } taskHandler: { URLSessionTask in
             uploadTask = URLSessionTask
@@ -82,7 +81,7 @@ class MNetworking: ObservableObject {
         let serverUrl = "http://192.168.100.35:12480/media/assets"
         var downloadTask: URLSessionTask?
 
-        NCCommunication.sharedInstance.downloadSavedAssets(serverUrl: serverUrl) { _ in
+        MComm.shared.downloadSavedAssets(serverUrl: serverUrl) { _ in
             // Track download task here?
         } taskHandler: { URLSessionTask in
             downloadTask = URLSessionTask
