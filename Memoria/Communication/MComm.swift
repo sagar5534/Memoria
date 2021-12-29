@@ -12,7 +12,6 @@ import KeychainAccess
 public class MComm: SessionDelegate {
     static let shared: MComm = .init()
 
-    private let keychain = Keychain(service: "com.memoria.tokens")
     private var reachabilityStatus: NetworkReachabilityManager.NetworkReachabilityStatus = .unknown
 
     internal lazy var session: Alamofire.Session = {
@@ -23,7 +22,7 @@ public class MComm: SessionDelegate {
             delegate: self,
             rootQueue: DispatchQueue(label: "com.memoria.sessionManagerData.rootQueue"),
             startRequestsImmediately: true,
-            interceptor: JwtInterceptor(storage: keychain)
+            interceptor: JwtInterceptor()
         )
     }()
 
@@ -31,24 +30,14 @@ public class MComm: SessionDelegate {
 
     override public init(fileManager: FileManager = .default) {
         super.init(fileManager: fileManager)
-
         print("Starting Communication Services")
         startNetworkReachabilityObserver()
-
-        testing()
     }
 
     deinit {
         print("Stopping Communication Services")
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "changeUser"), object: nil)
         stopNetworkReachabilityObserver()
-    }
-
-    public func testing() {
-        let items = keychain.allItems()
-        for item in items {
-            print("item: \(item)")
-        }
     }
 
     // MARK: - Uploads
@@ -148,11 +137,7 @@ public class MComm: SessionDelegate {
 }
 
 struct JwtInterceptor: RequestInterceptor {
-    private let storage: Keychain
-
-    init(storage: Keychain) {
-        self.storage = storage
-    }
+    let keychain = MKeychain()
 
     func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         guard urlRequest.url?.absoluteString.hasPrefix("http://192.168.100.35:12480") == true
@@ -161,7 +146,7 @@ struct JwtInterceptor: RequestInterceptor {
         }
 
         var urlRequest = urlRequest
-        let token = (try? storage.get("bearer_token")) ?? ""
+        let token = keychain.getBearerToken() ?? ""
         urlRequest.headers.add(.authorization(bearerToken: token))
 
         completion(.success(urlRequest))
@@ -181,7 +166,7 @@ struct JwtInterceptor: RequestInterceptor {
     }
 
     func refreshToken(completion: @escaping (_ isSuccess: Bool) -> Void) {
-        guard let refToken = try? storage.get("refresh_token") else {
+        guard let refToken = keychain.getRefreshToken() else {
             completion(false)
             return
         }
@@ -191,12 +176,11 @@ struct JwtInterceptor: RequestInterceptor {
         AF.request("http://192.168.100.35:12480/api/auth/refresh", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseDecodable(of: RefreshToken.self) { response in
                 switch response.result {
-                case let .failure(error):
-                    let resultError = MCommErrors().getError(error: error, httResponse: response.response)
-                    completion(false)
                 case .success:
-                    self.storage["bearer_token"] = response.value?.data.payload.token
+                    keychain.setBearerToken(token: response.value?.data.payload.token ?? "")
                     completion(true)
+                case .failure:
+                    completion(false)
                 }
             }
     }
