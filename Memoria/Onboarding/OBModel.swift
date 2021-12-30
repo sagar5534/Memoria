@@ -46,7 +46,7 @@ class OBStore: ObservableObject {
     }
 
     func attempLogin(username: String, password: String) {
-        let endpoint = workingURL + (workingURL.hasSuffix("/") ? "api/auth/login" : "/api/auth/login")
+        let endpoint = workingURL + MNetworking.ENDPOINT.apiLogin.rawValue
         guard let url = URL(string: endpoint) else { return }
         let json: [String: Any] = ["username": username, "password": password]
 
@@ -62,7 +62,6 @@ class OBStore: ObservableObject {
         }
 
         running = true
-
         cancellable = URLSession.shared.dataTaskPublisher(for: request)
             .map { $0.data }
             .decode(type: RefreshToken.self, decoder: JSONDecoder())
@@ -81,11 +80,10 @@ class OBStore: ObservableObject {
                     self.isError = true
                     return
                 }
-                let defaults = UserDefaults.standard
-                defaults.set(self.workingURL, forKey: "serverURL")
-
+                UserDefaults.standard.set(self.workingURL, forKey: "serverURL")
                 MKeychain.shared.setBearerToken(token: refreshToken.data.payload.token!)
                 MKeychain.shared.setRefreshToken(token: refreshToken.data.payload.refreshToken!)
+                UserDefaults.standard.set(true, forKey: "signedIn")
             })
     }
 }

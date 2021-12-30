@@ -171,6 +171,9 @@ private struct Login: View {
                             if !serverURL.lowercased().hasPrefix("http") {
                                 serverURL = "https://" + serverURL
                             }
+                            if serverURL.hasSuffix("/") {
+                                serverURL = String(serverURL.dropLast())
+                            }
                             store.pingServer(url: serverURL)
                         }
                         .foregroundColor(.white)
@@ -246,7 +249,7 @@ private struct Login: View {
                     }
                     Spacer()
                 }
-   
+
                 HStack {
                     // TODO:
                     Button(action: {}) {

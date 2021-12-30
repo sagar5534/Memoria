@@ -140,10 +140,8 @@ struct JwtInterceptor: RequestInterceptor {
     let keychain = MKeychain()
 
     func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard urlRequest.url?.absoluteString.hasPrefix("http://192.168.100.35:12480") == true
-        else {
-            return completion(.success(urlRequest))
-        }
+        let serverUrl = UserDefaults.standard.string(forKey: "serverURL") ?? ""
+        guard urlRequest.url?.absoluteString.hasPrefix(serverUrl) == true else { return completion(.success(urlRequest)) }
 
         var urlRequest = urlRequest
         let token = keychain.getBearerToken() ?? ""
@@ -154,8 +152,8 @@ struct JwtInterceptor: RequestInterceptor {
 
     func retry(_ request: Alamofire.Request, for _: Alamofire.Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
-            /// The request did not fail due to a 401 Unauthorized response.
-            /// Return the original error and don't retry the request.
+            // The request did not fail due to a 401 Unauthorized response.
+            // Return the original error and don't retry the request.
             return completion(.doNotRetryWithError(error))
         }
 
@@ -170,10 +168,10 @@ struct JwtInterceptor: RequestInterceptor {
             completion(false)
             return
         }
-
         let parameters = ["refresh_token": refToken]
+        let serverUrl = UserDefaults.standard.string(forKey: "serverURL")! + MNetworking.ENDPOINT.apiRefresh.rawValue
 
-        AF.request("http://192.168.100.35:12480/api/auth/refresh", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        AF.request(serverUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseDecodable(of: RefreshToken.self) { response in
                 switch response.result {
                 case .success:
