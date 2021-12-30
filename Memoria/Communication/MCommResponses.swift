@@ -20,7 +20,13 @@ struct DataClass: Codable {
 }
 
 struct Payload: Codable {
-    let type, token: String
+    let type: String
+    let token, refreshToken: String?
+
+    enum CodingKeys: String, CodingKey {
+        case type, token
+        case refreshToken = "refresh_token"
+    }
 }
 
 struct User: Codable {
@@ -32,4 +38,10 @@ struct User: Codable {
         case password, username
         case v = "__v"
     }
+}
+
+// MARK: - HealthCheck
+
+struct HealthCheck: Codable {
+    let status: String?
 }

@@ -39,8 +39,8 @@ struct OBOverview: View {
                             .tag(index)
                     }
 
-                    Login()
-                        .tag(data.count + 1)
+                    Login(store: OBStore())
+                        .tag(data.count)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
 
@@ -49,10 +49,10 @@ struct OBOverview: View {
                         .frame(width: 40)
                     Spacer()
 
-                    if selectedPage != data.count + 1 {
+                    if selectedPage != data.count {
                         Button(action: {
                             withAnimation {
-                                selectedPage = data.count + 1
+                                selectedPage = data.count
                             }
                         }, label: {
                             Text("Skip")
@@ -66,6 +66,7 @@ struct OBOverview: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -113,8 +114,14 @@ private struct OBOverview_View: View {
 }
 
 private struct Login: View {
+    @State private var serverURL: String = ""
+    @State private var username: String = ""
+    @State private var password: String = ""
+
+    @ObservedObject var store: OBStore
+
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack(alignment: .center) {
             Image("TEST3")
                 .resizable()
                 .scaledToFill()
@@ -126,44 +133,178 @@ private struct Login: View {
 
             LinearGradient(gradient: Gradient(
                 colors: [
-                    Color(UIColor.systemBackground).opacity(0),
-                    Color(UIColor.systemBackground).opacity(0.3),
-                    Color(UIColor.systemBackground).opacity(0.5),
+                    Color(UIColor.systemBackground).opacity(0.6),
+                    Color(UIColor.systemBackground).opacity(0.7),
+                    Color(UIColor.systemBackground).opacity(0.8),
                     Color(UIColor.systemBackground).opacity(1),
                 ]
             ), startPoint: .top, endPoint: .bottom)
 
-            HStack {
-                VStack(alignment: .leading, spacing: 15.0) {
-                    Text("Login")
-                        .bold()
-                        .multilineTextAlignment(.leading)
-                        .font(.system(size: 50))
-                        .lineSpacing(-10)
-
-                    Text("Sign into your account to access your library")
-                        .multilineTextAlignment(.leading)
-                        .font(.body)
-
-                    Button(action: {
-                        withAnimation {}
-                    }, label: {
-                        Text("Go To App")
-                            .bold()
-                    })
-                    .foregroundColor(.secondary)
+            VStack {
+                if !store.showSignIn {
+                    loginView
+                } else {
+                    signInView
                 }
-                Spacer()
             }
             .padding(.horizontal, 30)
             .padding(.bottom)
+            .transition(.slide)
         }
+    }
+
+    var loginView: some View {
+        VStack(alignment: .leading, spacing: 15.0) {
+            Text("Connect")
+                .bold()
+                .multilineTextAlignment(.leading)
+                .font(.system(size: 50))
+                .lineSpacing(-10)
+                .padding(.bottom)
+
+            VStack(spacing: 15) {
+                VStack(alignment: .center, spacing: 13) {
+                    HStack {
+                        TextField("Server URL", text: $serverURL) { Bool in
+                            if Bool { store.isError = false }
+                        } onCommit: {
+                            if !serverURL.lowercased().hasPrefix("http") {
+                                serverURL = "https://" + serverURL
+                            }
+                            store.pingServer(url: serverURL)
+                        }
+                        .foregroundColor(.white)
+                        .autocapitalization(.none)
+                        .font(.system(size: 18))
+
+                        if store.running {
+                            ProgressView()
+                                .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.2)))
+                        } else if store.isError {
+                            Image(systemName: "exclamationmark.icloud")
+                                .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.2)))
+                        } else {
+                            Image(systemName: "arrow.right")
+                        }
+                    }
+
+                    Divider()
+                        .background(Color.white)
+                }
+
+                HStack {
+                    Text("The link to your Memoria web interface when you open it in the browser.")
+                        .modifier(CustomTextM(fontName: "OpenSans-Regular", fontSize: 14, fontColor: Color.white.opacity(0.65)))
+                    Spacer()
+                }
+            }
+        }
+    }
+
+    var signInView: some View {
+        VStack(alignment: .leading, spacing: 15.0) {
+            Text("Sign In")
+                .bold()
+                .multilineTextAlignment(.leading)
+                .font(.system(size: 50))
+                .lineSpacing(-10)
+                .padding(.bottom)
+
+            VStack(spacing: 15) {
+                VStack(alignment: .center, spacing: 30) {
+                    VStack(alignment: .center) {
+                        TextField("Username", text: $username)
+                            .foregroundColor(.white)
+                            .autocapitalization(.none)
+                            .font(.system(size: 18))
+
+                        Divider()
+                            .background(Color.white)
+                    }
+                    VStack(alignment: .center) {
+                        SecureField("Password", text: $password) {
+                            if username != "", password != "" {
+                                store.attempLogin(username: username, password: password)
+                            }
+                        }
+                        .autocapitalization(.none)
+                        .font(.system(size: 18))
+
+                        Divider()
+                            .background(Color.white)
+                    }
+                }
+
+                HStack {
+                    if store.running {
+                        ProgressView()
+                            .animation(.easeIn)
+                    } else if store.isError {
+                        Text("Incorrect credentials")
+                            .modifier(CustomTextM(fontName: "OpenSans-Regular", fontSize: 14, fontColor: Color.red.opacity(0.95)))
+                            .animation(.easeIn)
+                    }
+                    Spacer()
+                }
+   
+                HStack {
+                    // TODO:
+                    Button(action: {}) {
+                        Text("Forgot your password?")
+                            .modifier(CustomTextM(fontName: "OpenSans-Regular", fontSize: 14, fontColor: Color.white.opacity(0.65)))
+                    }
+                    Spacer()
+                }
+            }
+
+            Button(action: {
+                store.attempLogin(username: username, password: password)
+            }) {
+                Text("login".uppercased())
+                    .accentColor(.black)
+                    .font(.custom("OpenSans-Regular", size: 14))
+                    .modifier(ButtonStyle(buttonHeight: 60, buttonColor: Color.white, buttonRadius: 10))
+                    .animation(.default)
+            }
+            .disabled(username == "" || password == "")
+            .padding(.top, 30)
+        }
+    }
+}
+
+private struct CustomTextM: ViewModifier {
+    // MARK: - PROPERTIES
+
+    let fontName: String
+    let fontSize: CGFloat
+    let fontColor: Color
+
+    func body(content: Content) -> some View {
+        content
+            .font(.custom(fontName, size: fontSize))
+            .foregroundColor(fontColor)
+    }
+}
+
+private struct ButtonStyle: ViewModifier {
+    // MARK: - PROPERTIES
+
+    let buttonHeight: CGFloat
+    let buttonColor: Color
+    let buttonRadius: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity)
+            .frame(height: buttonHeight)
+            .background(buttonColor)
+            .cornerRadius(buttonRadius)
     }
 }
 
 struct Onboarding_Overview_Previews: PreviewProvider {
     static var previews: some View {
+//        Login(store: OBStore())
         OBOverview()
-            .preferredColorScheme(.dark)
     }
 }

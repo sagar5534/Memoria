@@ -9,7 +9,7 @@ import Foundation
 import KeychainAccess
 
 public class MKeychain {
-    static let shared: MComm = .init()
+    static let shared: MKeychain = .init()
     private let keychain: Keychain
 
     init() {
