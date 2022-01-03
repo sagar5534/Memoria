@@ -13,11 +13,10 @@ struct Thumbnail: View {
 
     var body: some View {
         let path = (item.thumbnailPath.isEmpty ? item.path : item.thumbnailPath).replacingOccurrences(of: "\\", with: #"/"#)
-        let url = URL(string: #"http://192.168.100.35:12480/data/\#(path)"#)
 
         ZStack(alignment: .bottomLeading) {
             AsyncImageCustom(
-                url: url!,
+                url: path,
                 placeholder: { blurBackdrop },
                 image: {
                     Image(uiImage: $0)

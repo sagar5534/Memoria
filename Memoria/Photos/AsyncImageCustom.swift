@@ -9,13 +9,12 @@ struct AsyncImageCustom<Placeholder: View>: View {
     private let image: (UIImage) -> Image
 
     init(
-        url: URL,
+        url: String,
         @ViewBuilder placeholder: () -> Placeholder,
         @ViewBuilder image: @escaping (UIImage) -> Image = Image.init(uiImage:)
     ) {
         self.placeholder = placeholder()
         self.image = image
-//        _loader = StateObject(wrappedValue: ImageLoader(url: url))
         _loader = StateObject(wrappedValue: ImageLoader(url: url, cache: Environment(\.imageCache).wrappedValue))
     }
 
@@ -35,31 +34,18 @@ struct AsyncImageCustom<Placeholder: View>: View {
     }
 }
 
-protocol ImageCache {
-    subscript(_: URL) -> UIImage? { get set }
-}
-
-struct TemporaryImageCache: ImageCache {
-    private let cache = NSCache<NSURL, UIImage>()
-
-    subscript(_ key: URL) -> UIImage? {
-        get { cache.object(forKey: key as NSURL) }
-        set { newValue == nil ? cache.removeObject(forKey: key as NSURL) : cache.setObject(newValue!, forKey: key as NSURL) }
-    }
-}
-
 class ImageLoader: ObservableObject {
     @Published var image: UIImage?
 
     private(set) var isLoading = false
 
-    private let url: URL
+    private let url: String
     private var cache: ImageCache?
     private var cancellable: AnyCancellable?
 
-    private static let imageProcessingQueue = DispatchQueue(label: "image-processing")
+    private static let imageProcessingQueue = DispatchQueue(label: "com.memoria.Image-processing")
 
-    init(url: URL, cache: ImageCache? = nil) {
+    init(url: String, cache: ImageCache? = nil) {
         self.url = url
         self.cache = cache
     }
@@ -71,12 +57,15 @@ class ImageLoader: ObservableObject {
     func load() {
         guard !isLoading else { return }
 
+        let server = Constants.makeRequestURL(endpoint: .media)
+        let serverURL = URL(string: #"\#(server)/\#(url)"#)!
+
         if let image = cache?[url] {
             self.image = image
             return
         }
 
-        cancellable = URLSession.shared.dataTaskPublisher(for: url)
+        cancellable = URLSession.shared.dataTaskPublisher(for: serverURL)
             .map { UIImage(data: $0.data) }
             .replaceError(with: nil)
             .handleEvents(receiveSubscription: { [weak self] _ in self?.onStart() },
@@ -106,6 +95,19 @@ class ImageLoader: ObservableObject {
 
     private func cache(_ image: UIImage?) {
         image.map { cache?[url] = $0 }
+    }
+}
+
+protocol ImageCache {
+    subscript(_: String) -> UIImage? { get set }
+}
+
+struct TemporaryImageCache: ImageCache {
+    private let cache = NSCache<NSString, UIImage>()
+
+    subscript(_ key: String) -> UIImage? {
+        get { cache.object(forKey: key as NSString) }
+        set { newValue == nil ? cache.removeObject(forKey: key as NSString) : cache.setObject(newValue!, forKey: key as NSString) }
     }
 }
 

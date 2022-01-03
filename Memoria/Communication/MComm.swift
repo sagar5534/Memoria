@@ -42,12 +42,15 @@ public class MComm: SessionDelegate {
 
     // MARK: - Uploads
 
-    func upload(file: FileUpload, serverUrl: String, queue: DispatchQueue = .main,
-                requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
-                taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
-                progressHandler: @escaping (_ progress: Progress) -> Void = { _ in },
-                completionHandler: @escaping (_ account: String, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void)
-    {
+    func upload(
+        file: FileUpload,
+        serverUrl: String,
+        queue: DispatchQueue = .main,
+        requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
+        taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
+        progressHandler: @escaping (_ progress: Progress) -> Void = { _ in },
+        completionHandler: @escaping (_ account: String, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void
+    ) {
         guard serverUrl != "" else { return }
 
         let parameters: [String: String] = [
@@ -96,11 +99,13 @@ public class MComm: SessionDelegate {
 
     // MARK: - Downloads
 
-    func downloadSavedAssets(serverUrl: String, queue: DispatchQueue = .main,
-                             requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
-                             taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
-                             completionHandler: @escaping (_ res: AssetCollection?, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void)
-    {
+    func downloadSavedAssets(
+        serverUrl: String,
+        queue: DispatchQueue = .main,
+        requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
+        taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
+        completionHandler: @escaping (_ res: AssetCollection?, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void
+    ) {
         guard serverUrl != "" else { return }
 
         session.request(serverUrl, method: .get)
@@ -109,6 +114,30 @@ public class MComm: SessionDelegate {
                 queue.async { taskHandler(task) }
             })
             .responseDecodable(of: AssetCollection.self) { response in
+                switch response.result {
+                case let .failure(error):
+                    let resultError = MCommErrors().getError(error: error, httResponse: response.response)
+                    queue.async { completionHandler(nil, error, resultError.errorCode, resultError.description ?? "") }
+                case .success:
+                    queue.async { completionHandler(response.value, nil, nil, nil) }
+                }
+            }
+    }
+
+    func getMedia(
+        serverUrl: String, queue: DispatchQueue = .main,
+        requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
+        taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
+        completionHandler: @escaping (_ res: [Media]?, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void
+    ) {
+        guard serverUrl != "" else { return }
+
+        session.request(serverUrl, method: .get)
+            .validate()
+            .onURLSessionTaskCreation(perform: { task in
+                queue.async { taskHandler(task) }
+            })
+            .responseDecodable(of: [Media].self) { response in
                 switch response.result {
                 case let .failure(error):
                     let resultError = MCommErrors().getError(error: error, httResponse: response.response)
@@ -169,7 +198,7 @@ struct JwtInterceptor: RequestInterceptor {
             return
         }
         let parameters = ["refresh_token": refToken]
-        let serverUrl = UserDefaults.standard.string(forKey: "serverURL")! + MNetworking.ENDPOINT.apiRefresh.rawValue
+        let serverUrl = Constants.makeRequestURL(endpoint: .apiRefresh)
 
         AF.request(serverUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseDecodable(of: RefreshToken.self) { response in

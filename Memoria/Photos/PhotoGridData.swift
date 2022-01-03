@@ -13,7 +13,6 @@ class PhotoGridData: ObservableObject {
     @Published var groupedMedia = [[Media]]()
     @Published var isLoading = true
 
-    let url = URL(string: "http://192.168.100.35:12480/media")!
     private var cancellable: AnyCancellable?
 
     init() {
@@ -21,31 +20,29 @@ class PhotoGridData: ObservableObject {
     }
 
     func fetchAllMedia() {
-        cancellable = URLSession.shared.dataTaskPublisher(for: url)
-            .tryMap { $0.data }
-            .decode(type: [Media].self, decoder: JSONDecoder())
-            .receive(on: RunLoop.main)
-            .catch { _ in Just(self.allMedia) }
-            .sink { [weak self] data in
-                let groupedDic = Dictionary(grouping: data) { media -> String in
-                    media.creationDate.toDate()!.toString(withFormat: "ddMMyyyy")
-                }
-
-                var groupedMedia = [[Media]]()
-                let keys = groupedDic.keys.sorted { first, second in
-                    first.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970 > second.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970
-                }
-                keys.forEach { key in
-                    groupedMedia.append(groupedDic[key]!)
-                }
-
-                if self?.groupedMedia == groupedMedia {
-                    print("No refresh needed")
-                } else {
-                    self?.allMedia = data
-                    self?.groupedMedia = groupedMedia
-                }
-                self?.isLoading = false
+        MNetworking.sharedInstance.getMedia {
+            print("Running")
+        } completion: { data, _, _ in
+            guard data != nil else { return }
+            let groupedDic = Dictionary(grouping: data!) { media -> String in
+                media.creationDate.toDate()!.toString(withFormat: "ddMMyyyy")
             }
+
+            var groupedMedia = [[Media]]()
+            let keys = groupedDic.keys.sorted { first, second in
+                first.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970 > second.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970
+            }
+            keys.forEach { key in
+                groupedMedia.append(groupedDic[key]!)
+            }
+
+            if self.groupedMedia == groupedMedia {
+                print("No refresh needed")
+            } else {
+                self.allMedia = data!
+                self.groupedMedia = groupedMedia
+            }
+            self.isLoading = false
+        }
     }
 }

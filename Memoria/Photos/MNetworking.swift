@@ -61,7 +61,7 @@ class MNetworking: ObservableObject {
     }
 
     private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ file: String, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = UserDefaults.standard.string(forKey: "serverURL")! + MNetworking.ENDPOINT.mediaUpload.rawValue
+        let serverUrl = Constants.makeRequestURL(endpoint: .mediaUpload)
         let fileName = file.filename
         var uploadTask: URLSessionTask?
 
@@ -79,7 +79,7 @@ class MNetworking: ObservableObject {
     }
 
     func downloadSavedAssets(start: @escaping () -> Void, completion: @escaping (_ result: AssetCollection?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = UserDefaults.standard.string(forKey: "serverURL")! + MNetworking.ENDPOINT.mediaAssets.rawValue
+        let serverUrl = Constants.makeRequestURL(endpoint: .mediaAssets)
         var downloadTask: URLSessionTask?
 
         MComm.shared.downloadSavedAssets(serverUrl: serverUrl) { _ in
@@ -96,11 +96,21 @@ class MNetworking: ObservableObject {
         }
     }
 
-    public enum ENDPOINT: String {
-        case media = "/media"
-        case mediaAssets = "/media/assets"
-        case mediaUpload = "/media/upload"
-        case apiRefresh = "/api/auth/refresh"
-        case apiLogin = "/api/auth/login"
+    func getMedia(start: @escaping () -> Void, completion: @escaping (_ result: [Media]?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
+        let serverUrl = Constants.makeRequestURL(endpoint: .media)
+        var downloadTask: URLSessionTask?
+
+        MComm.shared.getMedia(serverUrl: serverUrl) { _ in
+            // Track download task here?
+        } taskHandler: { URLSessionTask in
+            downloadTask = URLSessionTask
+            start()
+        } completionHandler: { data, _, errorCode, errorDescription in
+            guard data != nil else {
+                completion(nil, errorCode, errorDescription)
+                return
+            }
+            completion(data, errorCode, errorDescription)
+        }
     }
 }
