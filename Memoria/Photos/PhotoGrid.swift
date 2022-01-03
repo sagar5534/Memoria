@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PhotoGrid: View {
     let namespace: Namespace.ID
-    var groupedMedia: [[Media]]
+    var groupedMedia: SortedMediaCollection
 
     @Binding var details: Bool
     @Binding var media: Media?
@@ -24,6 +24,7 @@ struct PhotoGrid: View {
             ForEach(groupedMedia.indices, id: \.self) { i in
                 Section(header: titleHeader(header: groupedMedia[i].first!.creationDate.toDate()!.toString())) {
                     ForEach(groupedMedia[i].indices, id: \.self) { index in
+
                         ZStack {
                             // Background
                             Color.clear
@@ -42,9 +43,9 @@ struct PhotoGrid: View {
                                     .scaledToFill()
                                     .layoutPriority(-1)
                             }
-
-                            // Media Info
-                            if groupedMedia[i][index].isFavorite && !details {
+//
+//                            // Media Info
+                            if groupedMedia[i][index].isFavorite ?? false && !details {
                                 VStack {
                                     Spacer()
                                     HStack {
@@ -57,6 +58,7 @@ struct PhotoGrid: View {
                                     }
                                 }
                             }
+                            
                         }
                         .clipped()
                         .matchedGeometryEffect(id: groupedMedia[i][index].id, in: namespace, isSource: true)

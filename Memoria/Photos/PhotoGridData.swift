@@ -9,8 +9,8 @@ import Combine
 import Foundation
 
 class PhotoGridData: ObservableObject {
-    @Published var allMedia = [Media]()
-    @Published var groupedMedia = [[Media]]()
+    @Published var allMedia = MediaCollection()
+    @Published var groupedMedia = SortedMediaCollection()
     @Published var isLoading = true
 
     private var cancellable: AnyCancellable?
@@ -28,7 +28,7 @@ class PhotoGridData: ObservableObject {
                 media.creationDate.toDate()!.toString(withFormat: "ddMMyyyy")
             }
 
-            var groupedMedia = [[Media]]()
+            var groupedMedia = SortedMediaCollection()
             let keys = groupedDic.keys.sorted { first, second in
                 first.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970 > second.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970
             }

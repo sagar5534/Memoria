@@ -45,7 +45,7 @@ struct PhotosToolbar: View {
                     Spacer()
 
                     Button(action: {
-                        media?.isFavorite.toggle()
+                        media?.isFavorite?.toggle()
                     }, label: {
                         Image(systemName: media?.isFavorite ?? false ? "heart.fill" : "heart")
                             .resizable()
