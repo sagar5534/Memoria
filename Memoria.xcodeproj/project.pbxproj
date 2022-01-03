@@ -46,6 +46,8 @@
 		E5A2519F27824DD90094DDC1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2519E27824DD90094DDC1 /* Constants.swift */; };
 		E5BB83E9276AEEC3004B0EE4 /* MComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB83E8276AEEC2004B0EE4 /* MComm.swift */; };
 		E5BB83ED276AEFC6004B0EE4 /* MCommErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB83EC276AEFC6004B0EE4 /* MCommErrors.swift */; };
+		E5EB8B3A2782DCDD006A2226 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB8B392782DCDD006A2226 /* Settings.swift */; };
+		E5EB8B3E2782EA32006A2226 /* SettingsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB8B3D2782EA32006A2226 /* SettingsWebView.swift */; };
 		E5EEA84A270967B500B0FE58 /* OBOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA849270967B500B0FE58 /* OBOverview.swift */; };
 		E5EEA84C27096A3200B0FE58 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA84B27096A3200B0FE58 /* PageControl.swift */; };
 		E5F131B8277AB2A500CDA4C2 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = E5F131B7277AB2A500CDA4C2 /* KeychainAccess */; };
@@ -106,6 +108,8 @@
 		E5A2519E27824DD90094DDC1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E5BB83E8276AEEC2004B0EE4 /* MComm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MComm.swift; sourceTree = "<group>"; };
 		E5BB83EC276AEFC6004B0EE4 /* MCommErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCommErrors.swift; sourceTree = "<group>"; };
+		E5EB8B392782DCDD006A2226 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		E5EB8B3D2782EA32006A2226 /* SettingsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWebView.swift; sourceTree = "<group>"; };
 		E5EEA849270967B500B0FE58 /* OBOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBOverview.swift; sourceTree = "<group>"; };
 		E5EEA84B27096A3200B0FE58 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		E5F131B9277C36BE00CDA4C2 /* MCommResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCommResponses.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 		1B824CBA26BF2FA80070D469 /* Memoria */ = {
 			isa = PBXGroup;
 			children = (
+				E5EB8B382782DCD3006A2226 /* Settings */,
 				E5EEA8482709675F00B0FE58 /* Onboarding */,
 				1B1399CF26E2E5BF00C2559F /* Layouts */,
 				1B824CCD26BF39170070D469 /* Photos */,
@@ -278,6 +283,15 @@
 				E5F131BB277C388800CDA4C2 /* MKeychain.swift */,
 			);
 			path = Communication;
+			sourceTree = "<group>";
+		};
+		E5EB8B382782DCD3006A2226 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E5EB8B392782DCDD006A2226 /* Settings.swift */,
+				E5EB8B3D2782EA32006A2226 /* SettingsWebView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		E5EEA8482709675F00B0FE58 /* Onboarding */ = {
@@ -389,6 +403,7 @@
 				1B824CD826BF6D530070D469 /* MNetworking.swift in Sources */,
 				1B73875F26CF709F00B7FC42 /* EnvironmentValues.swift in Sources */,
 				E5F131BE277C441200CDA4C2 /* OBModel.swift in Sources */,
+				E5EB8B3A2782DCDD006A2226 /* Settings.swift in Sources */,
 				1B73875326CF6FF800B7FC42 /* Thumbnail.swift in Sources */,
 				1BAD6E6827004DE600618A08 /* LottieView.swift in Sources */,
 				1B97510F26EBDBA600E1C529 /* PhotosView.swift in Sources */,
@@ -399,6 +414,7 @@
 				E5A2519B277D7A950094DDC1 /* MainView.swift in Sources */,
 				1B824CD226BF39B10070D469 /* AutoUploadService.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,
+				E5EB8B3E2782EA32006A2226 /* SettingsWebView.swift in Sources */,
 				E5EEA84C27096A3200B0FE58 /* PageControl.swift in Sources */,
 				E5F131BA277C36BE00CDA4C2 /* MCommResponses.swift in Sources */,
 				E5BB83E9276AEEC3004B0EE4 /* MComm.swift in Sources */,
