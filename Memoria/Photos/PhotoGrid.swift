@@ -73,7 +73,7 @@ struct PhotoGrid: View {
     }
 }
 
-struct titleHeader: View {
+private struct titleHeader: View {
     let header: String
 
     var body: some View {

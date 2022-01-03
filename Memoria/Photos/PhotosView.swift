@@ -20,15 +20,20 @@ struct PhotosView: View {
         ZStack {
             if showTabbar {
                 TabView {
-                    ScrollGrid
-                        .tabItem {
-                            Label("Photos", systemImage: "photo.fill.on.rectangle.fill")
-                        }
+                    NavigationView {
+                        ScrollGrid
+                            .navigationBarHidden(true)
+                    }
+                    .tabItem {
+                        Label("Photos", systemImage: "photo.fill.on.rectangle.fill")
+                    }
 
-                    Text("For You")
-                        .tabItem {
-                            Label("For You", systemImage: "rectangle.stack.person.crop.fill")
-                        }
+                    NavigationView {
+                        Text("For You")
+                    }
+                    .tabItem {
+                        Label("For You", systemImage: "rectangle.stack.person.crop.fill")
+                    }
                 }
             } else {
                 ScrollGrid
