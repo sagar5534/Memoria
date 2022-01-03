@@ -72,8 +72,11 @@ class AutoUploadService: ObservableObject {
                 let assetResources = PHAssetResource.assetResources(for: asset)
                 var fileUpload = self.createFileUpload()
 
+                var filename = ((assetResources.first?.originalFilename ?? "File") as NSString).deletingPathExtension
+                filename = filename.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "File"
+
                 fileUpload.assetId = asset.localIdentifier
-                fileUpload.filename = ((assetResources.first?.originalFilename ?? "File") as NSString).deletingPathExtension
+                fileUpload.filename = filename
                 fileUpload.mediaType = asset.mediaType.rawValue
                 fileUpload.mediaSubType = Int(asset.mediaSubtypes.rawValue)
                 fileUpload.creationDate = asset.creationDate ?? Date()

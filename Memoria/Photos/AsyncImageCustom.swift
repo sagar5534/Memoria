@@ -57,9 +57,8 @@ class ImageLoader: ObservableObject {
     func load() {
         guard !isLoading else { return }
 
-        let server = Constants.makeRequestURL(endpoint: .media)
-        let serverURL = URL(string: #"\#(server)/\#(url)"#)!
-
+        let server = Constants.makeRequestURL(endpoint: .staticMedia)
+        let serverURL = URL(string: #"\#(server)\#(url)"#)!
         if let image = cache?[url] {
             self.image = image
             return

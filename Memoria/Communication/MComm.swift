@@ -128,7 +128,7 @@ public class MComm: SessionDelegate {
         serverUrl: String, queue: DispatchQueue = .main,
         requestHandler _: @escaping (_ request: UploadRequest) -> Void = { _ in },
         taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
-        completionHandler: @escaping (_ res: [Media]?, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void
+        completionHandler: @escaping (_ res: MediaCollection?, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void
     ) {
         guard serverUrl != "" else { return }
 
@@ -137,7 +137,7 @@ public class MComm: SessionDelegate {
             .onURLSessionTaskCreation(perform: { task in
                 queue.async { taskHandler(task) }
             })
-            .responseDecodable(of: [Media].self) { response in
+            .responseDecodable(of: MediaCollection.self) { response in
                 switch response.result {
                 case let .failure(error):
                     let resultError = MCommErrors().getError(error: error, httResponse: response.response)

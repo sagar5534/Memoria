@@ -96,7 +96,7 @@ class MNetworking: ObservableObject {
         }
     }
 
-    func getMedia(start: @escaping () -> Void, completion: @escaping (_ result: [Media]?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
+    func getMedia(start: @escaping () -> Void, completion: @escaping (_ result: MediaCollection?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
         let serverUrl = Constants.makeRequestURL(endpoint: .media)
         var downloadTask: URLSessionTask?
 
