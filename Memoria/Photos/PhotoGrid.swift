@@ -58,7 +58,6 @@ struct PhotoGrid: View {
                                     }
                                 }
                             }
-                            
                         }
                         .clipped()
                         .matchedGeometryEffect(id: groupedMedia[i][index].id, in: namespace, isSource: true)

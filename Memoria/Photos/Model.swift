@@ -29,8 +29,6 @@ struct Media: Decodable, Hashable {
 typealias MediaCollection = [Media]
 typealias SortedMediaCollection = [[Media]]
 
-
-
 // MARK: - AssetIds
 
 typealias AssetCollection = [String]
