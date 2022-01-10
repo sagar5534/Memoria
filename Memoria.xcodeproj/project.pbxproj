@@ -42,6 +42,7 @@
 		1BD92C2226CB593500A598DB /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD92C2126CB593500A598DB /* NavigationBar.swift */; };
 		1BD92C2A26CC161300A598DB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1BD92C2926CC161300A598DB /* SDWebImageSwiftUI */; };
 		E51527992766DF5700882881 /* LivePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51527982766DF5700882881 /* LivePhoto.swift */; };
+		E581E448278CBF0E00F089D3 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E581E447278CBF0E00F089D3 /* ImagePicker.swift */; };
 		E5A2519B277D7A950094DDC1 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2519A277D7A950094DDC1 /* MainView.swift */; };
 		E5A2519F27824DD90094DDC1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2519E27824DD90094DDC1 /* Constants.swift */; };
 		E5BB83E9276AEEC3004B0EE4 /* MComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB83E8276AEEC2004B0EE4 /* MComm.swift */; };
@@ -104,6 +105,7 @@
 		1BD49A5F26DF04F600D504AD /* PhotoGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridData.swift; sourceTree = "<group>"; };
 		1BD92C2126CB593500A598DB /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		E51527982766DF5700882881 /* LivePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePhoto.swift; sourceTree = "<group>"; };
+		E581E447278CBF0E00F089D3 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		E5A2519A277D7A950094DDC1 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E5A2519E27824DD90094DDC1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E5BB83E8276AEEC2004B0EE4 /* MComm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MComm.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			children = (
 				E5EB8B392782DCDD006A2226 /* Settings.swift */,
 				E5EB8B3D2782EA32006A2226 /* SettingsWebView.swift */,
+				E581E447278CBF0E00F089D3 /* ImagePicker.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				1B824CD626BF60380070D469 /* UserImage.swift in Sources */,
 				1B73876C26D5FCDD00B7FC42 /* PhotosToolbar.swift in Sources */,
 				E51527992766DF5700882881 /* LivePhoto.swift in Sources */,
+				E581E448278CBF0E00F089D3 /* ImagePicker.swift in Sources */,
 				E5A2519B277D7A950094DDC1 /* MainView.swift in Sources */,
 				1B824CD226BF39B10070D469 /* AutoUploadService.swift in Sources */,
 				1B824CBC26BF2FA80070D469 /* MemoriaApp.swift in Sources */,

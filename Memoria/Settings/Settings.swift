@@ -92,7 +92,10 @@ struct Settings: View {
 private struct UserInfo: View {
     @AppStorage("userName") private var userName = "User"
     @AppStorage("userEmail") private var userEmail = "User@email.com"
+
     @State private var textfield: String = ""
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
 
     var body: some View {
         List {
@@ -100,17 +103,20 @@ private struct UserInfo: View {
                 VStack(alignment: .center) {
                     HStack {
                         Spacer()
+
                         UserImage()
                             .frame(width: 100, height: 100, alignment: .center)
+
                         Spacer()
                     }
                     .padding(.vertical, 10)
 
                     Divider()
-                    Button(action: {}, label: {
+                    Button(action: {
+                        showingImagePicker = true
+                    }, label: {
                         Text("Change Profile Image")
                     })
-                    .disabled(true)
                     .padding(.vertical, 10)
                 }
             }
@@ -154,6 +160,10 @@ private struct UserInfo: View {
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Name & Email")
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: inputImage) { _ in loadImage() }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePicker(image: $inputImage)
+        }
     }
 
     func checkEnteredName() {
@@ -161,6 +171,11 @@ private struct UserInfo: View {
             userName = textfield
             textfield = ""
         }
+    }
+
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        userImages().saveImage(inputImage)
     }
 }
 
