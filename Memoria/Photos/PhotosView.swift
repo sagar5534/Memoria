@@ -74,13 +74,14 @@ struct PhotosView: View {
                     })
                     .foregroundColor(.primary)
 
-                    Button(action: {}, label: {
+                    NavigationLink(destination: Settings()) {
                         Image(systemName: "gearshape")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 20)
-                    })
-                    .foregroundColor(.primary)
+
+                            .foregroundColor(.primary)
+                    }
                 }
             }
             .padding([.horizontal, .top])
