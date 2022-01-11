@@ -142,7 +142,7 @@ private struct UserInfo: View {
                             }).foregroundColor(.blue))
 
                     })
-                .padding(.vertical, 10)
+                    .padding(.vertical, 10)
             }
 
             Section {

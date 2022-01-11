@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class OBStore: ObservableObject {
+class OBModel: ObservableObject {
     @Published var showSignIn: Bool = false
     @Published var isError: Bool = false
     @Published var running: Bool = false

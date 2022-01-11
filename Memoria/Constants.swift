@@ -18,7 +18,7 @@ struct Constants {
     }
 
     static func makeRequestURL(endpoint: ENDPOINT) -> String {
-        //TODO maybe break or log user out?
+        // TODO: maybe break or log user out?
         return UserDefaults.standard.string(forKey: "serverURL") ?? "" + endpoint.rawValue
     }
 }

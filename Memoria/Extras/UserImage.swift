@@ -11,8 +11,6 @@ struct UserImage: View {
     @State var image: Image?
 
     var body: some View {
-        
-        
         if image != nil {
             image?
                 .resizable()
@@ -26,14 +24,10 @@ struct UserImage: View {
                 .scaledToFill()
                 .clipShape(Circle())
         }
-        
-        
-        
     }
 }
 
 class userImages {
-    
     func loadImage(url: URL) -> UIImage? {
         if let data = try? Data(contentsOf: url), let loaded = UIImage(data: data) {
             return loaded
@@ -41,8 +35,8 @@ class userImages {
             return nil
         }
     }
+
     func saveImage(_ image: UIImage?) {
-        
         if let data = image?.pngData() {
             // Create URL
             let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -59,10 +53,8 @@ class userImages {
                 print("Unable to Write Data to Disk (\(error))")
             }
         }
-        
     }
 }
-
 
 struct UserImage_Previews: PreviewProvider {
     static var previews: some View {
