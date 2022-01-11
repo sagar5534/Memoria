@@ -11,20 +11,27 @@ import SwiftUI
 
 class AutoUploadService: ObservableObject {
     static let sharedInstance = AutoUploadService()
-    @AppStorage("autoUpload") private var autoUpload = true
+    @AppStorage("backupEnabled") private var backupEnabled = false
+//    @AppStorage("cellularBackup") private var cellularBackup = false
 
     private var uploadList: [FileUpload] = []
     @Published var running: Bool = false
 
     func initiateAutoUpload() {
-        // TODO: Perhaps find a better way to make this safe??
         if running {
             print("Automatic Upload: Already Running")
             return
         }
         running = true
 
-        if autoUpload {
+        guard backupEnabled else {
+            running = false
+            return
+        }
+
+        // TODO: Check if on cellular and allowed
+
+        if backupEnabled {
             askAuthorizationPhotoLibrary { hasPermission in
                 if hasPermission {
                     self.createUploadList { uploadList in
@@ -38,7 +45,7 @@ class AutoUploadService: ObservableObject {
                         }
                     }
                 } else {
-                    self.autoUpload = false
+                    self.backupEnabled = false
                     self.running = false
                 }
             }

@@ -30,7 +30,7 @@ struct MainView: View {
 }
 
 private struct MotherView: View {
-    @AppStorage("signedIn") var signedIn: Bool = false
+    @AppStorage("signedIn") private var signedIn: Bool = false
 
     var body: some View {
         VStack {
