@@ -14,19 +14,6 @@ struct OnboardingModel: Identifiable {
     let asset: String
 }
 
-private let data: [OnboardingModel] = [
-    OnboardingModel(
-        title: "Your \nphotos, \nin your hands.",
-        detail: "Memoria brings together all the media that matters to you. Your personal collection in a single app, on any device, no matter where you are.",
-        asset: "TEST2"
-    ),
-    OnboardingModel(
-        title: "Lorem Ipsum",
-        detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a nibh nec justo convallis semper. Morbi pretium erat felis, id suscipit arcu tincidunt",
-        asset: "TEST"
-    ),
-]
-
 struct OBOverview: View {
     @State private var selectedPage = 0
 
@@ -53,15 +40,15 @@ struct OBOverview: View {
 
                 VStack {
                     TabView(selection: $selectedPage.animation()) {
-                        ForEach(data.indices) { index in
-                            OBOverview_View(data: data[index])
-                                .tag(index)
-                        }
+                        OBOverview_Main()
+                            .tag(0)
+                        OBOverview_Features()
+                            .tag(1)
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
 
                     VStack(alignment: .center) {
-                        PageControl(currentPage: $selectedPage, numberOfPages: data.count)
+                        PageControl(currentPage: $selectedPage, numberOfPages: 2)
                             .frame(width: 40)
                             .padding()
 
@@ -100,19 +87,17 @@ struct OBOverview: View {
     }
 }
 
-private struct OBOverview_View: View {
-    let data: OnboardingModel
-
+private struct OBOverview_Main: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 15.0) {
-                Text(data.title)
+                Text("Your \nphotos, \nin your hands.")
                     .bold()
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 50))
                     .lineSpacing(-10)
 
-                Text(data.detail)
+                Text("Memoria brings together all the media that matters to you. Your personal collection in a single app, on any device, no matter where you are.")
                     .multilineTextAlignment(.leading)
                     .font(.body)
             }
@@ -123,8 +108,41 @@ private struct OBOverview_View: View {
     }
 }
 
+private struct OBOverview_Features: View {
+    private var threeColumnGrid = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    private var symbols = ["photo", "video", "livephoto", "slowmo", "desktopcomputer", "airplayvideo"]
+    private var label = ["Photos", "Videos", "Live Photos", "Slow Motions", "Web Access", "Share"]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15.0) {
+            Text("Features")
+                .bold()
+                .multilineTextAlignment(.leading)
+                .font(.system(size: 50))
+                .lineSpacing(-10)
+                .padding()
+
+            LazyVGrid(columns: threeColumnGrid, spacing: 20) {
+                ForEach(symbols.indices, id: \.self) { index in
+                    VStack(alignment: .center) {
+                        Image(systemName: symbols[index])
+                            .font(.system(size: 30))
+                            .frame(width: 50, height: 50)
+                            .cornerRadius(10)
+                        Text(label[index])
+                            .multilineTextAlignment(.center)
+                    }
+                }
+            }
+        }
+        .padding()
+    }
+}
+
 struct Onboarding_Overview_Previews: PreviewProvider {
     static var previews: some View {
         OBOverview()
+        OBOverview_Main()
+        OBOverview_Features()
     }
 }
