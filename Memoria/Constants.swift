@@ -19,6 +19,12 @@ struct Constants {
 
     static func makeRequestURL(endpoint: ENDPOINT) -> String {
         // TODO: maybe break or log user out?
-        return UserDefaults.standard.string(forKey: "serverURL") ?? "" + endpoint.rawValue
+        var temp = UserDefaults.standard.string(forKey: "serverURL") ?? ""
+        guard temp != "" else {
+            print("Error: serverURL does not exist")
+            return ""
+        }
+        temp = temp + endpoint.rawValue
+        return temp
     }
 }

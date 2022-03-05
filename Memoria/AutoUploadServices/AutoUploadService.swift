@@ -161,8 +161,10 @@ class AutoUploadService: ObservableObject {
 
                     MNetworking.sharedInstance.downloadSavedAssets {
                         // Start
-                    } completion: { uploadedAssets, _, _ in
+                    } completion: { uploadedAssets, errorCode, errorDesc in
+                                                
                         guard uploadedAssets != nil else {
+                            print("Download Saved Assets Error: ", errorCode, errorDesc)
                             completion(pendingAssets)
                             return
                         }
