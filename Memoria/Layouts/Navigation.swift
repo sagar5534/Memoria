@@ -8,16 +8,10 @@
 import SwiftUI
 
 struct Navigation: View {
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-    @ViewBuilder var body: some View {
-        // Phone View
-        if horizontalSizeClass == .compact {
-            TabNavigation()
-        }
-        // Ipad View
-        else {
-            SidebarNavigation()
+    var body: some View {
+        NavigationView {
+            PhotosView()
         }
     }
 }

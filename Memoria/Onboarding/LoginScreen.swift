@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Login: View {
+struct LoginScreen: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var serverURL: String = ""
     @State private var username: String = ""
@@ -205,7 +205,7 @@ private struct ButtonStyle: ViewModifier {
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            Login()
+            LoginScreen()
         }
     }
 }

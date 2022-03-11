@@ -14,7 +14,7 @@ struct OnboardingModel: Identifiable {
     let asset: String
 }
 
-struct OBOverview: View {
+struct OnboardingScreen: View {
     @State private var selectedPage = 0
 
     var body: some View {
@@ -53,7 +53,7 @@ struct OBOverview: View {
                             .padding()
 
                         NavigationLink(
-                            destination: Login(),
+                            destination: LoginScreen(),
                             label: {
                                 Text("Get Started")
                                     .bold()
@@ -141,7 +141,7 @@ private struct OBOverview_Features: View {
 
 struct Onboarding_Overview_Previews: PreviewProvider {
     static var previews: some View {
-        OBOverview()
+        OnboardingScreen()
         OBOverview_Main()
         OBOverview_Features()
     }
