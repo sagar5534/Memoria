@@ -34,17 +34,9 @@ let package = Package(
             ]
         )
     ],
-    dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .branch("master")),
-        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", .branch("master"))
-    ],
     targets: [
         .executableTarget(
             name: "AppModule",
-            dependencies: [
-                .product(name: "Alamofire", package: "alamofire"),
-                .product(name: "KeychainAccess", package: "keychainaccess")
-            ],
             path: ".",
             resources: [
                 .process("Resources")
