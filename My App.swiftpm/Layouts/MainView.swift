@@ -38,7 +38,7 @@ private struct MotherView: View {
                 Navigation()
                     .transition(.opacity)
             } else {
-                OBOverview()
+                OnboardingScreen()
                     .transition(.opacity)
             }
         }
