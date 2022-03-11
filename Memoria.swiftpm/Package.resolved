@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": "master",
+          "revision": "2d085513c48a17082859fede7e6530dfb971f554",
+          "version": null
+        }
+      },
+      {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
+        "state": {
+          "branch": "master",
+          "revision": "6299daec1d74be12164fec090faf9ed14d0da9d6",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

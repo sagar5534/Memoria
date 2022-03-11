@@ -16,6 +16,8 @@ let package = Package(
         .iOSApplication(
             name: "Memoria",
             targets: ["AppModule"],
+            bundleIdentifier: "ca.sagarp.Memoria",
+            teamIdentifier: "LL6476HKHT",
             displayVersion: "1.0",
             bundleVersion: "1",
             iconAssetName: "AppIcon",
@@ -32,10 +34,21 @@ let package = Package(
             ]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .branch("master")),
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", .branch("master"))
+    ],
     targets: [
         .executableTarget(
             name: "AppModule",
-            path: "."
+            dependencies: [
+                .product(name: "Alamofire", package: "alamofire"),
+                .product(name: "KeychainAccess", package: "keychainaccess")
+            ],
+            path: ".",
+            resources: [
+                .process("Resources")
+            ]
         )
     ]
 )
