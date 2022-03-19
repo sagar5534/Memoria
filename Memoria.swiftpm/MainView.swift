@@ -30,12 +30,12 @@ struct MainView: View {
 }
 
 private struct MotherView: View {
-    @AppStorage("signedIn") private var signedIn: Bool = false
+    @AppStorage("signedIn") private var signedIn: Bool = true
 
     var body: some View {
         VStack {
             if signedIn {
-                Navigation()
+                PhotosView(showTabbar: true)
                     .transition(.opacity)
             } else {
                 OnboardingScreen()
