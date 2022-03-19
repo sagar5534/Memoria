@@ -7,57 +7,20 @@
 
 import SwiftUI
 
-struct Login: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+struct SelectServer: View {
     @State private var serverURL: String = ""
-    @State private var username: String = ""
-    @State private var password: String = ""
     @ObservedObject var store: OBModel = OBModel()
-
+    
     var body: some View {
-        ZStack {
-            Image("TEST")
-                .resizable()
-                .scaledToFill()
-                .frame(
-                    width: UIScreen.main.bounds.width
-                )
-                .clipped()
-                .overlay(
-                    LinearGradient(gradient: Gradient(
-                        colors: [
-                            Color(UIColor.systemBackground).opacity(0.3),
-                            Color(UIColor.systemBackground).opacity(0.6),
-                            Color(UIColor.systemBackground).opacity(0.8),
-                            Color(UIColor.systemBackground).opacity(1),
-                        ]
-                    ), startPoint: .top, endPoint: .bottom)
-                )
-
-            VStack {
-                if !store.showSignIn {
-                    ConnectServer
-                } else {
-                    SignInToServer
-                }
-            }
-            .padding(.horizontal, 30)
-            .padding(.bottom)
-            .transition(.slide)
-        }
-        .edgesIgnoringSafeArea(.top)
-        .preferredColorScheme(.dark)
-    }
-
-    var ConnectServer: some View {
         VStack(alignment: .leading, spacing: 15.0) {
+            Spacer()
             Text("Connect")
                 .bold()
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 50))
                 .lineSpacing(-10)
-                .padding(.bottom)
-
+                .padding(.horizontal, 30)
+            
             VStack(spacing: 15) {
                 VStack(alignment: .center, spacing: 13) {
                     HStack {
@@ -76,7 +39,7 @@ struct Login: View {
                         .foregroundColor(.white)
                         .autocapitalization(.none)
                         .font(.system(size: 18))
-
+                        
                         if store.running {
                             ProgressView()
                                 .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.2)))
@@ -86,30 +49,58 @@ struct Login: View {
                         } else {
                             Image(systemName: "arrow.right")
                         }
+                        
+                        NavigationLink(isActive: $store.showSignIn) { 
+                            SignInToServer(store: store)
+                        } label: {}
+                        
                     }
-
                     Divider()
                         .background(Color.white)
                 }
-
+                
                 HStack {
                     Text("The link to your Memoria web interface when you open it in the browser.")
-                        .modifier(CustomTextM(fontName: "OpenSans-Regular", fontSize: 14, fontColor: Color.white.opacity(0.65)))
+                        .font(.system(size: 14))
+                        .opacity(0.65)
                     Spacer()
                 }
             }
+            .padding(.all, 30)
+            Spacer()
         }
+        .background(
+            LinearGradient(gradient: Gradient(
+                colors: [
+                    Color(UIColor.systemBackground).opacity(0.3),
+                    Color(UIColor.systemBackground).opacity(0.6),
+                    Color(UIColor.systemBackground).opacity(0.8),
+                    Color(UIColor.systemBackground).opacity(1),
+                ]
+            ), startPoint: .top, endPoint: .bottom)
+        )
+        .background(Image("TEST").resizable().scaledToFill())
+        .navigationBarHidden(true)
+        .accentColor(.white)
+        .preferredColorScheme(.dark)
     }
+}
 
-    var SignInToServer: some View {
+struct SignInToServer: View {
+    @State private var username: String = ""
+    @State private var password: String = ""
+    @ObservedObject var store: OBModel
+    
+    var body: some View {
         VStack(alignment: .leading, spacing: 15.0) {
+            Spacer()
             Text("Sign In")
                 .bold()
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 50))
                 .lineSpacing(-10)
-                .padding(.bottom)
-
+                .padding(.horizontal, 30)
+            
             VStack(spacing: 15) {
                 VStack(alignment: .center, spacing: 30) {
                     VStack(alignment: .center) {
@@ -117,7 +108,6 @@ struct Login: View {
                             .foregroundColor(.white)
                             .autocapitalization(.none)
                             .font(.system(size: 18))
-
                         Divider()
                             .background(Color.white)
                     }
@@ -129,83 +119,76 @@ struct Login: View {
                         }
                         .autocapitalization(.none)
                         .font(.system(size: 18))
-
                         Divider()
                             .background(Color.white)
                     }
                 }
-
+                
                 HStack {
                     if store.running {
                         ProgressView()
-                            .animation(.easeIn)
                     } else if store.isError {
                         Text("Incorrect credentials")
-                            .modifier(CustomTextM(fontName: "OpenSans-Regular", fontSize: 14, fontColor: Color.red.opacity(0.95)))
-                            .animation(.easeIn)
+                            .font(.system(size: 14))
+                            .opacity(0.95)
                     }
                     Spacer()
                 }
-
                 HStack {
-                    // TODO:
                     Button(action: {}) {
                         Text("Forgot your password?")
-                            .modifier(CustomTextM(fontName: "OpenSans-Regular", fontSize: 14, fontColor: Color.white.opacity(0.65)))
+                            .font(.system(size: 14))
+                            .opacity(0.65)
                     }
                     Spacer()
                 }
             }
-
+            .padding(.all, 30)
+            
             Button(action: {
                 store.attempLogin(username: username, password: password)
             }) {
-                Text("login".uppercased())
-                    .accentColor(.black)
-                    .font(.custom("OpenSans-Regular", size: 14))
-                    .modifier(ButtonStyle(buttonHeight: 60, buttonColor: Color.white, buttonRadius: 10))
-                    .animation(.default)
+                Text("Sign In".uppercased())
+                    .bold()
+                    .foregroundColor(.black)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundColor(.white)
+                    )
+                    .padding()
+                    .foregroundColor(.secondary)
             }
             .disabled(username == "" || password == "")
-            .padding(.top, 30)
+            .padding(.horizontal, 30)
+            
+            Spacer()
         }
-    }
-}
-
-private struct CustomTextM: ViewModifier {
-    // MARK: - PROPERTIES
-
-    let fontName: String
-    let fontSize: CGFloat
-    let fontColor: Color
-
-    func body(content: Content) -> some View {
-        content
-            .font(.custom(fontName, size: fontSize))
-            .foregroundColor(fontColor)
-    }
-}
-
-private struct ButtonStyle: ViewModifier {
-    // MARK: - PROPERTIES
-
-    let buttonHeight: CGFloat
-    let buttonColor: Color
-    let buttonRadius: CGFloat
-
-    func body(content: Content) -> some View {
-        content
-            .frame(maxWidth: .infinity)
-            .frame(height: buttonHeight)
-            .background(buttonColor)
-            .cornerRadius(buttonRadius)
+        .background(
+            LinearGradient(gradient: Gradient(
+                colors: [
+                    Color(UIColor.systemBackground).opacity(0.3),
+                    Color(UIColor.systemBackground).opacity(0.6),
+                    Color(UIColor.systemBackground).opacity(0.8),
+                    Color(UIColor.systemBackground).opacity(1),
+                ]
+            ), startPoint: .top, endPoint: .bottom)
+        )
+        .background(Image("TEST").resizable().scaledToFill())
+        .navigationBarHidden(true)
+        .accentColor(.white)
+        .preferredColorScheme(.dark)
     }
 }
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            Login()
+            SelectServer()
+        }
+        NavigationView {
+            SignInToServer(store: OBModel())
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  Onboarding_Overview.swift
+//  OnboardingScreen.swift
 //  Memoria
 //
 //  Created by Sagar R Patel on 2021-10-03.
@@ -26,7 +26,7 @@ struct OnboardingScreen: View {
                         .frame(width: 40)
 
                     NavigationLink(
-                        destination: Login(),
+                        destination: SelectServer(),
                         label: {
                             Text("Get Started")
                                 .bold()
