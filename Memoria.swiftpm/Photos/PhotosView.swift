@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PhotosView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    let showTabbar: Bool
     @Namespace private var namespace
     @State private var media: Media?
     @State private var details = false
@@ -18,27 +17,17 @@ struct PhotosView: View {
 
     var body: some View {
         ZStack {
-            if showTabbar {
-                TabView {
-                    NavigationView {
-                        ScrollGrid
-                            .navigationBarHidden(true)
-                    }
+            TabView {
+                    ScrollGrid
                     .tabItem {
                         Label("Photos", systemImage: "photo.fill.on.rectangle.fill")
                     }
 
-                    NavigationView {
-                        Text("For You")
-                    }
+                    Text("For You")
                     .tabItem {
                         Label("For You", systemImage: "rectangle.stack.person.crop.fill")
                     }
                 }
-            } else {
-                ScrollGrid
-            }
-
             if details {
                 PhotoDetail(namespace: namespace, details: $details, media: $media)
             }

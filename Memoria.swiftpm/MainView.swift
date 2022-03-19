@@ -35,11 +35,17 @@ private struct MotherView: View {
     var body: some View {
         VStack {
             if signedIn {
-                PhotosView(showTabbar: true)
-                    .transition(.opacity)
+                NavigationView {
+                    PhotosView()
+                }
+                .navigationViewStyle(.stack)
+                .transition(.opacity)
             } else {
-                OnboardingScreen()
-                    .transition(.opacity)
+                NavigationView {
+                    OnboardingScreen()
+                }
+                .navigationViewStyle(.stack)
+                .transition(.opacity)
             }
         }
     }

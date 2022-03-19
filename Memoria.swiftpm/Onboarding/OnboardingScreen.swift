@@ -11,8 +11,7 @@ struct OnboardingScreen: View {
     @State private var selectedPage = 0
     
     var body: some View {
-        NavigationView {
-            VStack {
+        VStack {
                 TabView(selection: $selectedPage.animation()) {
                     IntroPanel()
                         .tag(0)
@@ -63,8 +62,6 @@ struct OnboardingScreen: View {
             .navigationBarHidden(true)
             .accentColor(.white)
             .preferredColorScheme(.dark)
-        }
-        .navigationViewStyle(.stack)
         
     }
 }
