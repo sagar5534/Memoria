@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainView: View {
     @State var isActive: Bool = false
-
+    
     var body: some View {
         VStack {
             if self.isActive {
@@ -31,15 +31,12 @@ struct MainView: View {
 
 private struct MotherView: View {
     @AppStorage("signedIn") private var signedIn: Bool = true
-
+    
     var body: some View {
         VStack {
             if signedIn {
-                NavigationView {
-                    PhotosView()
-                }
-                .navigationViewStyle(.stack)
-                .transition(.opacity)
+                PhotosView()
+                    .transition(.opacity)
             } else {
                 NavigationView {
                     OnboardingScreen()
@@ -53,11 +50,9 @@ private struct MotherView: View {
 
 private struct SplashView: View {
     @Environment(\.colorScheme) var colorScheme
-
+    
     var body: some View {
         ZStack {
-            let x = colorScheme == .dark ? Color.black : Color.white
-            x.ignoresSafeArea()
             VStack {
                 Text("Memoria")
                     .font(.custom("Pacifico-Regular", size: 30))
