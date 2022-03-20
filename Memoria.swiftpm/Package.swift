@@ -16,6 +16,8 @@ let package = Package(
         .iOSApplication(
             name: "Memoria",
             targets: ["AppModule"],
+            bundleIdentifier: "ca.sagarp.Memoria",
+            teamIdentifier: "LL6476HKHT",
             displayVersion: "1.0",
             bundleVersion: "1",
             iconAssetName: "AppIcon",
