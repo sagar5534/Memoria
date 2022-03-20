@@ -45,7 +45,10 @@ let package = Package(
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "KeychainAccess", package: "KeychainAccess")
             ],
-            path: "."
+            path: ".",
+            resources: [
+            .process("Resources")
+            ]
         )
     ]
 )

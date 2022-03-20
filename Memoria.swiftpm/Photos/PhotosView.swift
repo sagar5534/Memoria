@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct PhotosView: View {
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Namespace private var namespace
     @State private var media: Media?
     @State private var details = false
     @ObservedObject var photoGridData = PhotoGridData()
     @ObservedObject var autoUploadService = AutoUploadService.sharedInstance
     
+    init() {
+        
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 17)!]
+        let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = attributes
+        appearance.largeTitleTextAttributes = largeAttributes
+        appearance.backButtonAppearance.normal.titleTextAttributes = attributes
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
     
     var body: some View {
         ZStack {
@@ -22,6 +34,7 @@ struct PhotosView: View {
                 NavigationView {
                     ScrollGrid
                 }
+                .navigationViewStyle(.stack)
                 .tabItem {
                     Label("Photos", systemImage: "photo.fill.on.rectangle.fill")
                 }
@@ -45,9 +58,6 @@ struct PhotosView: View {
     var ScrollGrid: some View {
         
         ScrollView {
-            
-            //                Text("Memoria")
-            //                    .font(.custom("Pacifico-Regular", size: 26, relativeTo: .title2))
             
             Divider()
             
@@ -74,27 +84,6 @@ struct PhotosView: View {
                             }
                         }
                     }
-                }
-                .onAppear {
-                    let appearance = UINavigationBarAppearance()
-                    appearance.configureWithOpaqueBackground()
-                    UINavigationBar.appearance().standardAppearance = appearance
-                    UINavigationBar.appearance().scrollEdgeAppearance = appearance
-                    
-                    guard let customFont = UIFont(name: "Pacifico-Regular", size: UIFont.labelFontSize) else {
-                        fatalError("""
-                            Failed to load the "CustomFont-Light" font.
-                            Make sure the font file is included in the project and the font name is spelled correctly.
-                            """
-                        )
-                    }
-//                    label.font = UIFontMetrics.default.scaledFont(for: customFont)
-//                    label.adjustsFontForContentSizeCategory = true
-                    
-                    let attributes = [NSAttributedString.Key.font: customFont]
-
-                    UINavigationBar.appearance().titleTextAttributes = attributes
-
                 }
         }
     }
