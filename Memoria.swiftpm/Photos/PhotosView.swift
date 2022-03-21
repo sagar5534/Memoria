@@ -22,16 +22,12 @@ struct PhotosView: View {
         
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.titlePositionAdjustment.vertical = 1
         navBarAppearance.titleTextAttributes = attributes
         navBarAppearance.largeTitleTextAttributes = largeAttributes
         navBarAppearance.backButtonAppearance.normal.titleTextAttributes = attributes
         UINavigationBar.appearance().standardAppearance = navBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
-        
-//                let tabAppearance = UITabBarAppearance()
-//                tabAppearance.configureWithOpaqueBackground()
-//                UITabBar.appearance().standardAppearance = tabAppearance
-//                UITabBar.appearance().scrollEdgeAppearance = tabAppearance
     }
     
     var body: some View {
@@ -42,33 +38,57 @@ struct PhotosView: View {
                     NavigationView {
                         ScrollGrid
                     }
+                    .navigationViewStyle(.stack)
                 case 1:
                     NavigationView {
                         Text("For You")
+                    }
+                case 2: 
+                    NavigationView {
+                        Text("Search")
                     }
                 default:
                     NavigationView {
                         ScrollGrid
                     }
                 }
-                                
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        tabSelected = 0
-                    }) {
-                        Image(systemName: "photo.fill.on.rectangle.fill")
+                
+                VStack(spacing: 0) {
+                    Divider()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            tabSelected = 0
+                        }) {
+                            Image(systemName: "house")
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.vertical, 14)
+                        }
+                        Spacer()
+                        Button(action: {
+                            tabSelected = 1
+                        }) {
+                            Image(systemName: "square.stack")
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.vertical, 14)
+                        }
+                        Spacer()
+                        Button(action: {
+                            tabSelected = 2
+                        }) {
+                            Image(systemName: "magnifyingglass")
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.vertical, 14)
+                        }
+                        Spacer()
                     }
-                    Spacer()
-                    Button(action: {
-                        tabSelected = 1
-                    }) {
-                        Image(systemName: "rectangle.stack.person.crop.fill")
-                    }
-                    Spacer()
+                    .foregroundColor(.primary)
                 }
                 .frame(height: UITabBarController().tabBar.frame.size.height)
-                .background(.white)
+                .background(.background)
             }
             
             if details {
@@ -76,7 +96,7 @@ struct PhotosView: View {
             }
         }
         .animation(details ? .spring(response: 0.25, dampingFraction: 0.8) :
-            .spring(response: 0.2, dampingFraction: 0.8), value: details)
+                        .spring(response: 0.2, dampingFraction: 0.8), value: details)
     }
     
     @ViewBuilder
@@ -88,21 +108,27 @@ struct PhotosView: View {
                 .navigationTitle("Memoria")
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        HStack(alignment: .center, spacing: 14.0) {
-                            Button(action: {}, label: {
-                                if autoUploadService.running {
-                                    Label("Backup", systemImage: "arrow.clockwise.icloud")
-                                } else {
-                                    Label("Backup", systemImage: "checkmark.icloud")
-                                        .onTapGesture {
-                                            autoUploadService.initiateAutoUpload()
-                                        }
-                                }
-                            })
-                            .foregroundColor(.primary)
+                        HStack(alignment: .center, spacing: 12.0) {
+                            
+                            if autoUploadService.running {
+                                Button(action: {}, label: {
+                                    Image(systemName: "arrow.clockwise.icloud")
+                                })
+                                    .foregroundColor(.primary)
+                            } else {
+                                Button(action: {
+                                    autoUploadService.initiateAutoUpload()
+                                }, label: {
+                                    Image(systemName: "checkmark.icloud")
+                                })
+                                    .foregroundColor(.primary)
+                            }
                             
                             NavigationLink(destination: Settings()) {
-                                Label("Settings", systemImage: "gearshape")
+                                Image(systemName: "gearshape")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 20)
                                     .foregroundColor(.primary)
                             }
                         }

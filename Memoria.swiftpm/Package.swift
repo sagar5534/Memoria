@@ -31,6 +31,10 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
+            ],
+            capabilities: [
+                .localNetwork(purposeString: "Allows connection to your hosted server", bonjourServiceTypes: []),
+                .photoLibrary(purposeString: "Allows access to your library to sync them to your hosted server")
             ]
         )
     ],
