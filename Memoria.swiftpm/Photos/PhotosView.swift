@@ -11,54 +11,77 @@ struct PhotosView: View {
     @Namespace private var namespace
     @State private var media: Media?
     @State private var details = false
+    @State private var tabSelected = 0
+    
     @ObservedObject var photoGridData = PhotoGridData()
     @ObservedObject var autoUploadService = AutoUploadService.sharedInstance
     
     init() {
-        
         let attributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 17)!]
         let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
         
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.titleTextAttributes = attributes
-        appearance.largeTitleTextAttributes = largeAttributes
-        appearance.backButtonAppearance.normal.titleTextAttributes = attributes
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.titleTextAttributes = attributes
+        navBarAppearance.largeTitleTextAttributes = largeAttributes
+        navBarAppearance.backButtonAppearance.normal.titleTextAttributes = attributes
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        
+//                let tabAppearance = UITabBarAppearance()
+//                tabAppearance.configureWithOpaqueBackground()
+//                UITabBar.appearance().standardAppearance = tabAppearance
+//                UITabBar.appearance().scrollEdgeAppearance = tabAppearance
     }
     
     var body: some View {
         ZStack {
-            TabView {
-                NavigationView {
-                    ScrollGrid
+            ZStack(alignment: .bottom) {
+                switch tabSelected {
+                case 0:
+                    NavigationView {
+                        ScrollGrid
+                    }
+                case 1:
+                    NavigationView {
+                        Text("For You")
+                    }
+                default:
+                    NavigationView {
+                        ScrollGrid
+                    }
                 }
-                .navigationViewStyle(.stack)
-                .tabItem {
-                    Label("Photos", systemImage: "photo.fill.on.rectangle.fill")
+                                
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        tabSelected = 0
+                    }) {
+                        Image(systemName: "photo.fill.on.rectangle.fill")
+                    }
+                    Spacer()
+                    Button(action: {
+                        tabSelected = 1
+                    }) {
+                        Image(systemName: "rectangle.stack.person.crop.fill")
+                    }
+                    Spacer()
                 }
-                
-                NavigationView{
-                    Text("For You")
-                }
-                .tabItem {
-                    Label("For You", systemImage: "rectangle.stack.person.crop.fill")
-                }
+                .frame(height: UITabBarController().tabBar.frame.size.height)
+                .background(.white)
             }
+            
             if details {
                 PhotoDetail(namespace: namespace, details: $details, media: $media)
             }
         }
         .animation(details ? .spring(response: 0.25, dampingFraction: 0.8) :
-                        .spring(response: 0.2, dampingFraction: 0.8), value: details)
+            .spring(response: 0.2, dampingFraction: 0.8), value: details)
     }
     
     @ViewBuilder
     var ScrollGrid: some View {
-        
         ScrollView {
-            
             Divider()
             
             PhotoGrid(namespace: namespace, groupedMedia: photoGridData.groupedMedia, details: $details, media: $media)
@@ -76,7 +99,7 @@ struct PhotosView: View {
                                         }
                                 }
                             })
-                                .foregroundColor(.primary)
+                            .foregroundColor(.primary)
                             
                             NavigationLink(destination: Settings()) {
                                 Label("Settings", systemImage: "gearshape")
