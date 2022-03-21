@@ -8,7 +8,7 @@
 import SwiftUI
 import class Foundation.Bundle
 
-#if os(macOS)
+#if Xcode
 extension Bundle {
   static var module:Bundle { Bundle(identifier: "ca.sagarp.Memoria")! }
 }
