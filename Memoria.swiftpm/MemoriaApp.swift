@@ -6,6 +6,14 @@
 //
 
 import SwiftUI
+import class Foundation.Bundle
+
+#if !SPM
+extension Bundle {
+  static var module:Bundle { Bundle(identifier: "ca.sagarp.Memoria")! }
+}
+#endif
+
 
 @main
 struct MemoriaApp: App {

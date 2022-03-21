@@ -36,18 +36,20 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", "5.5.0"..<"6.0.0"),
-        .package(url: "https://github.com/sagar5534/KeychainAccess.git", "4.2.2"..<"5.0.0")
+        .package(url: "https://github.com/sagar5534/KeychainAccess.git", "4.2.2"..<"5.0.0"),
+        .package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image", "2.0.0"..<"3.0.0")
     ],
     targets: [
         .executableTarget(
             name: "AppModule",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
-                .product(name: "KeychainAccess", package: "KeychainAccess")
+                .product(name: "KeychainAccess", package: "KeychainAccess"),
+                .product(name: "CachedAsyncImage", package: "swiftui-cached-async-image")
             ],
             path: ".",
             resources: [
-            .process("Resources")
+                .process("Resources")
             ]
         )
     ]
