@@ -17,7 +17,7 @@ class AutoUploadService: ObservableObject {
     private var uploadList: [FileUpload] = []
     @Published var running: Bool = false
 
-    func initiateAutoUpload() {
+    func initiateAutoUpload(onComplete: @escaping () -> Void) {
         if running {
             print("Automatic Upload: Already Running")
             return
@@ -42,6 +42,7 @@ class AutoUploadService: ObservableObject {
                         MNetworking.sharedInstance.upload(uploadList: uploadList!) { success, failed in
                             print("Uploading Finished:", success, "Uploaded /", failed, "Failed")
                             self.running = false
+                            onComplete()
                         }
                     }
                 } else {

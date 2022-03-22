@@ -32,7 +32,7 @@ struct PhotosView: View {
     
     var body: some View {
         ZStack {
-            ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
                 switch tabSelected {
                 case 0:
                     NavigationView {
@@ -53,40 +53,38 @@ struct PhotosView: View {
                     }
                 }
                 
-                VStack(spacing: 0) {
-                    Divider()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            tabSelected = 0
-                        }) {
-                            Image(systemName: "house")
-                                .resizable()
-                                .scaledToFit()
-                                .padding(.vertical, 14)
-                        }
-                        Spacer()
-                        Button(action: {
-                            tabSelected = 1
-                        }) {
-                            Image(systemName: "square.stack")
-                                .resizable()
-                                .scaledToFit()
-                                .padding(.vertical, 14)
-                        }
-                        Spacer()
-                        Button(action: {
-                            tabSelected = 2
-                        }) {
-                            Image(systemName: "magnifyingglass")
-                                .resizable()
-                                .scaledToFit()
-                                .padding(.vertical, 14)
-                        }
-                        Spacer()
+                Divider()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        tabSelected = 0
+                    }) {
+                        Image(systemName: "house")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(.vertical, 14)
                     }
-                    .foregroundColor(.primary)
+                    Spacer()
+                    Button(action: {
+                        tabSelected = 1
+                    }) {
+                        Image(systemName: "square.stack")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(.vertical, 14)
+                    }
+                    Spacer()
+                    Button(action: {
+                        tabSelected = 2
+                    }) {
+                        Image(systemName: "magnifyingglass")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(.vertical, 14)
+                    }
+                    Spacer()
                 }
+                .foregroundColor(.primary)
                 .frame(height: UITabBarController().tabBar.frame.size.height)
                 .background(.background)
             }
@@ -103,10 +101,14 @@ struct PhotosView: View {
     var ScrollGrid: some View {
         ScrollView {
             Divider()
-            
             PhotoGrid(namespace: namespace, groupedMedia: photoGridData.groupedMedia, details: $details, media: $media)
                 .navigationTitle("Memoria")
                 .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) { 
+                        if photoGridData.isLoading {
+                            ProgressView().foregroundColor(.primary)
+                        }
+                    }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         HStack(alignment: .center, spacing: 12.0) {
                             
@@ -117,7 +119,9 @@ struct PhotosView: View {
                                     .foregroundColor(.primary)
                             } else {
                                 Button(action: {
-                                    autoUploadService.initiateAutoUpload()
+                                    autoUploadService.initiateAutoUpload { 
+                                        photoGridData.fetchAllMedia()
+                                    }
                                 }, label: {
                                     Image(systemName: "checkmark.icloud")
                                 })

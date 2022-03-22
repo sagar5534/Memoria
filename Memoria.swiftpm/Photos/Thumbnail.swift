@@ -7,6 +7,9 @@
 import SwiftUI
 import CachedAsyncImage
 
+extension URLCache {
+    static let imageCache = URLCache(memoryCapacity: 512*1000*1000, diskCapacity: 10*1000*1000*1000)
+}
 struct Thumbnail: View {
     @Environment(\.colorScheme) var colorScheme
     
@@ -19,8 +22,10 @@ struct Thumbnail: View {
         
         ZStack(alignment: .bottomLeading) {
             
+            
             CachedAsyncImage(
                 url: serverURL,
+                urlCache: .imageCache, 
                 transaction: Transaction(animation: .easeOut(duration: 0.1))
             ) { phase in
                 switch phase {
