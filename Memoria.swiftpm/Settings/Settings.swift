@@ -11,7 +11,7 @@ struct Settings: View {
     @AppStorage("userName") private var userName = "User"
     @AppStorage("userEmail") private var userEmail = "User@email.com"
     @AppStorage("signedIn") private var signedIn: Bool = false
-
+    
     var body: some View {
         List {
             Section {
@@ -86,6 +86,7 @@ struct Settings: View {
         }
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle(Text("Settings"))
+        .padding(.top)
     }
 }
 
@@ -97,8 +98,10 @@ private struct UserInfo: View {
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
 
+    @FocusState private var textFieldFocused: Bool
+    
     var body: some View {
-        List {
+        Form {
             Section {
                 VStack(alignment: .center) {
                     HStack {
@@ -122,7 +125,17 @@ private struct UserInfo: View {
             }
 
             Section {
-                Picker(selection: $textfield, label:
+                Picker(selection: $userName) { 
+                    TextField("Your Name", text: $userName)
+                        .focused($textFieldFocused)
+                        .onSubmit {
+//                            validate(name: userName)
+                        }
+                        .textInputAutocapitalization(.words)
+                        .disableAutocorrection(true)
+                        .submitLabel(.done)
+//                        .tag(userName)
+                } label: { 
                     HStack {
                         Text("Name")
                         Spacer()
@@ -130,19 +143,9 @@ private struct UserInfo: View {
                             .foregroundColor(.secondary)
                             .font(.system(size: 16))
                             .lineLimit(1)
-                    }, content: {
-                        TextField(userName, text: $textfield) { _ in } onCommit: {
-                            checkEnteredName()
-                        }
-                        .navigationBarItems(trailing:
-                            Button(action: {
-                                checkEnteredName()
-                            }, label: {
-                                Text("Save")
-                            }).foregroundColor(.blue))
-
-                    })
-                    .padding(.vertical, 10)
+                    }
+                }
+                
             }
 
             Section {
@@ -163,13 +166,6 @@ private struct UserInfo: View {
         .onChange(of: inputImage) { _ in loadImage() }
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $inputImage)
-        }
-    }
-
-    func checkEnteredName() {
-        if !textfield.isEmpty {
-            userName = textfield
-            textfield = ""
         }
     }
 

@@ -16,20 +16,6 @@ struct PhotosView: View {
     @ObservedObject var photoGridData = PhotoGridData()
     @ObservedObject var autoUploadService = AutoUploadService.sharedInstance
     
-    init() {
-        let attributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 17)!]
-        let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
-        
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
-        navBarAppearance.titlePositionAdjustment.vertical = 1
-        navBarAppearance.titleTextAttributes = attributes
-        navBarAppearance.largeTitleTextAttributes = largeAttributes
-        navBarAppearance.backButtonAppearance.normal.titleTextAttributes = attributes
-        UINavigationBar.appearance().standardAppearance = navBarAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
-    }
-    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -37,6 +23,24 @@ struct PhotosView: View {
                 case 0:
                     NavigationView {
                         ScrollGrid
+                            .onAppear { 
+                                let attributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 17)!]
+                                let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
+                                let navBarAppearance = UINavigationBarAppearance()
+                                navBarAppearance.configureWithOpaqueBackground()
+                                navBarAppearance.titlePositionAdjustment.vertical = 1
+                                navBarAppearance.titleTextAttributes = attributes
+                                navBarAppearance.largeTitleTextAttributes = largeAttributes
+                                navBarAppearance.backButtonAppearance.normal.titleTextAttributes = attributes
+                                UINavigationBar.appearance().standardAppearance = navBarAppearance
+                                UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+                            }
+                            .onDisappear { 
+                                let navBarAppearance = UINavigationBarAppearance()
+                                navBarAppearance.configureWithOpaqueBackground()
+                                UINavigationBar.appearance().standardAppearance = navBarAppearance
+                                UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+                            }
                     }
                     .navigationViewStyle(.stack)
                 case 1:
@@ -47,6 +51,10 @@ struct PhotosView: View {
                     NavigationView {
                         Text("Search")
                     }
+                case 3: 
+                    NavigationView {
+                        Settings()
+                    }
                 default:
                     NavigationView {
                         ScrollGrid
@@ -56,32 +64,13 @@ struct PhotosView: View {
                 Divider()
                 HStack {
                     Spacer()
-                    Button(action: {
-                        tabSelected = 0
-                    }) {
-                        Image(systemName: "house")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(.vertical, 14)
-                    }
+                    NavBarItem(tabSelected: $tabSelected, tag: 0, icon: "house")
                     Spacer()
-                    Button(action: {
-                        tabSelected = 1
-                    }) {
-                        Image(systemName: "square.stack")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(.vertical, 14)
-                    }
+                    NavBarItem(tabSelected: $tabSelected, tag: 1, icon: "square.stack")
                     Spacer()
-                    Button(action: {
-                        tabSelected = 2
-                    }) {
-                        Image(systemName: "magnifyingglass")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(.vertical, 14)
-                    }
+                    NavBarItem(tabSelected: $tabSelected, tag: 2, icon: "magnifyingglass")
+                    Spacer()
+                    NavBarItem(tabSelected: $tabSelected, tag: 3, icon: "person.fill")
                     Spacer()
                 }
                 .foregroundColor(.primary)
@@ -127,17 +116,29 @@ struct PhotosView: View {
                                 })
                                     .foregroundColor(.primary)
                             }
-                            
-                            NavigationLink(destination: Settings()) {
-                                Image(systemName: "gearshape")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 20)
-                                    .foregroundColor(.primary)
-                            }
                         }
                     }
                 }
         }
     }
 }
+
+private struct NavBarItem: View {
+    @Binding var tabSelected: Int
+    var tag: Int
+    var icon: String
+    
+    @ViewBuilder
+    var body: some View {
+        Button(action: {
+            tabSelected = tag
+        }) {
+            Image(systemName: icon)
+                .resizable()
+                .scaledToFit()
+                .padding(.vertical, 14)
+        }
+    }
+}
+
+    
