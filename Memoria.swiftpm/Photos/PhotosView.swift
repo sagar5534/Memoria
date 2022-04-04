@@ -23,6 +23,7 @@ struct PhotosView: View {
                 case 0:
                     NavigationView {
                         ScrollGrid
+                            .navigationTitle("Memoria")
                             .onAppear { 
                                 let attributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 17)!]
                                 let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
@@ -56,9 +57,7 @@ struct PhotosView: View {
                         Settings()
                     }
                 default:
-                    NavigationView {
-                        ScrollGrid
-                    }
+                    EmptyView()
                 }
                 
                 Divider()
@@ -88,37 +87,34 @@ struct PhotosView: View {
     
     @ViewBuilder
     var ScrollGrid: some View {
-        ScrollView {
-            Divider()
-            PhotoGrid(namespace: namespace, groupedMedia: photoGridData.groupedMedia, details: $details, media: $media)
-                .navigationTitle("Memoria")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) { 
-                        if photoGridData.isLoading {
-                            ProgressView().foregroundColor(.primary)
-                        }
-                    }
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        HStack(alignment: .center, spacing: 12.0) {
-                            
-                            if autoUploadService.running {
-                                Button(action: {}, label: {
-                                    Image(systemName: "arrow.clockwise.icloud")
-                                })
-                                    .foregroundColor(.primary)
-                            } else {
-                                Button(action: {
-                                    autoUploadService.initiateAutoUpload { 
-                                        photoGridData.fetchAllMedia()
-                                    }
-                                }, label: {
-                                    Image(systemName: "checkmark.icloud")
-                                })
-                                    .foregroundColor(.primary)
+        if photoGridData.isLoading {
+            ProgressView().foregroundColor(.primary)
+        } else {
+            ScrollView {
+                Divider()
+                PhotoGrid(namespace: namespace, groupedMedia: photoGridData.groupedMedia, details: $details, media: $media)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            HStack(alignment: .center, spacing: 12.0) {
+                                if autoUploadService.running {
+                                    Button(action: {}, label: {
+                                        Image(systemName: "arrow.clockwise.icloud")
+                                    })
+                                        .foregroundColor(.primary)
+                                } else {
+                                    Button(action: {
+                                        autoUploadService.initiateAutoUpload { 
+                                            photoGridData.fetchAllMedia()
+                                        }
+                                    }, label: {
+                                        Image(systemName: "checkmark.icloud")
+                                    })
+                                        .foregroundColor(.primary)
+                                }
                             }
                         }
                     }
-                }
+            }
         }
     }
 }
@@ -141,4 +137,4 @@ private struct NavBarItem: View {
     }
 }
 
-    
+

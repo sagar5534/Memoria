@@ -76,12 +76,13 @@ struct PhotoDetail: View {
                     }
                 }
         )
+        
 
         // --------------------------------------------------------
         // Toolbar View
         // --------------------------------------------------------
         if showToolbarButtons {
-            PhotosToolbar(onCloseTap: close, showShareSheet: $showShareSheet, media: $media)
+            PhotosToolbar(onCloseTap: close, media: $media, showShareSheet: $showShareSheet)
                 .sheet(isPresented: $showShareSheet) {
                     ShareSheet(activityItems: [UIImage(named: "profile")])
                 }

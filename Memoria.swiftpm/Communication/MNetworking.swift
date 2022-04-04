@@ -113,4 +113,23 @@ class MNetworking: ObservableObject {
             completion(data, errorCode, errorDescription)
         }
     }
+    
+    func updateMedia(media: Media, start: @escaping () -> Void, completion: @escaping (_ result: Media?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
+        let serverUrl = Constants.makeRequestURL(endpoint: .media) + "/" + media.id
+        var downloadTask: URLSessionTask?
+        print(serverUrl)
+        MComm.shared.updateMedia(media: media, serverUrl: serverUrl) { _ in
+            // Track download task here?
+        } taskHandler: { URLSessionTask in
+            downloadTask = URLSessionTask
+            start()
+        } completionHandler: { data, _, errorCode, errorDescription in
+            guard data != nil else {
+                completion(nil, errorCode, errorDescription)
+                return
+            }
+            completion(data, errorCode, errorDescription)
+        }
+    }
+    
 }

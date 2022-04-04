@@ -9,11 +9,11 @@ import SwiftUI
 
 struct PhotosToolbar: View {
     var onCloseTap: () -> Void = {}
-    @Binding var showShareSheet: Bool
     @Binding var media: Media?
-
+    @Binding var showShareSheet: Bool
+    @State private var showingDeleteAlert = false
+    
     var body: some View {
-        var isFav = media?.isFavorite
 
         VStack(alignment: .center) {
             // --------------------------------------------------------
@@ -35,8 +35,8 @@ struct PhotosToolbar: View {
                 }
 
                 VStack {
-                    Text("Today")
-                    Text("9:31 pm")
+                    Text(media?.creationDate.toDate()!.toString(withFormat: "d MMMM YYYY") ?? "")
+                    Text(media?.creationDate.toDate()!.toString(withFormat: "h:mm a") ?? "")
                         .font(.caption)
                 }
                 .foregroundColor(.white)
@@ -46,6 +46,13 @@ struct PhotosToolbar: View {
 
                     Button(action: {
                         media?.isFavorite?.toggle()
+                        
+                        MNetworking.sharedInstance.updateMedia(media: media!) { 
+                            print("Updating Media")
+                        } completion: { result, errorCode, errorDescription in
+                            print("Done Updating", result, errorCode, errorDescription)
+                        }
+                        
                     }, label: {
                         Image(systemName: media?.isFavorite ?? false ? "heart.fill" : "heart")
                             .resizable()
@@ -76,7 +83,7 @@ struct PhotosToolbar: View {
 
                 Spacer()
 
-                Button(action: { self.showShareSheet.toggle() }, label: {
+                Button(action: { self.showingDeleteAlert.toggle() }, label: {
                     Image(systemName: "trash")
                         .resizable()
                         .scaledToFit()
@@ -85,6 +92,15 @@ struct PhotosToolbar: View {
                 .foregroundColor(.red)
                 .padding()
                 .contentShape(Rectangle())
+                .alert(isPresented:$showingDeleteAlert) {
+                    Alert(
+                        title: Text("Are you sure you want to delete this?"),
+                        primaryButton: .destructive(Text("Delete")) {
+                            print("Deleting...")
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
             }
         }
     }
@@ -92,7 +108,7 @@ struct PhotosToolbar: View {
 
 struct PhotosToolbar_Previews: PreviewProvider {
     static var previews: some View {
-        PhotosToolbar(showShareSheet: .constant(false), media: .constant(nil))
+        PhotosToolbar(media: .constant(nil), showShareSheet: .constant(false))
             .preferredColorScheme(.dark)
     }
 }

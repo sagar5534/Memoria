@@ -4,7 +4,7 @@ import UIKit
 
 // MARK: - Media
 
-struct Media: Decodable, Hashable {
+struct Media: Encodable, Decodable, Hashable {
     let id, livePhotoPath, thumbnailPath, path: String
     let isLivePhoto: Bool
     var isHidden, isFavorite: Bool?
