@@ -57,8 +57,33 @@ struct NavigationBarColor: ViewModifier {
     }
 }
 
+struct FontedNavigationBar: ViewModifier {
+    init() {
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 17)!]
+        let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
+        let navBarAppearance = UINavigationBarAppearance()
+
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.titlePositionAdjustment.vertical = 1
+        navBarAppearance.titleTextAttributes = attributes
+        navBarAppearance.largeTitleTextAttributes = largeAttributes
+        navBarAppearance.backButtonAppearance.normal.titleTextAttributes = attributes
+
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+    }
+
+    func body(content: Content) -> some View {
+        content
+    }
+}
+
 extension View {
     func navigationBarColor(backgroundColor: UIColor, tintColor: UIColor) -> some View {
         modifier(NavigationBarColor(backgroundColor: backgroundColor, tintColor: tintColor))
+    }
+
+    func fontedNavigationBar() -> some View {
+        modifier(FontedNavigationBar())
     }
 }

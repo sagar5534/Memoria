@@ -147,7 +147,7 @@ public class MComm: SessionDelegate {
                 }
             }
     }
-    
+
     func updateMedia(
         media: Media,
         serverUrl: String, queue: DispatchQueue = .main,
@@ -156,7 +156,7 @@ public class MComm: SessionDelegate {
         completionHandler: @escaping (_ res: Media?, _ error: AFError?, _ errorCode: Int?, _ errorDescription: String?) -> Void
     ) {
         guard serverUrl != "" else { return }
-        
+
         session.request(serverUrl, method: .put, parameters: media)
             .validate()
             .onURLSessionTaskCreation(perform: { task in

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SelectServer: View {
     @State private var serverURL: String = ""
-    @ObservedObject var store: OBModel = OBModel()
-    
+    @ObservedObject var store: OBModel = .init()
+
     var body: some View {
         VStack(alignment: .leading, spacing: 15.0) {
             Spacer()
@@ -20,14 +20,14 @@ struct SelectServer: View {
                 .font(.system(size: 50))
                 .lineSpacing(-10)
                 .padding(.horizontal, 30)
-            
+
             VStack(spacing: 15) {
                 VStack(alignment: .center, spacing: 13) {
                     HStack {
                         TextField("Server URL", text: $serverURL) { Bool in
                             if Bool { store.isError = false }
                         } onCommit: {
-                            guard !serverURL.isEmpty else {return}
+                            guard !serverURL.isEmpty else { return }
                             if !serverURL.lowercased().hasPrefix("http") {
                                 serverURL = "https://" + serverURL
                             }
@@ -39,7 +39,7 @@ struct SelectServer: View {
                         .foregroundColor(.white)
                         .autocapitalization(.none)
                         .font(.system(size: 18))
-                        
+
                         if store.running {
                             ProgressView()
                                 .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.2)))
@@ -49,16 +49,15 @@ struct SelectServer: View {
                         } else {
                             Image(systemName: "arrow.right")
                         }
-                        
-                        NavigationLink(isActive: $store.showSignIn) { 
+
+                        NavigationLink(isActive: $store.showSignIn) {
                             SignInToServer(store: store)
                         } label: {}
-                        
                     }
                     Divider()
                         .background(Color.white)
                 }
-                
+
                 HStack {
                     Text("The link to your Memoria web interface when you open it in the browser.")
                         .font(.system(size: 14))
@@ -90,7 +89,7 @@ struct SignInToServer: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @ObservedObject var store: OBModel
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 15.0) {
             Spacer()
@@ -100,7 +99,7 @@ struct SignInToServer: View {
                 .font(.system(size: 50))
                 .lineSpacing(-10)
                 .padding(.horizontal, 30)
-            
+
             VStack(spacing: 15) {
                 VStack(alignment: .center, spacing: 30) {
                     VStack(alignment: .center) {
@@ -123,7 +122,7 @@ struct SignInToServer: View {
                             .background(Color.white)
                     }
                 }
-                
+
                 HStack {
                     if store.running {
                         ProgressView()
@@ -144,7 +143,7 @@ struct SignInToServer: View {
                 }
             }
             .padding(.all, 30)
-            
+
             Button(action: {
                 store.attempLogin(username: username, password: password)
             }) {
@@ -162,7 +161,7 @@ struct SignInToServer: View {
             }
             .disabled(username == "" || password == "")
             .padding(.horizontal, 30)
-            
+
             Spacer()
         }
         .background(

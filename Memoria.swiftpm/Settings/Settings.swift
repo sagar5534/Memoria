@@ -11,7 +11,7 @@ struct Settings: View {
     @AppStorage("userName") private var userName = "User"
     @AppStorage("userEmail") private var userEmail = "User@email.com"
     @AppStorage("signedIn") private var signedIn: Bool = false
-    
+
     var body: some View {
         List {
             Section {
@@ -84,9 +84,10 @@ struct Settings: View {
                 )
             }
         }
-        .listStyle(InsetGroupedListStyle())
+//        .listStyle(InsetGroupedListStyle())
+        .listStyle(InsetListStyle())
         .navigationBarTitle(Text("Settings"))
-        .padding(.top)
+//        .padding(.top)
     }
 }
 
@@ -99,7 +100,7 @@ private struct UserInfo: View {
     @State private var inputImage: UIImage?
 
     @FocusState private var textFieldFocused: Bool
-    
+
     var body: some View {
         Form {
             Section {
@@ -125,7 +126,7 @@ private struct UserInfo: View {
             }
 
             Section {
-                Picker(selection: $userName) { 
+                Picker(selection: $userName) {
                     TextField("Your Name", text: $userName)
                         .focused($textFieldFocused)
                         .onSubmit {
@@ -135,7 +136,7 @@ private struct UserInfo: View {
                         .disableAutocorrection(true)
                         .submitLabel(.done)
 //                        .tag(userName)
-                } label: { 
+                } label: {
                     HStack {
                         Text("Name")
                         Spacer()
@@ -145,7 +146,6 @@ private struct UserInfo: View {
                             .lineLimit(1)
                     }
                 }
-                
             }
 
             Section {

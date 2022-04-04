@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainView: View {
     @State var isActive: Bool = false
-    
+
     var body: some View {
         VStack {
             if self.isActive {
@@ -31,7 +31,7 @@ struct MainView: View {
 
 private struct MotherView: View {
     @AppStorage("signedIn") private var signedIn: Bool = false
-    
+
     var body: some View {
         VStack {
             if signedIn {
@@ -50,7 +50,7 @@ private struct MotherView: View {
 
 private struct SplashView: View {
     @Environment(\.colorScheme) var colorScheme
-    
+
     var body: some View {
         ZStack {
             VStack {

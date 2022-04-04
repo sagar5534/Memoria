@@ -37,7 +37,7 @@ struct PhotoDetail: View {
             // --------------------------------------------------------
             ZStack {
                 GeometryReader { geo in
-                    Thumbnail(item: media!)
+                    FullResImage(item: media!)
                         .matchedGeometryEffect(id: media!.id, in: namespace)
                         .scaledToFit()
                         .frame(width: geo.size.width, height: geo.size.height)
@@ -54,7 +54,7 @@ struct PhotoDetail: View {
                             }
                         }
                 }
-                .transition(.modal)
+//                .transition(.modal)
             }
         }
         .gesture(
@@ -76,7 +76,6 @@ struct PhotoDetail: View {
                     }
                 }
         )
-        
 
         // --------------------------------------------------------
         // Toolbar View

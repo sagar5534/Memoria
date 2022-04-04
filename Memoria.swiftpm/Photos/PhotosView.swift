@@ -12,10 +12,10 @@ struct PhotosView: View {
     @State private var media: Media?
     @State private var details = false
     @State private var tabSelected = 0
-    
+
     @ObservedObject var photoGridData = PhotoGridData()
     @ObservedObject var autoUploadService = AutoUploadService.sharedInstance
-    
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -24,19 +24,8 @@ struct PhotosView: View {
                     NavigationView {
                         ScrollGrid
                             .navigationTitle("Memoria")
-                            .onAppear { 
-                                let attributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 17)!]
-                                let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
-                                let navBarAppearance = UINavigationBarAppearance()
-                                navBarAppearance.configureWithOpaqueBackground()
-                                navBarAppearance.titlePositionAdjustment.vertical = 1
-                                navBarAppearance.titleTextAttributes = attributes
-                                navBarAppearance.largeTitleTextAttributes = largeAttributes
-                                navBarAppearance.backButtonAppearance.normal.titleTextAttributes = attributes
-                                UINavigationBar.appearance().standardAppearance = navBarAppearance
-                                UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
-                            }
-                            .onDisappear { 
+                            .fontedNavigationBar() // Experiemental
+                            .onDisappear {
                                 let navBarAppearance = UINavigationBarAppearance()
                                 navBarAppearance.configureWithOpaqueBackground()
                                 UINavigationBar.appearance().standardAppearance = navBarAppearance
@@ -48,18 +37,18 @@ struct PhotosView: View {
                     NavigationView {
                         Text("For You")
                     }
-                case 2: 
+                case 2:
                     NavigationView {
                         Text("Search")
                     }
-                case 3: 
+                case 3:
                     NavigationView {
                         Settings()
                     }
                 default:
                     EmptyView()
                 }
-                
+
                 Divider()
                 HStack {
                     Spacer()
@@ -76,15 +65,15 @@ struct PhotosView: View {
                 .frame(height: UITabBarController().tabBar.frame.size.height)
                 .background(.background)
             }
-            
+
             if details {
                 PhotoDetail(namespace: namespace, details: $details, media: $media)
             }
         }
         .animation(details ? .spring(response: 0.25, dampingFraction: 0.8) :
-                        .spring(response: 0.2, dampingFraction: 0.8), value: details)
+            .spring(response: 0.2, dampingFraction: 0.8), value: details)
     }
-    
+
     @ViewBuilder
     var ScrollGrid: some View {
         if photoGridData.isLoading {
@@ -100,16 +89,16 @@ struct PhotosView: View {
                                     Button(action: {}, label: {
                                         Image(systemName: "arrow.clockwise.icloud")
                                     })
-                                        .foregroundColor(.primary)
+                                    .foregroundColor(.primary)
                                 } else {
                                     Button(action: {
-                                        autoUploadService.initiateAutoUpload { 
+                                        autoUploadService.initiateAutoUpload {
                                             photoGridData.fetchAllMedia()
                                         }
                                     }, label: {
                                         Image(systemName: "checkmark.icloud")
                                     })
-                                        .foregroundColor(.primary)
+                                    .foregroundColor(.primary)
                                 }
                             }
                         }
@@ -123,7 +112,7 @@ private struct NavBarItem: View {
     @Binding var tabSelected: Int
     var tag: Int
     var icon: String
-    
+
     @ViewBuilder
     var body: some View {
         Button(action: {
@@ -136,5 +125,3 @@ private struct NavBarItem: View {
         }
     }
 }
-
-

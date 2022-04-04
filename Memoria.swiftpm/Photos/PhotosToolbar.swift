@@ -12,9 +12,8 @@ struct PhotosToolbar: View {
     @Binding var media: Media?
     @Binding var showShareSheet: Bool
     @State private var showingDeleteAlert = false
-    
-    var body: some View {
 
+    var body: some View {
         VStack(alignment: .center) {
             // --------------------------------------------------------
             // Top Bar
@@ -35,8 +34,8 @@ struct PhotosToolbar: View {
                 }
 
                 VStack {
-                    Text(media?.creationDate.toDate()!.toString(withFormat: "d MMMM YYYY") ?? "")
-                    Text(media?.creationDate.toDate()!.toString(withFormat: "h:mm a") ?? "")
+                    Text(media?.creationDate.toDate()!.toString(withFormat: "d MMMM YYYY") ?? "Today")
+                    Text(media?.creationDate.toDate()!.toString(withFormat: "h:mm a") ?? "12:00 AM")
                         .font(.caption)
                 }
                 .foregroundColor(.white)
@@ -45,14 +44,15 @@ struct PhotosToolbar: View {
                     Spacer()
 
                     Button(action: {
-                        media?.isFavorite?.toggle()
-                        
-                        MNetworking.sharedInstance.updateMedia(media: media!) { 
+                        guard media != nil else { return }
+                        media!.isFavorite?.toggle()
+
+                        MNetworking.sharedInstance.updateMedia(media: media!) {
                             print("Updating Media")
-                        } completion: { result, errorCode, errorDescription in
-                            print("Done Updating", result, errorCode, errorDescription)
+                        } completion: { result, _, _ in
+                            print("Done Updating Media", result)
                         }
-                        
+
                     }, label: {
                         Image(systemName: media?.isFavorite ?? false ? "heart.fill" : "heart")
                             .resizable()
@@ -92,11 +92,12 @@ struct PhotosToolbar: View {
                 .foregroundColor(.red)
                 .padding()
                 .contentShape(Rectangle())
-                .alert(isPresented:$showingDeleteAlert) {
+                .alert(isPresented: $showingDeleteAlert) {
                     Alert(
                         title: Text("Are you sure you want to delete this?"),
                         primaryButton: .destructive(Text("Delete")) {
                             print("Deleting...")
+                            // Delete Media Command
                         },
                         secondaryButton: .cancel()
                     )

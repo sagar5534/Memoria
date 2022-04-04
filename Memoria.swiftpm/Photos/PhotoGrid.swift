@@ -9,8 +9,7 @@ import SwiftUI
 
 struct PhotoGrid: View {
     let namespace: Namespace.ID
-    var groupedMedia: SortedMediaCollection
-
+    @State var groupedMedia: SortedMediaCollection
     @Binding var details: Bool
     @Binding var media: Media?
 
@@ -64,7 +63,7 @@ struct PhotoGrid: View {
                         .zIndex(media == groupedMedia[i][index] ? 100 : 1)
                         .aspectRatio(1, contentMode: .fit)
                         .id(groupedMedia[i][index].id)
-                        .transition(.invisible)
+//                        .transition(.invisible)
                     }
                 }
                 .id(UUID())

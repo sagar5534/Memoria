@@ -113,7 +113,7 @@ class MNetworking: ObservableObject {
             completion(data, errorCode, errorDescription)
         }
     }
-    
+
     func updateMedia(media: Media, start: @escaping () -> Void, completion: @escaping (_ result: Media?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
         let serverUrl = Constants.makeRequestURL(endpoint: .media) + "/" + media.id
         var downloadTask: URLSessionTask?
@@ -131,5 +131,4 @@ class MNetworking: ObservableObject {
             completion(data, errorCode, errorDescription)
         }
     }
-    
 }

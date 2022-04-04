@@ -21,7 +21,7 @@ class PhotoGridData: ObservableObject {
 
     func fetchAllMedia() {
         MNetworking.sharedInstance.getMedia {
-            print("Running")
+            print("Fetching all data")
         } completion: { data, _, _ in
             guard data != nil else { return }
             let groupedDic = Dictionary(grouping: data!) { media -> String in
