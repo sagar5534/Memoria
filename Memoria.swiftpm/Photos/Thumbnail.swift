@@ -22,23 +22,21 @@ struct Thumbnail: View {
             .replacingOccurrences(of: "\\", with: #"/"#)
         let serverURL = URL(string: #"\#(server)\#(path)"#)!
 
-        ZStack(alignment: .bottomLeading) {
-            CachedAsyncImage(
-                url: serverURL,
-                urlCache: .imageCache,
-                transaction: Transaction(animation: .easeOut(duration: 0.1))
-            ) { phase in
-                switch phase {
-                case .empty:
-                    blurBackdrop
-                case let .success(image):
-                    image
-                        .resizable()
-                case .failure:
-                    Image(systemName: "wifi.slash")
-                @unknown default:
-                    blurBackdrop
-                }
+        CachedAsyncImage(
+            url: serverURL,
+            urlCache: .imageCache,
+            transaction: Transaction(animation: .easeOut(duration: 0.1))
+        ) { phase in
+            switch phase {
+            case .empty:
+                blurBackdrop
+            case let .success(image):
+                image
+                    .resizable()
+            case .failure:
+                Image(systemName: "wifi.slash")
+            @unknown default:
+                blurBackdrop
             }
         }
     }
@@ -62,15 +60,13 @@ struct FullResImage: View {
         let path = item.path.replacingOccurrences(of: "\\", with: #"/"#)
         let serverURL = URL(string: #"\#(server)\#(path)"#)!
 
-        ZStack(alignment: .bottomLeading) {
-            CachedAsyncImage(
-                url: serverURL,
-                urlCache: .imageCache
-            ) { image in
-                image.resizable()
-            } placeholder: {
-                Color.clear
-            }
+        CachedAsyncImage(
+            url: serverURL,
+            urlCache: .imageCache
+        ) { image in
+            image.resizable()
+        } placeholder: {
+            Color.blue // Testing
         }
     }
 }

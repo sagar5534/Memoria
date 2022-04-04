@@ -50,20 +50,8 @@ struct PhotosView: View {
                 }
 
                 Divider()
-                HStack {
-                    Spacer()
-                    NavBarItem(tabSelected: $tabSelected, tag: 0, icon: "house")
-                    Spacer()
-                    NavBarItem(tabSelected: $tabSelected, tag: 1, icon: "square.stack")
-                    Spacer()
-                    NavBarItem(tabSelected: $tabSelected, tag: 2, icon: "magnifyingglass")
-                    Spacer()
-                    NavBarItem(tabSelected: $tabSelected, tag: 3, icon: "person.fill")
-                    Spacer()
-                }
-                .foregroundColor(.primary)
-                .frame(height: UITabBarController().tabBar.frame.size.height)
-                .background(.background)
+
+                CustomTabBar(tabSelected: $tabSelected)
             }
 
             if details {
@@ -108,6 +96,10 @@ struct PhotosView: View {
     }
 }
 
+// --------------------------------------------------------
+// Tab Bar
+// --------------------------------------------------------
+
 private struct NavBarItem: View {
     @Binding var tabSelected: Int
     var tag: Int
@@ -121,7 +113,64 @@ private struct NavBarItem: View {
             Image(systemName: icon)
                 .resizable()
                 .scaledToFit()
-                .padding(.vertical, 14)
         }
+    }
+}
+
+private struct CustomTabBar: View {
+    @Binding var tabSelected: Int
+    private let circleSize: CGFloat = 4
+
+    @ViewBuilder
+    var body: some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .center, spacing: 5) {
+                NavBarItem(tabSelected: $tabSelected, tag: 0, icon: "house")
+                Circle()
+                    .frame(height: circleSize, alignment: .center)
+                    .foregroundColor(tabSelected == 0 ? Color.primary : Color.clear)
+            }
+            .frame(width: 40, alignment: .center)
+
+            Spacer()
+            VStack(alignment: .center, spacing: 5) {
+                NavBarItem(tabSelected: $tabSelected, tag: 1, icon: "square.stack")
+
+                Circle()
+                    .frame(height: circleSize, alignment: .center)
+                    .foregroundColor(tabSelected == 1 ? Color.primary : Color.clear)
+            }
+            .frame(width: 40, alignment: .center)
+
+            Spacer()
+            VStack(alignment: .center, spacing: 5) {
+                NavBarItem(tabSelected: $tabSelected, tag: 2, icon: "magnifyingglass")
+                Circle()
+                    .frame(height: circleSize, alignment: .center)
+                    .foregroundColor(tabSelected == 2 ? Color.primary : Color.clear)
+            }
+            .frame(width: 40, alignment: .center)
+            Spacer()
+
+            VStack(alignment: .center, spacing: 5) {
+                NavBarItem(tabSelected: $tabSelected, tag: 3, icon: "person")
+                Circle()
+                    .frame(height: circleSize, alignment: .center)
+                    .foregroundColor(tabSelected == 3 ? Color.primary : Color.clear)
+            }
+            .frame(width: 40, alignment: .center)
+            Spacer()
+        }
+        .foregroundColor(.primary)
+        .padding(.vertical, 8)
+        .frame(height: UITabBarController().tabBar.frame.size.height)
+        .background(.background)
+    }
+}
+
+struct PhotosView_Previews: PreviewProvider {
+    static var previews: some View {
+        CustomTabBar(tabSelected: .constant(0))
     }
 }
