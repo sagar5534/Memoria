@@ -17,7 +17,7 @@ struct Thumbnail: View {
     @State var isThumb = true
 
     var body: some View {
-        let server = Constants.makeRequestURL(endpoint: .staticMedia)
+        let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
         let path = (isThumb ? item.thumbnailPath : item.path)
             .replacingOccurrences(of: "\\", with: #"/"#)
         let serverURL = URL(string: #"\#(server)\#(path)"#)!
@@ -56,7 +56,7 @@ struct FullResImage: View {
     let item: Media
 
     var body: some View {
-        let server = Constants.makeRequestURL(endpoint: .staticMedia)
+        let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
         let path = item.thumbnailPath.replacingOccurrences(of: "\\", with: #"/"#)
         let serverURL = URL(string: #"\#(server)\#(path)"#)!
 

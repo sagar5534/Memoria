@@ -223,7 +223,7 @@ struct JwtInterceptor: RequestInterceptor {
             return
         }
         let parameters = ["refresh_token": refToken]
-        let serverUrl = Constants.makeRequestURL(endpoint: .apiRefresh)
+        let serverUrl = MCommConstants.makeRequestURL(endpoint: .apiRefresh)
 
         AF.request(serverUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseDecodable(of: RefreshToken.self) { response in

@@ -9,60 +9,76 @@ import SwiftUI
 
 struct HeroView: View {
     @Namespace var namespace
+    
     @ObservedObject var photoGridData = PhotoGridData()
+    @ObservedObject var autoUploadService = AutoUploadService()
 
+    @State private var tabSelected = 0
     @State private var selectedItem: Media? = nil
-    @State private var scaler: CGFloat = 120
     @State private var showShareSheet = false
     @State private var showModalToolbar = true
     @State private var modalScale = CGSize.zero
     @State private var modalOffset = CGSize.zero
-
+    
     var body: some View {
-        let columns = [GridItem(.adaptive(minimum: scaler), spacing: 2)]
-
+        
         return ZStack {
             // --------------------------------------------------------
             // NavigationView with LazyVGrid
             // --------------------------------------------------------
-            NavigationView {
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 2) {
-                        ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
-                            Section(header: titleHeader(header: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
-                                ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { index in
-                                    ZStack {
-                                        Color.clear
-                                        if self.selectedItem?.id != photoGridData.groupedMedia[i][index].id {
-                                            Thumbnail(item: photoGridData.groupedMedia[i][index])
-                                                .onTapGesture {
-                                                    openModal(photoGridData.groupedMedia[i][index])
-                                                }
-                                                .scaledToFill()
-                                                .layoutPriority(-1)
-                                        }
+            VStack(spacing: 0) {
+                switch tabSelected {
+                case 0:
+                    NavigationView {
+                        AllPhotosView(
+                            namespace: namespace,
+                            photoGridData: photoGridData,
+                            selectedItem: selectedItem,
+                            openModal: openModal
+                        )
+                        .toolbar {
+                            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                                HStack(alignment: .center, spacing: 12.0) {
+                                    if autoUploadService.running {
+                                        Button(action: {}, label: {
+                                            Image(systemName: "arrow.clockwise.icloud")
+                                        })
+                                        .foregroundColor(.primary)
+                                    } else {
+                                        Button(action: {
+                                            autoUploadService.initiateAutoUpload {
+                                                photoGridData.fetchAllMedia()
+                                            }
+                                        }, label: {
+                                            Image(systemName: "checkmark.icloud")
+                                        })
+                                        .foregroundColor(.primary)
                                     }
-                                    .clipped()
-                                    .matchedGeometryEffect(id: photoGridData.groupedMedia[i][index].id, in: namespace)
-                                    .zIndex(selectedItem?.id == photoGridData.groupedMedia[i][index].id ? 100 : 1)
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .id(photoGridData.groupedMedia[i][index].id)
                                 }
                             }
-                            .id(UUID())
                         }
                     }
-                    .navigationTitle("Memoria")
-                    .fontedNavigationBar() // Experiemental
-                    .onDisappear {
-                        let navBarAppearance = UINavigationBarAppearance()
-                        navBarAppearance.configureWithOpaqueBackground()
-                        UINavigationBar.appearance().standardAppearance = navBarAppearance
-                        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+                    .navigationViewStyle(.stack)
+                case 1:
+                    NavigationView {
+                        Text("For You")
                     }
+                case 2:
+                    NavigationView {
+                        Text("Search")
+                    }
+                case 3:
+                    NavigationView {
+                        Settings()
+                    }
+                default:
+                    EmptyView()
                 }
+            
+                Divider()
+            
+                CustomTabBar(tabSelected: $tabSelected)
             }
-            .navigationViewStyle(.stack)
             .zIndex(1)
             
             // --------------------------------------------------------
@@ -72,8 +88,12 @@ struct HeroView: View {
                 Group {
                     Color.black
                         .edgesIgnoringSafeArea(.all)
-                        .onTapGesture(perform: closeModal)
                         .transition(.opacity)
+                        .onTapGesture(count: 1) {
+                            withAnimation {
+                                showModalToolbar.toggle()
+                            }
+                        }
                         .zIndex(2)
                     
                     GeometryReader { geo in
@@ -93,6 +113,14 @@ struct HeroView: View {
                                     showModalToolbar.toggle()
                                 }
                             }
+                    }
+                    
+                    if showModalToolbar {
+                        ModalToolbar(onCloseTap: closeModal, media: $selectedItem, showShareSheet: $showShareSheet)
+                            .sheet(isPresented: $showShareSheet) {
+                                ShareSheet(activityItems: [])
+                            }
+                            .transition(.opacity)
                     }
                 }
                 .gesture(
@@ -119,24 +147,13 @@ struct HeroView: View {
     }
     
     private func closeModal() {
-        self.modalScale = .zero
-        self.modalOffset = .zero
+        modalScale = .zero
+        modalOffset = .zero
+        showModalToolbar = true
         withAnimation(.spring(response: 0.2, dampingFraction: 0.8)) { self.selectedItem = nil }
     }
     
     private func openModal(_ item: Media) {
         withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) { self.selectedItem = item }
-    }
-}
-
-private struct titleHeader: View {
-    let header: String
-    
-    var body: some View {
-        Text(header)
-            .font(.custom("OpenSans-SemiBold", size: 14))
-            .foregroundColor(.primary)
-            .padding(14)
-            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

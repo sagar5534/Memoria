@@ -46,7 +46,7 @@ class OBModel: ObservableObject {
     }
 
     func attempLogin(username: String, password: String) {
-        let endpoint = workingURL + Constants.ENDPOINT.apiLogin.rawValue
+        let endpoint = workingURL + MCommConstants.ENDPOINT.apiLogin.rawValue
         guard let url = URL(string: endpoint) else { return }
         let json: [String: Any] = ["username": username, "password": password]
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PhotosToolbar: View {
+struct ModalToolbar: View {
     var onCloseTap: () -> Void = {}
     @Binding var media: Media?
     @Binding var showShareSheet: Bool
@@ -109,7 +109,7 @@ struct PhotosToolbar: View {
 
 struct PhotosToolbar_Previews: PreviewProvider {
     static var previews: some View {
-        PhotosToolbar(media: .constant(nil), showShareSheet: .constant(false))
+        ModalToolbar(media: .constant(nil), showShareSheet: .constant(false))
             .preferredColorScheme(.dark)
     }
 }

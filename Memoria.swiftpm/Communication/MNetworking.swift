@@ -61,7 +61,7 @@ class MNetworking: ObservableObject {
     }
 
     private func uploadFile(file: FileUpload, start: @escaping () -> Void, completion: @escaping (_ file: String, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = Constants.makeRequestURL(endpoint: .mediaUpload)
+        let serverUrl = MCommConstants.makeRequestURL(endpoint: .mediaUpload)
         let fileName = file.filename
         var uploadTask: URLSessionTask?
 
@@ -79,7 +79,7 @@ class MNetworking: ObservableObject {
     }
 
     func downloadSavedAssets(start: @escaping () -> Void, completion: @escaping (_ result: AssetCollection?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = Constants.makeRequestURL(endpoint: .mediaAssets)
+        let serverUrl = MCommConstants.makeRequestURL(endpoint: .mediaAssets)
         var downloadTask: URLSessionTask?
 
         MComm.shared.downloadSavedAssets(serverUrl: serverUrl) { _ in
@@ -97,7 +97,7 @@ class MNetworking: ObservableObject {
     }
 
     func getMedia(start: @escaping () -> Void, completion: @escaping (_ result: MediaCollection?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = Constants.makeRequestURL(endpoint: .media)
+        let serverUrl = MCommConstants.makeRequestURL(endpoint: .media)
         var downloadTask: URLSessionTask?
 
         MComm.shared.getMedia(serverUrl: serverUrl) { _ in
@@ -115,7 +115,7 @@ class MNetworking: ObservableObject {
     }
 
     func updateMedia(media: Media, start: @escaping () -> Void, completion: @escaping (_ result: Media?, _ errorCode: Int?, _ errorDescription: String?) -> Void) {
-        let serverUrl = Constants.makeRequestURL(endpoint: .media) + "/" + media.id
+        let serverUrl = MCommConstants.makeRequestURL(endpoint: .media) + "/" + media.id
         var downloadTask: URLSessionTask?
         print(serverUrl)
         MComm.shared.updateMedia(media: media, serverUrl: serverUrl) { _ in
