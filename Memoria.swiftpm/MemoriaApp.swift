@@ -21,8 +21,12 @@ struct MemoriaApp: App {
     }
 
     var body: some Scene {
+
+    
         WindowGroup {
-            MainView()
+//            MainView()
+            
+            HeroView()
         }
     }
 
