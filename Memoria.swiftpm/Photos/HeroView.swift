@@ -1,38 +1,27 @@
 //
-//  HeroView.swift
-//  HeroAnimations
+//  PhotoView.swift
+//  PhotoView
 //
-//  Created by SwiftUI-Lab on 04-Jul-2020.
-//  https://swiftui-lab.com/matchedGeometryEffect-part1
+//  Created by Sagar on 2021-09-26.
 //
 
 import SwiftUI
-import Combine
 
 struct HeroView: View {
-    @Namespace var nspace
-    @Environment(\.colorScheme) var scheme
-    
-    @State private var selectedItem: Media? = nil
-    @State private var blur = false
-    @State private var isPortrait: Bool?
-        
-    @State private var scaler: CGFloat = 120
-    
+    @Namespace var namespace
     @ObservedObject var photoGridData = PhotoGridData()
 
-//    @State var groupedMedia: SortedMediaCollection
+    @State private var selectedItem: Media? = nil
+    @State private var scaler: CGFloat = 120
     @State private var showShareSheet = false
-    @State private var showToolbarButtons = true
-    
-    @State private var scale = CGSize.zero
-    @State private var offset = CGSize.zero
-    
+    @State private var showModalToolbar = true
+    @State private var modalScale = CGSize.zero
+    @State private var modalOffset = CGSize.zero
+
     var body: some View {
         let columns = [GridItem(.adaptive(minimum: scaler), spacing: 2)]
-        
+
         return ZStack {
-            
             // --------------------------------------------------------
             // NavigationView with LazyVGrid
             // --------------------------------------------------------
@@ -42,127 +31,101 @@ struct HeroView: View {
                         ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
                             Section(header: titleHeader(header: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
                                 ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { index in
-                                    
                                     ZStack {
-                                        
                                         Color.clear
-                                        
                                         if self.selectedItem?.id != photoGridData.groupedMedia[i][index].id {
-    //                                        Color.red
                                             Thumbnail(item: photoGridData.groupedMedia[i][index])
                                                 .onTapGesture {
-                                                    tapThumbnail(photoGridData.groupedMedia[i][index]) }
+                                                    openModal(photoGridData.groupedMedia[i][index])
+                                                }
                                                 .scaledToFill()
                                                 .layoutPriority(-1)
-                                                .matchedGeometryEffect(id: photoGridData.groupedMedia[i][index].id, in: nspace, isSource: true)
-                                                .transition(.invisible)
-
                                         }
                                     }
                                     .clipped()
+                                    .matchedGeometryEffect(id: photoGridData.groupedMedia[i][index].id, in: namespace)
                                     .zIndex(selectedItem?.id == photoGridData.groupedMedia[i][index].id ? 100 : 1)
                                     .aspectRatio(1, contentMode: .fit)
-//                                    .id(photoGridData.groupedMedia[i][index].id)
-                                    .id(UUID())
-
+                                    .id(photoGridData.groupedMedia[i][index].id)
                                 }
                             }
                             .id(UUID())
                         }
                     }
-                    .navigationTitle(Text("Our Food Service"))
+                    .navigationTitle("Memoria")
+                    .fontedNavigationBar() // Experiemental
+                    .onDisappear {
+                        let navBarAppearance = UINavigationBarAppearance()
+                        navBarAppearance.configureWithOpaqueBackground()
+                        UINavigationBar.appearance().standardAppearance = navBarAppearance
+                        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+                    }
                 }
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .navigationViewStyle(.stack)
             .zIndex(1)
-            
-            
-            // --------------------------------------------------------
-            // Backdrop to blur the grid while the modal is displayed
-            // --------------------------------------------------------
-            if blur {
-//                Color.black
-//                    .edgesIgnoringSafeArea(.all)
-//                    .onTapGesture(perform: tapBackdrop)
-//                    .transition(.opacity)
-//                    .zIndex(2)
-            }
             
             // --------------------------------------------------------
             // Modal view
             // --------------------------------------------------------
             if self.selectedItem != nil {
-                Color.clear.overlay(
+                Group {
+                    Color.black
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture(perform: closeModal)
+                        .transition(.opacity)
+                        .zIndex(2)
                     
                     GeometryReader { geo in
-                        FullResImage(item: selectedItem!)
+                        FullResImage(item: self.selectedItem!)
+                            .matchedGeometryEffect(id: self.selectedItem!.id, in: namespace)
                             .scaledToFit()
                             .frame(width: geo.size.width, height: geo.size.height)
                             .scaleEffect(
-                                scale.height < 50 ?
-                                1 - ((scale.height / 100) / 3) :
+                                modalScale.height < 50 ?
+                                    1 - ((modalScale.height / 100) / 3) :
                                     0.866
                             )
-                            .animation(.linear(duration: 0.1), value: scale)
-                            .offset(x: offset.width, y: offset.height)
+                            .animation(.linear(duration: 0.1), value: modalScale)
+                            .offset(x: modalOffset.width, y: modalOffset.height)
                             .onTapGesture(count: 1) {
                                 withAnimation {
-                                    showToolbarButtons.toggle()
+                                    showModalToolbar.toggle()
                                 }
                             }
                     }
-                        .matchedGeometryEffect(id: self.selectedItem!.id, in: nspace, properties: .position)
-                        .gesture(
-                            DragGesture()
-                                .onChanged { gesture in
-                                    if gesture.translation.height >= 0 {
-                                        self.scale = gesture.translation
-                                    }
-                                    self.offset = gesture.translation
-                                }
-                                .onEnded { gesture in
-                                    if gesture.translation.height > 50 {
-                                        withAnimation {
-                                            tapBackdrop()
-                                        }
-                                    } else {
-                                        self.scale = .zero
-                                        self.offset = .zero
-                                    }
-                                }
-                        )
+                }
+                .gesture(
+                    DragGesture()
+                        .onChanged { gesture in
+                            if gesture.translation.height >= 0 {
+                                self.modalScale = gesture.translation
+                            }
+                            self.modalOffset = gesture.translation
+                        }
+                        .onEnded { gesture in
+                            if gesture.translation.height > 50 {
+                                closeModal()
+                            } else {
+                                self.modalScale = .zero
+                                self.modalOffset = .zero
+                            }
+                        }
                 )
                 .zIndex(3)
-                .transition(.modal)
             }
-            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            print(photoGridData.groupedMedia.count)
-        }
     }
     
-    /// When the backdrop is tapped, close the modal and unblur the screen
-    func tapBackdrop() {
-        print("Back")
-        self.blur = false
-        offset = CGSize.zero
-        scale = CGSize.zero
-
-        DispatchQueue.main.async {
-            withAnimation(.easeIn(duration: 0.1)) { self.selectedItem = nil }
-        }
+    private func closeModal() {
+        self.modalScale = .zero
+        self.modalOffset = .zero
+        withAnimation(.spring(response: 0.2, dampingFraction: 0.8)) { self.selectedItem = nil }
     }
     
-    /// Blur the screen and open a modal on top.
-    func tapThumbnail(_ item: Media) {
-        print("Enter")
-        withAnimation(.easeIn(duration: 0.1)) { self.selectedItem = item }
-
-        DispatchQueue.main.async {
-            self.blur = true
-        }
+    private func openModal(_ item: Media) {
+        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) { self.selectedItem = item }
     }
 }
 
@@ -177,4 +140,3 @@ private struct titleHeader: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-

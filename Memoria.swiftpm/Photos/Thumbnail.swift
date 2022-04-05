@@ -57,7 +57,7 @@ struct FullResImage: View {
 
     var body: some View {
         let server = Constants.makeRequestURL(endpoint: .staticMedia)
-        let path = item.path.replacingOccurrences(of: "\\", with: #"/"#)
+        let path = item.thumbnailPath.replacingOccurrences(of: "\\", with: #"/"#)
         let serverURL = URL(string: #"\#(server)\#(path)"#)!
 
         CachedAsyncImage(
@@ -65,8 +65,6 @@ struct FullResImage: View {
             urlCache: .imageCache
         ) { image in
             image.resizable()
-        } placeholder: {
-            Color.blue // Testing
-        }
+        } placeholder: {}
     }
 }
