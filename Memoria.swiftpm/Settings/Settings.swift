@@ -84,10 +84,7 @@ struct Settings: View {
                 )
             }
         }
-//        .listStyle(InsetGroupedListStyle())
         .listStyle(InsetListStyle())
-        .navigationBarTitle(Text("Settings"))
-//        .padding(.top)
     }
 }
 

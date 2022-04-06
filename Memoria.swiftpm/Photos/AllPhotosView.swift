@@ -49,14 +49,6 @@ struct AllPhotosView: View {
                         .id(UUID())
                     }
                 }
-                .navigationTitle("Memoria")
-                .fontedNavigationBar() // Experiemental
-                .onDisappear {
-                    let navBarAppearance = UINavigationBarAppearance()
-                    navBarAppearance.configureWithOpaqueBackground()
-                    UINavigationBar.appearance().standardAppearance = navBarAppearance
-                    UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
-                }
             }
         }
         

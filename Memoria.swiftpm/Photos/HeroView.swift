@@ -57,19 +57,27 @@ struct HeroView: View {
                                 }
                             }
                         }
+                        .fontedNavigationBar()
+                        .navigationTitle("Memoria")
                     }
                     .navigationViewStyle(.stack)
                 case 1:
                     NavigationView {
                         Text("For You")
+                            .defaultNavigationBar()
+                            .navigationTitle("For You")
                     }
                 case 2:
                     NavigationView {
                         Text("Search")
+                            .defaultNavigationBar()
+                            .navigationTitle("Search")
                     }
                 case 3:
                     NavigationView {
                         Settings()
+                            .defaultNavigationBar()
+                            .navigationTitle("Settings")
                     }
                 default:
                     EmptyView()

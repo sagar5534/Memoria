@@ -55,16 +55,48 @@ struct Thumbnail: View {
 struct FullResImage: View {
     let item: Media
 
+    @State var show = false
+    
     var body: some View {
         let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
         let path = item.thumbnailPath.replacingOccurrences(of: "\\", with: #"/"#)
         let serverURL = URL(string: #"\#(server)\#(path)"#)!
+        
+        let full = item.path.replacingOccurrences(of: "\\", with: #"/"#)
+        let fullserverURL = URL(string: #"\#(server)\#(full)"#)!
 
-        CachedAsyncImage(
-            url: serverURL,
-            urlCache: .imageCache
-        ) { image in
-            image.resizable()
-        } placeholder: {}
+        ZStack {
+            
+            CachedAsyncImage(
+                url: serverURL,
+                urlCache: .imageCache
+            ) { image in
+                image.resizable()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            show.toggle()
+                        }
+                    }
+                
+            } placeholder: {}
+            
+            if show {
+                CachedAsyncImage(
+                    url: fullserverURL,
+                    urlCache: .imageCache
+                ) { image in
+                    image.resizable()
+                    
+                } placeholder: {
+                    Color.clear
+                }
+            }
+            
+        }
+        
+        
+        
+        
+        
     }
 }
