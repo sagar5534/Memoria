@@ -25,7 +25,7 @@ class PhotoGridData: ObservableObject {
         } completion: { data, _, _ in
             guard data != nil else { return }
             let groupedDic = Dictionary(grouping: data!) { media -> String in
-                media.creationDate.toDate()!.toString(withFormat: "ddMMyyyy")
+                media.modificationDate.toDate()!.toString(withFormat: "ddMMyyyy")
             }
 
             var groupedMedia = SortedMediaCollection()

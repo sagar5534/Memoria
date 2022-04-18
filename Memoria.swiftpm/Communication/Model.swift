@@ -5,25 +5,31 @@ import UIKit
 // MARK: - Media
 
 struct Media: Encodable, Decodable, Hashable {
-    let id, livePhotoPath, thumbnailPath, path: String
+    let id, path: String
+    let source: Source
+    let livePhotoPath, thumbnailPath: String?
     let isLivePhoto: Bool
     var isHidden, isFavorite: Bool?
     let duration: Double?
     let modificationDate, creationDate: String
-    let mediaSubType, mediaType: Int
+    let mediaSubType, mediaType: Int?
     let assetID, filename: String
-    let user: String
+    let user: String?
     let v: Int?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case livePhotoPath = "livePhoto_path"
         case thumbnailPath = "thumbnail_path"
-        case path, isLivePhoto, isHidden, isFavorite, duration, modificationDate, creationDate, mediaSubType, mediaType
         case assetID = "assetId"
-        case filename, user
         case v = "__v"
+        case filename, user, path, isLivePhoto, isHidden, isFavorite, duration, modificationDate, creationDate, mediaSubType, mediaType, source
     }
+}
+
+enum Source: String, Codable {
+    case local = "LOCAL"
+    case ios = "IOS"
 }
 
 typealias MediaCollection = [Media]

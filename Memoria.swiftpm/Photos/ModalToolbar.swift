@@ -34,8 +34,8 @@ struct ModalToolbar: View {
                 }
 
                 VStack {
-                    Text(media?.creationDate.toDate()!.toString(withFormat: "d MMMM YYYY") ?? "Today")
-                    Text(media?.creationDate.toDate()!.toString(withFormat: "h:mm a") ?? "12:00 AM")
+                    Text(media?.modificationDate.toDate()!.toString(withFormat: "d MMMM YYYY") ?? "Today")
+                    Text(media?.modificationDate.toDate()!.toString(withFormat: "h:mm a") ?? "12:00 AM")
                         .font(.caption)
                 }
                 .foregroundColor(.white)

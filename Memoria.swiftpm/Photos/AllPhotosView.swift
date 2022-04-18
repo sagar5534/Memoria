@@ -26,7 +26,7 @@ struct AllPhotosView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 2) {
                     ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
-                        Section(header: titleHeader(header: photoGridData.groupedMedia[i].first!.creationDate.toDate()!.toString())) {
+                        Section(header: titleHeader(header: photoGridData.groupedMedia[i].first!.modificationDate.toDate()!.toString())) {
                             ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { index in
                                 ZStack {
                                     Color.clear
