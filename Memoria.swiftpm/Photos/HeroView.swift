@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HeroView: View {
     @Namespace var namespace
-    
+
     @ObservedObject var photoGridData = PhotoGridData()
     @ObservedObject var autoUploadService = AutoUploadService()
 
@@ -19,9 +19,8 @@ struct HeroView: View {
     @State private var showModalToolbar = true
     @State private var modalScale = CGSize.zero
     @State private var modalOffset = CGSize.zero
-    
+
     var body: some View {
-        
         return ZStack {
             // --------------------------------------------------------
             // NavigationView with LazyVGrid
@@ -82,13 +81,13 @@ struct HeroView: View {
                 default:
                     EmptyView()
                 }
-            
+
                 Divider()
-            
+
                 CustomTabBar(tabSelected: $tabSelected)
             }
             .zIndex(1)
-            
+
             // --------------------------------------------------------
             // Modal view
             // --------------------------------------------------------
@@ -103,7 +102,7 @@ struct HeroView: View {
                             }
                         }
                         .zIndex(2)
-                    
+
                     GeometryReader { geo in
                         FullResImage(item: self.selectedItem!)
                             .matchedGeometryEffect(id: self.selectedItem!.id, in: namespace)
@@ -122,7 +121,7 @@ struct HeroView: View {
                                 }
                             }
                     }
-                    
+
                     if showModalToolbar {
                         ModalToolbar(onCloseTap: closeModal, media: $selectedItem, showShareSheet: $showShareSheet)
                             .sheet(isPresented: $showShareSheet) {
@@ -153,14 +152,14 @@ struct HeroView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     private func closeModal() {
         modalScale = .zero
         modalOffset = .zero
         showModalToolbar = true
         withAnimation(.spring(response: 0.2, dampingFraction: 0.8)) { self.selectedItem = nil }
     }
-    
+
     private func openModal(_ item: Media) {
         withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) { self.selectedItem = item }
     }

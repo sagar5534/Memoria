@@ -23,11 +23,11 @@ struct Thumbnail: View {
     @Environment(\.colorScheme) var colorScheme
     let item: Media
     let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
-    
+
     var body: some View {
         let path = (item.thumbnailPath != "" ? item.thumbnailPath! : item.path).replacingOccurrences(of: "\\", with: #"/"#)
         let serverURL = URL(string: #"\#(server)/\#(path)"#)
-        
+
         CachedAsyncImage(
             url: serverURL,
             urlCache: .imageCache,
@@ -49,7 +49,7 @@ struct Thumbnail: View {
             print(serverURL)
         }
     }
-    
+
     @ViewBuilder
     var blurBackdrop: some View {
         switch colorScheme {
@@ -63,32 +63,30 @@ struct Thumbnail: View {
 
 struct FullResImage: View {
     let item: Media
-    @State var state: mediaState = .thumb
+    @State private var state: mediaState = .thumb
     @State private var liveURL: URL?
     @State private var temp = false
+    private let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
 
     var body: some View {
-        let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
-        
-        let path = (item.thumbnailPath ?? item.path).replacingOccurrences(of: "\\", with: #"/"#)
-        let serverURL = URL(string: #"\#(server)/\#(path)"#)!
-        
-        let full = item.path.replacingOccurrences(of: "\\", with: #"/"#)
-        let fullserverURL = URL(string: #"\#(server)/\#(full)"#)!
-        
+        let thumbnailPath = (item.thumbnailPath ?? item.path).replacingOccurrences(of: "\\", with: #"/"#)
+        let thumbnailURL = URL(string: #"\#(server)/\#(thumbnailPath)"#)!
+        let fullPath = item.path.replacingOccurrences(of: "\\", with: #"/"#)
+        let fullURL = URL(string: #"\#(server)/\#(fullPath)"#)!
+
         ZStack {
             CachedAsyncImage(
-                url: serverURL,
+                url: thumbnailURL,
                 urlCache: .imageCache
             ) { image in
                 image.resizable()
             } placeholder: { Color.blue }
-                .transition(.opacity)
-            
+//                .transition(.opacity)
+
             switch state {
             case .full:
                 CachedAsyncImage(
-                    url: fullserverURL,
+                    url: fullURL,
                     urlCache: .imageCache
                 ) { image in
                     image.resizable()
@@ -105,10 +103,9 @@ struct FullResImage: View {
             default:
                 Color.clear
             }
-            
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 state = .full
             }
         }
@@ -130,24 +127,21 @@ struct FullResImage: View {
 struct PressActions: ViewModifier {
     var onPress: () -> Void
     var onRelease: () -> Void
-    
+
     @GestureState private var isPressingDown: Bool = false
     @GestureState private var isTapped = false
-    
+
     func body(content: Content) -> some View {
         let longPress = LongPressGesture(minimumDuration: 0.5)
             .onEnded { _ in
                 onPress()
             }
-        
         let hold = DragGesture(minimumDistance: 0)
             .onEnded { _ in
                 onRelease()
             }
-        
-        // Sequence Gesture
         let sequenceGesture = longPress.sequenced(before: hold)
-        
+
         content
             .gesture(sequenceGesture)
     }
@@ -156,12 +150,12 @@ struct PressActions: ViewModifier {
 struct AVPlayerView: UIViewControllerRepresentable {
     @Binding var videoURL: URL
     @Binding var temp: Bool
-    
+
     private var player: AVPlayer {
         return AVPlayer(url: videoURL)
     }
-    
-    func updateUIViewController(_ playerController: AVPlayerViewController, context: Context) {
+
+    func updateUIViewController(_ playerController: AVPlayerViewController, context _: Context) {
         if temp {
             playerController.player?.play()
             print("Live Started")
@@ -171,8 +165,8 @@ struct AVPlayerView: UIViewControllerRepresentable {
             print("Live Ended")
         }
     }
-    
-    func makeUIViewController(context: Context) -> AVPlayerViewController {
+
+    func makeUIViewController(context _: Context) -> AVPlayerViewController {
         let playerController = AVPlayerViewController()
         playerController.player = player
         playerController.showsPlaybackControls = false
@@ -181,12 +175,12 @@ struct AVPlayerView: UIViewControllerRepresentable {
         playerController.videoGravity = .resizeAspect
         playerController.view.backgroundColor = UIColor.clear
         playerController.player?.actionAtItemEnd = .none
-        
+
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerController.player?.currentItem, queue: .main) { _ in
             playerController.player?.seek(to: CMTime.zero)
             playerController.player?.play()
         }
-        
+
         return playerController
     }
 }

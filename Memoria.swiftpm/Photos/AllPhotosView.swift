@@ -1,6 +1,6 @@
 //
 //  SwiftUIView.swift
-//  
+//
 //
 //  Created by Sagar R Patel on 2022-04-05.
 //
@@ -14,9 +14,8 @@ struct AllPhotosView: View {
 
     @State var selectedItem: Media? = nil
     @State private var scaler: CGFloat = 120
-    var openModal: ((Media) -> Void)
+    var openModal: (Media) -> Void
 
-    
     var body: some View {
         let columns = [GridItem(.adaptive(minimum: scaler), spacing: 2)]
 
@@ -51,13 +50,12 @@ struct AllPhotosView: View {
                 }
             }
         }
-        
     }
 }
 
 private struct titleHeader: View {
     let header: String
-    
+
     var body: some View {
         Text(header)
             .font(.custom("OpenSans-SemiBold", size: 14))
@@ -67,9 +65,8 @@ private struct titleHeader: View {
     }
 }
 
-
-//struct SwiftUIView_Previews: PreviewProvider {
+// struct SwiftUIView_Previews: PreviewProvider {
 //    static var previews: some View {
 ////        SwiftUIView(namespace: , photoGridData: <#PhotoGridData#>, openModal: <#(Media) -> Void#>)
 //    }
-//}
+// }

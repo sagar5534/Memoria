@@ -46,7 +46,7 @@ extension View {
     func fontedNavigationBar() -> some View {
         modifier(FontedNavigationBar())
     }
-    
+
     func defaultNavigationBar() -> some View {
         modifier(DefaultNavigationBar())
     }

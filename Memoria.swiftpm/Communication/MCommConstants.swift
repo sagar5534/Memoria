@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MCommConstants{
+struct MCommConstants {
     enum ENDPOINT: String {
         case staticMedia = "/data"
         case media = "/media"
