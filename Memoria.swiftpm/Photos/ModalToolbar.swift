@@ -54,7 +54,7 @@ struct ModalToolbar: View {
                         }
 
                     }, label: {
-                        Image(systemName: media?.isFavorite ?? false ? "heart.fill" : "heart")
+                        Image(systemName: media?.isFavorite ?? false ? "star.fill" : "star")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 18)

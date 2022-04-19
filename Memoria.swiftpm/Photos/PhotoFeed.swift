@@ -9,16 +9,16 @@ import SwiftUI
 
 struct PhotoFeed: View {
     let namespace: Namespace.ID
-
+    
     @ObservedObject var photoGridData: PhotoFeedData
-
+    
     @State var selectedItem: Media? = nil
     @State private var scaler: CGFloat = 120
     var openModal: (Media) -> Void
-
+    
     var body: some View {
         let columns = [GridItem(.adaptive(minimum: scaler), spacing: 2)]
-
+        
         if photoGridData.isLoading {
             ProgressView().foregroundColor(.primary)
         } else {
@@ -46,6 +46,8 @@ struct PhotoFeed: View {
                                 .overlay(alignment: .topTrailing) {
                                     if photoGridData.groupedMedia[i][index].mediaType == 1 {
                                         VideoOverlay(duration: photoGridData.groupedMedia[i][index].duration?.secondsToString(style: .positional) ?? "")
+                                    } else if (photoGridData.groupedMedia[i][index].isFavorite == true) {
+                                        FavoriteOverlay()
                                     }
                                 }
                             }
@@ -60,7 +62,7 @@ struct PhotoFeed: View {
 
 private struct titleHeader: View {
     let header: String
-
+    
     var body: some View {
         Text(header)
             .font(.custom("OpenSans-SemiBold", size: 14))
@@ -78,9 +80,22 @@ private struct VideoOverlay: View {
                 title: { Text(duration) },
                 icon: { Image(systemName: "play.circle") }
             )
-            .font(.callout)
-            .padding(6)
-            .foregroundColor(.white)
+                .font(.callout)
+                .padding(6)
+                .foregroundColor(.white)
+        }.background(Color.black.opacity(0.3))
+            .cornerRadius(10.0)
+            .padding(4)
+    }
+}
+
+private struct FavoriteOverlay: View {
+    var body: some View {
+        ZStack {
+            Image(systemName: "star.circle")
+                .font(.callout)
+                .padding(6)
+                .foregroundColor(.white)
         }.background(Color.black.opacity(0.3))
             .cornerRadius(10.0)
             .padding(4)
