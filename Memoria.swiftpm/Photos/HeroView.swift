@@ -10,7 +10,7 @@ import SwiftUI
 struct HeroView: View {
     @Namespace var namespace
 
-    @ObservedObject var photoGridData = PhotoGridData()
+    @ObservedObject var photoGridData = PhotoFeedData()
     @ObservedObject var autoUploadService = AutoUploadService()
 
     @State private var tabSelected = 0
@@ -29,7 +29,7 @@ struct HeroView: View {
                 switch tabSelected {
                 case 0:
                     NavigationView {
-                        AllPhotosView(
+                        PhotoFeed(
                             namespace: namespace,
                             photoGridData: photoGridData,
                             selectedItem: selectedItem,
@@ -114,12 +114,14 @@ struct HeroView: View {
                                     0.866
                             )
                             .animation(.linear(duration: 0.1), value: modalScale)
+                            .animation(.linear(duration: 0.1), value: modalOffset)
                             .offset(x: modalOffset.width, y: modalOffset.height)
-                            .onTapGesture(count: 1) {
-                                withAnimation {
-                                    showModalToolbar.toggle()
-                                }
-                            }
+                    }
+                    .ignoresSafeArea()
+                    .onTapGesture(count: 1) {
+                        withAnimation {
+                            showModalToolbar.toggle()
+                        }
                     }
 
                     if showModalToolbar {

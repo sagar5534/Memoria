@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class PhotoGridData: ObservableObject {
+class PhotoFeedData: ObservableObject {
     @Published var allMedia = MediaCollection()
     @Published var groupedMedia = SortedMediaCollection()
     @Published var isLoading = true
