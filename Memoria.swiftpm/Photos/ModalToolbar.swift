@@ -12,61 +12,72 @@ struct ModalToolbar: View {
     @Binding var media: Media?
     @Binding var showShareSheet: Bool
     @State private var showingDeleteAlert = false
-
+    
     var body: some View {
         VStack(alignment: .center) {
             // --------------------------------------------------------
             // Top Bar
             // --------------------------------------------------------
-            ZStack {
-                HStack {
-                    Button(action: { onCloseTap() }, label: {
-                        Image(systemName: "chevron.backward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 18)
-                    })
+            HStack {
+                Button(action: { onCloseTap() }, label: {
+                    Image(systemName: "chevron.backward")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 18)
+                })
                     .foregroundColor(.white)
                     .padding()
                     .contentShape(Rectangle())
-
-                    Spacer()
-                }
-
-                VStack {
-                    Text(media?.modificationDate.toDate()!.toString(withFormat: "d MMMM YYYY") ?? "Today")
-                    Text(media?.modificationDate.toDate()!.toString(withFormat: "h:mm a") ?? "12:00 AM")
-                        .font(.caption)
-                }
-                .foregroundColor(.white)
-
-                HStack {
-                    Spacer()
-
+                
+                Spacer()
+                
+                HStack(alignment: .center, spacing: 22) {
+                    
+                    if media?.isLivePhoto ?? false {
+                        Button(action: {}, label: {
+                            Image(systemName: "play.circle")
+                                .resizable()
+                                .scaledToFit()
+                        })
+                            .foregroundColor(.white)
+                            .contentShape(Rectangle())
+                    }
+                    
                     Button(action: {
                         guard media != nil else { return }
                         media!.isFavorite?.toggle()
-
+                        
                         MNetworking.sharedInstance.updateMedia(media: media!) {
                             print("Updating Media")
                         } completion: { result, _, _ in
                             print("Done Updating Media", result)
                         }
-
+                        
                     }, label: {
                         Image(systemName: media?.isFavorite ?? false ? "star.fill" : "star")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 18)
                     })
-                    .foregroundColor(.white)
-                    .padding()
-                    .contentShape(Rectangle())
+                        .foregroundColor(.white)
+                        .contentShape(Rectangle())
+                    
+                    Button(action: {}, label: {
+                        Image(systemName: "ellipsis")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20)
+                    })
+                        .foregroundColor(.white)
+                        .contentShape(Rectangle())
+                    
                 }
+                .frame(height: 20)
+                .padding(.trailing)
+                
             }
-
+            
             Spacer()
-
+            
             // --------------------------------------------------------
             // Bottom Bar
             // --------------------------------------------------------
@@ -77,31 +88,31 @@ struct ModalToolbar: View {
                         .scaledToFit()
                         .frame(height: 20)
                 })
-                .foregroundColor(.white)
-                .padding()
-                .contentShape(Rectangle())
-
+                    .foregroundColor(.white)
+                    .padding()
+                    .contentShape(Rectangle())
+                
                 Spacer()
-
+                
                 Button(action: { self.showingDeleteAlert.toggle() }, label: {
                     Image(systemName: "trash")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 20)
                 })
-                .foregroundColor(.red)
-                .padding()
-                .contentShape(Rectangle())
-                .alert(isPresented: $showingDeleteAlert) {
-                    Alert(
-                        title: Text("Are you sure you want to delete this?"),
-                        primaryButton: .destructive(Text("Delete")) {
-                            print("Deleting...")
-                            // Delete Media Command
-                        },
-                        secondaryButton: .cancel()
-                    )
-                }
+                    .foregroundColor(.red)
+                    .padding()
+                    .contentShape(Rectangle())
+                    .alert(isPresented: $showingDeleteAlert) {
+                        Alert(
+                            title: Text("Are you sure you want to delete this?"),
+                            primaryButton: .destructive(Text("Delete")) {
+                                print("Deleting...")
+                                // Delete Media Command
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
             }
         }
     }
