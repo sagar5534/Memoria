@@ -18,102 +18,110 @@ struct ModalToolbar: View {
             // --------------------------------------------------------
             // Top Bar
             // --------------------------------------------------------
-            HStack {
-                Button(action: { onCloseTap() }, label: {
-                    Image(systemName: "chevron.backward")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 18)
-                })
-                    .foregroundColor(.white)
-                    .padding()
-                    .contentShape(Rectangle())
-                
-                Spacer()
-                
-                HStack(alignment: .center, spacing: 22) {
+            
+            ZStack(alignment: .top) {
+                LinearGradient(colors: [.black.opacity(0.8), .clear], startPoint: .top, endPoint: .bottom)
+                HStack {
+                    Button(action: { onCloseTap() }, label: {
+                        Image(systemName: "chevron.backward")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 18)
+                    })
+                        .foregroundColor(.white)
+                        .padding()
+                        .contentShape(Rectangle())
                     
-                    if media?.isLivePhoto ?? false {
-                        Button(action: {}, label: {
-                            Image(systemName: "play.circle")
+                    Spacer()
+                    
+                    HStack(alignment: .center, spacing: 22) {
+                        
+                        if media?.isLivePhoto ?? false {
+                            Button(action: {}, label: {
+                                Image(systemName: "play.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                            })
+                                .foregroundColor(.white)
+                                .contentShape(Rectangle())
+                        }
+                        
+                        Button(action: {
+                            guard media != nil else { return }
+                            media!.isFavorite?.toggle()
+                            
+                            MNetworking.sharedInstance.updateMedia(media: media!) {
+                                print("Updating Media")
+                            } completion: { result, _, _ in
+                                print("Done Updating Media", result)
+                            }
+                            
+                        }, label: {
+                            Image(systemName: media?.isFavorite ?? false ? "star.fill" : "star")
                                 .resizable()
                                 .scaledToFit()
                         })
                             .foregroundColor(.white)
                             .contentShape(Rectangle())
+                        
+                        Button(action: {}, label: {
+                            Image(systemName: "ellipsis")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20)
+                        })
+                            .foregroundColor(.white)
+                            .contentShape(Rectangle())
                     }
-                    
-                    Button(action: {
-                        guard media != nil else { return }
-                        media!.isFavorite?.toggle()
-                        
-                        MNetworking.sharedInstance.updateMedia(media: media!) {
-                            print("Updating Media")
-                        } completion: { result, _, _ in
-                            print("Done Updating Media", result)
-                        }
-                        
-                    }, label: {
-                        Image(systemName: media?.isFavorite ?? false ? "star.fill" : "star")
-                            .resizable()
-                            .scaledToFit()
-                    })
-                        .foregroundColor(.white)
-                        .contentShape(Rectangle())
-                    
-                    Button(action: {}, label: {
-                        Image(systemName: "ellipsis")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20)
-                    })
-                        .foregroundColor(.white)
-                        .contentShape(Rectangle())
-                    
+                    .frame(height: 20)
+                    .padding(.trailing)
                 }
-                .frame(height: 20)
-                .padding(.trailing)
-                
             }
+            .frame(height: 70)
             
             Spacer()
             
             // --------------------------------------------------------
             // Bottom Bar
             // --------------------------------------------------------
-            HStack {
-                Button(action: { self.showShareSheet.toggle() }, label: {
-                    Image(systemName: "square.and.arrow.up")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                })
-                    .foregroundColor(.white)
-                    .padding()
-                    .contentShape(Rectangle())
-                
-                Spacer()
-                
-                Button(action: { self.showingDeleteAlert.toggle() }, label: {
-                    Image(systemName: "trash")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                })
-                    .foregroundColor(.red)
-                    .padding()
-                    .contentShape(Rectangle())
-                    .alert(isPresented: $showingDeleteAlert) {
-                        Alert(
-                            title: Text("Are you sure you want to delete this?"),
-                            primaryButton: .destructive(Text("Delete")) {
-                                print("Deleting...")
-                                // Delete Media Command
-                            },
-                            secondaryButton: .cancel()
-                        )
-                    }
+            ZStack(alignment: .bottom) {
+                LinearGradient(colors: [.black.opacity(0.8), .clear], startPoint: .bottom, endPoint: .top)
+                HStack {
+                    Button(action: { self.showShareSheet.toggle() }, label: {
+                        Image(systemName: "square.and.arrow.up")
+                        
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                    })
+                        .foregroundColor(.white)
+                        .padding()
+                        .contentShape(Rectangle())
+                    
+                    Spacer()
+                    
+                    Button(action: { self.showingDeleteAlert.toggle() }, label: {
+                        Image(systemName: "trash")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                    })
+                        .foregroundColor(.white)
+                        .padding()
+                        .contentShape(Rectangle())
+                        .alert(isPresented: $showingDeleteAlert) {
+                            Alert(
+                                title: Text("Are you sure you want to delete this?"),
+                                primaryButton: .destructive(Text("Delete")) {
+                                    print("Deleting...")
+                                    // Delete Media Command
+                                },
+                                secondaryButton: .cancel()
+                            )
+                        }
+                }
             }
+            .frame(height: 70)
         }
     }
 }
