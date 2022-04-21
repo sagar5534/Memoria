@@ -80,12 +80,12 @@ private struct VideoOverlay: View {
                 title: { Text(duration) },
                 icon: { Image(systemName: "play.circle") }
             )
-                .font(.callout)
-                .padding(6)
+            .font(.footnote)
+                .padding(4.5)
                 .foregroundColor(.white)
         }.background(Color.black.opacity(0.3))
             .cornerRadius(10.0)
-            .padding(4)
+            .padding(3.5)
     }
 }
 
@@ -93,12 +93,12 @@ private struct FavoriteOverlay: View {
     var body: some View {
         ZStack {
             Image(systemName: "star.circle")
-                .font(.callout)
-                .padding(6)
+                .font(.footnote)
+                .padding(4.5)
                 .foregroundColor(.white)
         }.background(Color.black.opacity(0.3))
             .cornerRadius(10.0)
-            .padding(4)
+            .padding(3.5)
     }
 }
 
