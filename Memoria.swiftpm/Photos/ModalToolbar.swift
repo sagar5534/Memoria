@@ -20,7 +20,8 @@ struct ModalToolbar: View {
             // --------------------------------------------------------
             
             ZStack(alignment: .top) {
-                LinearGradient(colors: [.black.opacity(0.8), .clear], startPoint: .top, endPoint: .bottom)
+                LinearGradient(colors: [.black.opacity(0.5), .clear], startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.top)
                 HStack {
                     Button(action: { onCloseTap() }, label: {
                         Image(systemName: "chevron.backward")
@@ -77,7 +78,7 @@ struct ModalToolbar: View {
                     .padding(.trailing)
                 }
             }
-            .frame(height: 70)
+            .frame(height: 50)
             
             Spacer()
             
@@ -85,7 +86,8 @@ struct ModalToolbar: View {
             // Bottom Bar
             // --------------------------------------------------------
             ZStack(alignment: .bottom) {
-                LinearGradient(colors: [.black.opacity(0.8), .clear], startPoint: .bottom, endPoint: .top)
+                LinearGradient(colors: [.black.opacity(0.5), .clear], startPoint: .bottom, endPoint: .top)
+                    .edgesIgnoringSafeArea(.bottom)
                 HStack {
                     Button(action: { self.showShareSheet.toggle() }, label: {
                         Image(systemName: "square.and.arrow.up")
@@ -121,7 +123,7 @@ struct ModalToolbar: View {
                         }
                 }
             }
-            .frame(height: 70)
+            .frame(height: 50)
         }
     }
 }
