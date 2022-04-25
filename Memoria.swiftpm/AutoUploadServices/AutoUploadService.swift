@@ -165,7 +165,7 @@ class AutoUploadService: ObservableObject {
                     } completion: { uploadedAssets, errorCode, errorDesc in
 
                         guard uploadedAssets != nil else {
-                            print("Download Saved Assets Error: ", errorCode, errorDesc)
+                            print("Download Saved Assets Error: ", errorCode as Any, errorDesc as Any)
                             completion(pendingAssets)
                             return
                         }

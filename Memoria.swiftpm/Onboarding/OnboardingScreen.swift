@@ -11,6 +11,15 @@ struct OnboardingScreen: View {
     @State private var selectedPage = 0
 
     var body: some View {
+        
+        let buttonWidth: CGFloat = {
+           if UIDevice.current.userInterfaceIdiom == .phone {
+               return UIScreen.main.bounds.width * 0.9
+           } else {
+               return UIScreen.main.bounds.width * 0.5
+           }
+        }()
+
         VStack {
             TabView(selection: $selectedPage.animation()) {
                 IntroPanel()
@@ -31,7 +40,7 @@ struct OnboardingScreen: View {
                             .bold()
                             .foregroundColor(.black)
                             .padding()
-                            .frame(maxWidth: .infinity)
+                            .frame(minWidth: buttonWidth)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
                                     .foregroundColor(.white)
@@ -120,5 +129,6 @@ private struct FeaturesPanel: View {
 struct OnboardingScreen_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingScreen()
+            .previewInterfaceOrientation(.portraitUpsideDown)
     }
 }

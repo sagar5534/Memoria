@@ -91,6 +91,15 @@ struct SignInToServer: View {
     @ObservedObject var store: OBModel
 
     var body: some View {
+        
+        var buttonWidth: CGFloat = {
+           if UIDevice.current.userInterfaceIdiom == .phone {
+               return UIScreen.main.bounds.width * 0.9
+           } else {
+               return UIScreen.main.bounds.width * 0.5
+           }
+        }()
+        
         VStack(alignment: .leading, spacing: 15.0) {
             Spacer()
             Text("Sign In")
@@ -151,7 +160,7 @@ struct SignInToServer: View {
                     .bold()
                     .foregroundColor(.black)
                     .padding()
-                    .frame(maxWidth: .infinity)
+                    .frame(minWidth: buttonWidth)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundColor(.white)

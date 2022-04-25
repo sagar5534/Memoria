@@ -50,7 +50,7 @@ struct ModalToolbar: View {
                         MNetworking.sharedInstance.updateMedia(media: media!) {
                             print("Updating Media")
                         } completion: { result, _, _ in
-                            print("Done Updating Media", result)
+                            print("Done Updating Media", result as Any)
                         }
 
                     }, label: {
