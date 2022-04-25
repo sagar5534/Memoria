@@ -1,18 +1,11 @@
-//
-//  Thumbnail.swift
-//  HeroAnimations
-//
-//
-
-import AVFoundation
-import AVKit
-import CachedAsyncImage
 import SwiftUI
+import CachedAsyncImage
 
-enum mediaState {
+private enum mediaState {
     case thumb
     case full
     case live
+    case video
 }
 
 extension URLCache {
@@ -21,69 +14,54 @@ extension URLCache {
 
 struct Thumbnail: View {
     @Environment(\.colorScheme) var colorScheme
-    let item: Media
-    let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
+    let media: Media
 
     var body: some View {
-        let path = (item.thumbnailPath != "" ? item.thumbnailPath! : item.path).replacingOccurrences(of: "\\", with: #"/"#)
-        let serverURL = URL(string: #"\#(server)/\#(path)"#)
+        let path = (media.thumbnailPath != "" ? media.thumbnailPath! : media.path)
 
         CachedAsyncImage(
-            url: serverURL,
+            url: path.toStaticURL(),
             urlCache: .imageCache,
             transaction: Transaction(animation: .easeOut(duration: 0.1))
         ) { phase in
             switch phase {
             case .empty:
-                blurBackdrop
+                BlurBackdrop()
             case let .success(image):
                 image
                     .resizable()
             case .failure:
-                Image(systemName: "wifi.slash")
+                BlurBackdrop()
             @unknown default:
-                blurBackdrop
+                BlurBackdrop()
             }
         }
     }
-
-    @ViewBuilder
-    var blurBackdrop: some View {
-        switch colorScheme {
-        case .dark:
-            VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemMaterialDark))
-        default:
-            VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemMaterialLight))
-        }
-    }
 }
+
 
 struct FullResImage: View {
     let item: Media
     @State private var state: mediaState = .thumb
     @State private var liveURL: URL?
     @State private var temp = false
-    private let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
+    @EnvironmentObject var playerVM: VideoPlayerModel
 
     var body: some View {
-        let thumbnailPath = (item.thumbnailPath ?? item.path).replacingOccurrences(of: "\\", with: #"/"#)
-        let thumbnailURL = URL(string: #"\#(server)/\#(thumbnailPath)"#)!
-        let fullPath = item.path.replacingOccurrences(of: "\\", with: #"/"#)
-        let fullURL = URL(string: #"\#(server)/\#(fullPath)"#)!
+        let thumbnailPath = (item.thumbnailPath ?? item.path)
 
         ZStack {
             CachedAsyncImage(
-                url: thumbnailURL,
+                url: thumbnailPath.toStaticURL(),
                 urlCache: .imageCache
             ) { image in
                 image.resizable()
-            } placeholder: { Color.blue }
+            } placeholder: { Color.clear }
 
             switch state {
             case .full:
                 CachedAsyncImage(
-                    url: fullURL,
-                    urlCache: .imageCache
+                    url: item.path.toStaticURL()
                 ) { image in
                     image.resizable()
                 } placeholder: {
@@ -91,10 +69,16 @@ struct FullResImage: View {
                 }
                 .transition(.opacity)
 
-            case .live:
-                AVPlayerView(videoURL: .constant(liveURL!), temp: $temp)
+            case .live, .video:
+                CustomVideoPlayer(playerVM: playerVM)
+                    .transition(.opacity)
+                    .onAppear {
+                        playerVM.player.play()
+                        print("Video Started")
+                    }
                     .onDisappear {
-                        temp = false
+                        playerVM.player.pause()
+                        print("Video Ended")
                     }
             default:
                 Color.clear
@@ -102,25 +86,30 @@ struct FullResImage: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                state = .full
+                if item.mediaType == 0 {
+                    state = .full
+                } else {
+                    state = .video
+                }
             }
         }
-        .modifier(PressActions(onPress: {
-            guard state != .live, item.isLivePhoto else { return }
-            let live = item.livePhotoPath!.replacingOccurrences(of: "\\", with: #"/"#)
-            liveURL = URL(string: #"\#(server)/\#(live)"#)!
-            withAnimation {
-                temp = true
-                state = .live
-            }
-        }, onRelease: {
-            temp = false
-            state = .full
-        }))
+        .if(item.isLivePhoto){ view in
+            view.modifier(PressActions(onPress: {
+                guard state != .live, item.isLivePhoto else { return }
+                withAnimation {
+                    temp = true
+                    state = .live
+                }
+            }, onRelease: {
+                temp = false
+                state = .full
+            }))
+        }
+        
     }
 }
 
-struct PressActions: ViewModifier {
+private struct PressActions: ViewModifier {
     var onPress: () -> Void
     var onRelease: () -> Void
 
@@ -143,48 +132,10 @@ struct PressActions: ViewModifier {
     }
 }
 
-struct AVPlayerView: UIViewControllerRepresentable {
-    @Binding var videoURL: URL
-    @Binding var temp: Bool
-
-    private var player: AVPlayer {
-        return AVPlayer(url: videoURL)
-    }
-
-    func updateUIViewController(_ playerController: AVPlayerViewController, context _: Context) {
-        if temp {
-            playerController.player?.play()
-            print("Live Started")
-        } else {
-            playerController.player?.pause()
-            playerController.player?.seek(to: CMTime.zero)
-            print("Live Ended")
-        }
-    }
-
-    func makeUIViewController(context _: Context) -> AVPlayerViewController {
-        let playerController = AVPlayerViewController()
-        playerController.player = player
-        playerController.showsPlaybackControls = false
-        playerController.requiresLinearPlayback = true
-        playerController.updatesNowPlayingInfoCenter = false
-        playerController.videoGravity = .resizeAspect
-        playerController.view.backgroundColor = UIColor.clear
-        playerController.player?.actionAtItemEnd = .none
-
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerController.player?.currentItem, queue: .main) { _ in
-            playerController.player?.seek(to: CMTime.zero)
-            playerController.player?.play()
-        }
-
-        return playerController
-    }
-}
-
 struct Thumbnail_Previews: PreviewProvider {
     static var previews: some View {
         let media = Media(id: "", path: "Photos\\IMG_2791.jpg", source: Source.local, livePhotoPath: "Photos\\IMG_2791.mov", thumbnailPath: ".thumbs\\Photos\\IMG_2791_thumbs.jpg", isLivePhoto: true, duration: 0, modificationDate: Date().toString(), creationDate: Date().toString(), mediaSubType: 0, mediaType: 0, assetID: "", filename: "", user: "", v: 1)
 
-        Thumbnail(item: media)
+        Thumbnail(media: media)
     }
 }

@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// A view used to blur the grid, using a UIViewRepresentable of UIKit's UIVisualEffect
-struct VisualEffectView: UIViewRepresentable {
+private struct VisualEffectView: UIViewRepresentable {
     var uiVisualEffect: UIVisualEffect?
 
     func makeUIView(context _: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
@@ -18,5 +18,19 @@ struct VisualEffectView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UIVisualEffectView, context _: UIViewRepresentableContext<Self>) {
         uiView.effect = uiVisualEffect
+    }
+}
+
+
+struct BlurBackdrop: View {
+    @Environment(\.colorScheme) var colorScheme
+
+    var body: some View {
+        switch colorScheme {
+        case .dark:
+            VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemMaterialDark))
+        default:
+            VisualEffectView(uiVisualEffect: UIBlurEffect(style: .systemMaterialLight))
+        }
     }
 }

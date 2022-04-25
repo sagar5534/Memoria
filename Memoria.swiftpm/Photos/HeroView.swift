@@ -12,6 +12,7 @@ struct HeroView: View {
 
     @ObservedObject var photoGridData = PhotoFeedData()
     @ObservedObject var autoUploadService = AutoUploadService()
+    @StateObject private var playerVM = VideoPlayerModel()
 
     @State private var tabSelected = 0
     @State private var selectedItem: Media? = nil
@@ -21,6 +22,30 @@ struct HeroView: View {
     @State private var modalOffset = CGSize.zero
 
     var body: some View {
+        
+        let toggleToolbarGesture = TapGesture(count: 1)
+            .onEnded { _ in
+                withAnimation {
+                    self.showModalToolbar.toggle()
+                }
+            }
+        
+        let dragGesture = DragGesture()
+            .onChanged { gesture in
+                if gesture.translation.height >= 0 {
+                    self.modalScale = gesture.translation
+                }
+                self.modalOffset = gesture.translation
+            }
+            .onEnded { gesture in
+                if gesture.translation.height > 50 {
+                    closeModal()
+                } else {
+                    self.modalScale = .zero
+                    self.modalOffset = .zero
+                }
+            }
+        
         return ZStack {
             // --------------------------------------------------------
             // NavigationView with LazyVGrid
@@ -96,15 +121,12 @@ struct HeroView: View {
                     Color.black
                         .edgesIgnoringSafeArea(.all)
                         .transition(.opacity)
-                        .onTapGesture(count: 1) {
-                            withAnimation {
-                                showModalToolbar.toggle()
-                            }
-                        }
+                        .gesture(toggleToolbarGesture)
                         .zIndex(2)
 
                     GeometryReader { geo in
                         FullResImage(item: self.selectedItem!)
+                            .environmentObject(playerVM)
                             .matchedGeometryEffect(id: self.selectedItem!.id, in: namespace)
                             .scaledToFit()
                             .frame(width: geo.size.width, height: geo.size.height)
@@ -118,6 +140,7 @@ struct HeroView: View {
                             .offset(x: modalOffset.width, y: modalOffset.height)
                     }
                     .ignoresSafeArea()
+                    .highPriorityGesture(toggleToolbarGesture)
                     .onTapGesture(count: 1) {
                         withAnimation {
                             showModalToolbar.toggle()
@@ -126,29 +149,14 @@ struct HeroView: View {
 
                     if showModalToolbar {
                         ModalToolbar(onCloseTap: closeModal, media: $selectedItem, showShareSheet: $showShareSheet)
+                            .environmentObject(playerVM)
                             .sheet(isPresented: $showShareSheet) {
                                 ShareSheet(activityItems: [])
                             }
                             .transition(.opacity)
                     }
                 }
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            if gesture.translation.height >= 0 {
-                                self.modalScale = gesture.translation
-                            }
-                            self.modalOffset = gesture.translation
-                        }
-                        .onEnded { gesture in
-                            if gesture.translation.height > 50 {
-                                closeModal()
-                            } else {
-                                self.modalScale = .zero
-                                self.modalOffset = .zero
-                            }
-                        }
-                )
+                .gesture(dragGesture)
                 .zIndex(3)
             }
         }
@@ -163,6 +171,12 @@ struct HeroView: View {
     }
 
     private func openModal(_ item: Media) {
-        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) { self.selectedItem = item }
+        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) { self.selectedItem = item
+        }
+        if item.mediaType == 1 {
+            playerVM.setCurrentItem(item.path.toStaticURL())
+        } else if item.isLivePhoto {
+            playerVM.setCurrentItem(item.livePhotoPath!.toStaticURL())
+        }
     }
 }

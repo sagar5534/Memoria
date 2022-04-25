@@ -7,6 +7,7 @@
 
 import Foundation
 import Photos
+import SwiftUI
 
 extension String {
     func toDate(withFormat format: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") -> Date? {
@@ -16,6 +17,13 @@ extension String {
         let date = dateFormatter.date(from: self)
 
         return date
+    }
+
+    func toStaticURL() -> URL {
+        let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
+        let path = replacingOccurrences(of: "\\", with: #"/"#)
+            .addingPercentEncoding(withAllowedCharacters: .alphanumerics)
+        return URL(string: #"\#(server)/\#(path!)"#)!
     }
 }
 
@@ -60,6 +68,21 @@ extension PHAsset {
                     completionHandler(nil)
                 }
             })
+        }
+    }
+}
+
+extension View {
+    /// Applies the given transform if the given condition evaluates to `true`.
+    /// - Parameters:
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
+    @ViewBuilder func `if`<Content: View>(_ condition: @autoclosure () -> Bool, transform: (Self) -> Content) -> some View {
+        if condition() {
+            transform(self)
+        } else {
+            self
         }
     }
 }

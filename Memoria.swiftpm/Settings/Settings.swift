@@ -12,6 +12,8 @@ struct Settings: View {
     @AppStorage("userEmail") private var userEmail = "User@email.com"
     @AppStorage("signedIn") private var signedIn: Bool = false
 
+    @State private var showingSignOutAlert = false
+
     var body: some View {
         List {
             Section {
@@ -46,8 +48,7 @@ struct Settings: View {
                     }
                 )
                 Button(action: {
-                    print("Signing out user")
-                    signedIn = false
+                    showingSignOutAlert = true
                 }, label: {
                     Text("Sign Out")
                         .foregroundColor(.red)
@@ -85,6 +86,18 @@ struct Settings: View {
             }
         }
         .listStyle(InsetListStyle())
+        .alert(isPresented: $showingSignOutAlert) {
+            Alert(
+                title: Text("Are you sure you want to sign out?"),
+                primaryButton: .destructive(Text("Sign Out")) {
+                    print("Signing Out...")
+                    withAnimation {
+                        signedIn = false
+                    }
+                },
+                secondaryButton: .cancel()
+            )
+        }
     }
 }
 

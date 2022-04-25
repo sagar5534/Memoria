@@ -9,16 +9,14 @@ import SwiftUI
 
 struct PhotoFeed: View {
     let namespace: Namespace.ID
-    
     @ObservedObject var photoGridData: PhotoFeedData
-    
     @State var selectedItem: Media? = nil
     @State private var scaler: CGFloat = 120
-    var openModal: (Media) -> Void
-    
+    let openModal: (Media) -> Void
+
     var body: some View {
         let columns = [GridItem(.adaptive(minimum: scaler), spacing: 2)]
-        
+
         if photoGridData.isLoading {
             ProgressView().foregroundColor(.primary)
         } else {
@@ -30,7 +28,7 @@ struct PhotoFeed: View {
                                 ZStack {
                                     Color.clear
                                     if selectedItem?.id != photoGridData.groupedMedia[i][index].id {
-                                        Thumbnail(item: photoGridData.groupedMedia[i][index])
+                                        Thumbnail(media: photoGridData.groupedMedia[i][index])
                                             .onTapGesture {
                                                 openModal(photoGridData.groupedMedia[i][index])
                                             }
@@ -40,13 +38,13 @@ struct PhotoFeed: View {
                                 }
                                 .clipped()
                                 .matchedGeometryEffect(id: photoGridData.groupedMedia[i][index].id, in: namespace)
-                                .zIndex(selectedItem?.id == photoGridData.groupedMedia[i][index].id ? 100 : 1)
+//                                .zIndex(selectedItem?.id == photoGridData.groupedMedia[i][index].id ? 5 : 1)
                                 .aspectRatio(1, contentMode: .fit)
                                 .id(photoGridData.groupedMedia[i][index].id)
                                 .overlay(alignment: .topTrailing) {
                                     if photoGridData.groupedMedia[i][index].mediaType == 1 {
                                         VideoOverlay(duration: photoGridData.groupedMedia[i][index].duration?.secondsToString(style: .positional) ?? "")
-                                    } else if (photoGridData.groupedMedia[i][index].isFavorite == true) {
+                                    } else if photoGridData.groupedMedia[i][index].isFavorite == true {
                                         FavoriteOverlay()
                                     }
                                 }
@@ -62,7 +60,7 @@ struct PhotoFeed: View {
 
 private struct titleHeader: View {
     let header: String
-    
+
     var body: some View {
         Text(header)
             .font(.custom("OpenSans-SemiBold", size: 14))
@@ -81,8 +79,8 @@ private struct VideoOverlay: View {
                 icon: { Image(systemName: "play.circle") }
             )
             .font(.footnote)
-                .padding(4.5)
-                .foregroundColor(.white)
+            .padding(4.5)
+            .foregroundColor(.white)
         }.background(Color.black.opacity(0.3))
             .cornerRadius(10.0)
             .padding(3.5)
@@ -101,9 +99,3 @@ private struct FavoriteOverlay: View {
             .padding(3.5)
     }
 }
-
-// struct Photofeed_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let media = Media(id: "", path: "Photos\\IMG_2791.jpg", source: Source.local, livePhotoPath: "Photos\\IMG_2791.mov", thumbnailPath: ".thumbs\\Photos\\IMG_2791_thumbs.jpg", isLivePhoto: true, duration: 0, modificationDate: Date().toString(), creationDate: Date().toString(), mediaSubType: 0, mediaType: 0, assetID: "", filename: "", user: "", v: 1)
-//    }
-// }
