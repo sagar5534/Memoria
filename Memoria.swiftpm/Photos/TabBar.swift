@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CustomTabBar: View {
     @Binding var tabSelected: Int
+    @Binding var scrollToTop: Bool
     private let circleSize: CGFloat = 4
 
     @ViewBuilder
@@ -16,7 +17,7 @@ struct CustomTabBar: View {
         HStack {
             Spacer()
             VStack(alignment: .center, spacing: 5) {
-                NavBarItem(tabSelected: $tabSelected, tag: 0, icon: "house")
+                NavBarItem(tabSelected: $tabSelected, scrollToTop: $scrollToTop, tag: 0, icon: "house")
                 Circle()
                     .frame(height: circleSize, alignment: .center)
                     .foregroundColor(tabSelected == 0 ? Color.primary : Color.clear)
@@ -25,7 +26,7 @@ struct CustomTabBar: View {
 
             Spacer()
             VStack(alignment: .center, spacing: 5) {
-                NavBarItem(tabSelected: $tabSelected, tag: 1, icon: "square.stack")
+                NavBarItem(tabSelected: $tabSelected, scrollToTop: $scrollToTop, tag: 1, icon: "square.stack")
 
                 Circle()
                     .frame(height: circleSize, alignment: .center)
@@ -35,7 +36,7 @@ struct CustomTabBar: View {
 
             Spacer()
             VStack(alignment: .center, spacing: 5) {
-                NavBarItem(tabSelected: $tabSelected, tag: 2, icon: "magnifyingglass")
+                NavBarItem(tabSelected: $tabSelected, scrollToTop: $scrollToTop, tag: 2, icon: "magnifyingglass")
                 Circle()
                     .frame(height: circleSize, alignment: .center)
                     .foregroundColor(tabSelected == 2 ? Color.primary : Color.clear)
@@ -44,7 +45,7 @@ struct CustomTabBar: View {
             Spacer()
 
             VStack(alignment: .center, spacing: 5) {
-                NavBarItem(tabSelected: $tabSelected, tag: 3, icon: "person")
+                NavBarItem(tabSelected: $tabSelected, scrollToTop: $scrollToTop, tag: 3, icon: "person")
                 Circle()
                     .frame(height: circleSize, alignment: .center)
                     .foregroundColor(tabSelected == 3 ? Color.primary : Color.clear)
@@ -62,12 +63,16 @@ struct CustomTabBar: View {
 
 private struct NavBarItem: View {
     @Binding var tabSelected: Int
+    @Binding var scrollToTop: Bool
     var tag: Int
     var icon: String
 
     @ViewBuilder
     var body: some View {
         Button(action: {
+            if tabSelected == tag {
+                scrollToTop.toggle()
+            }
             tabSelected = tag
         }) {
             Image(systemName: icon)
@@ -79,6 +84,6 @@ private struct NavBarItem: View {
 
 struct PhotosView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTabBar(tabSelected: .constant(0))
+        CustomTabBar(tabSelected: .constant(0), scrollToTop: .constant(false))
     }
 }

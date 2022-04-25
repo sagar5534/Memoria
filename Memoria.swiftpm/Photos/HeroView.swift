@@ -16,6 +16,7 @@ struct HeroView: View {
 
     @State private var tabSelected = 0
     @State private var selectedItem: Media? = nil
+    @State private var scrollToTop: Bool = false
     @State private var showShareSheet = false
     @State private var showModalToolbar = true
     @State private var modalScale = CGSize.zero
@@ -56,7 +57,8 @@ struct HeroView: View {
                         PhotoFeed(
                             namespace: namespace,
                             photoGridData: photoGridData,
-                            selectedItem: selectedItem,
+                            selectedItem: selectedItem, 
+                            scrollToTop: $scrollToTop,
                             openModal: openModal
                         )
                         .toolbar {
@@ -108,7 +110,7 @@ struct HeroView: View {
 
                 Divider()
 
-                CustomTabBar(tabSelected: $tabSelected)
+                CustomTabBar(tabSelected: $tabSelected, scrollToTop: $scrollToTop)
             }
             .zIndex(1)
 
