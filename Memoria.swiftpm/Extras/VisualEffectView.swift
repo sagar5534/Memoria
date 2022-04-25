@@ -21,7 +21,6 @@ private struct VisualEffectView: UIViewRepresentable {
     }
 }
 
-
 struct BlurBackdrop: View {
     @Environment(\.colorScheme) var colorScheme
 

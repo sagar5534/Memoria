@@ -1,6 +1,6 @@
-import SwiftUI
 import AVFoundation
 import Combine
+import SwiftUI
 
 final class VideoPlayerModel: ObservableObject {
     let player = AVPlayer()
@@ -54,12 +54,11 @@ final class VideoPlayerModel: ObservableObject {
                 }
             }
         }
-    
+
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { _ in
             self.player.seek(to: CMTime.zero)
             self.player.play()
         }
-    
     }
 
     func setCurrentItem(_ item: URL) {

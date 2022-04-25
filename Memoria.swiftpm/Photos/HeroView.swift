@@ -22,14 +22,13 @@ struct HeroView: View {
     @State private var modalOffset = CGSize.zero
 
     var body: some View {
-        
         let toggleToolbarGesture = TapGesture(count: 1)
             .onEnded { _ in
                 withAnimation {
                     self.showModalToolbar.toggle()
                 }
             }
-        
+
         let dragGesture = DragGesture()
             .onChanged { gesture in
                 if gesture.translation.height >= 0 {
@@ -45,7 +44,7 @@ struct HeroView: View {
                     self.modalOffset = .zero
                 }
             }
-        
+
         return ZStack {
             // --------------------------------------------------------
             // NavigationView with LazyVGrid

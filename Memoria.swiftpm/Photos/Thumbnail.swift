@@ -1,5 +1,5 @@
-import SwiftUI
 import CachedAsyncImage
+import SwiftUI
 
 private enum mediaState {
     case thumb
@@ -38,7 +38,6 @@ struct Thumbnail: View {
         }
     }
 }
-
 
 struct FullResImage: View {
     let item: Media
@@ -93,7 +92,7 @@ struct FullResImage: View {
                 }
             }
         }
-        .if(item.isLivePhoto){ view in
+        .if(item.isLivePhoto) { view in
             view.modifier(PressActions(onPress: {
                 guard state != .live, item.isLivePhoto else { return }
                 withAnimation {
@@ -105,7 +104,6 @@ struct FullResImage: View {
                 state = .full
             }))
         }
-        
     }
 }
 

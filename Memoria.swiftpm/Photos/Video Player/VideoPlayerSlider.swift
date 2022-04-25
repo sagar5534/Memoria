@@ -5,7 +5,6 @@ struct VideoPlayerSlider: View {
 
     var body: some View {
         HStack {
-            
             Button(action: {
                 playerVM.isPlaying ? playerVM.player.pause() : playerVM.player.play()
             }, label: {
@@ -19,12 +18,11 @@ struct VideoPlayerSlider: View {
             .contentShape(Rectangle())
 
             Slider(value: $playerVM.currentTime, in: 0 ... (playerVM.duration ?? .infinity), onEditingChanged: { isEditing in
-                    playerVM.isEditingCurrentTime = isEditing
-                })
-                .foregroundColor(.white)
-                .accentColor(.white)
-                .padding(.trailing)
-            
+                playerVM.isEditingCurrentTime = isEditing
+            })
+            .foregroundColor(.white)
+            .accentColor(.white)
+            .padding(.trailing)
         }
     }
 }
