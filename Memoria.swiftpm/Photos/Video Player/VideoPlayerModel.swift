@@ -20,12 +20,13 @@ final class VideoPlayerModel: ObservableObject {
 
     init() {
         $isEditingCurrentTime
-            .dropFirst()
-            .filter { $0 == false }
-            .sink(receiveValue: { [weak self] _ in
+            .sink(receiveValue: { [weak self] isEditing in
                 guard let self = self else { return }
-                self.player.seek(to: CMTime(seconds: self.currentTime, preferredTimescale: 1), toleranceBefore: .zero, toleranceAfter: .zero)
-                if self.player.rate != 0 {
+                if isEditing {
+                    self.player.pause()
+                } else {
+                    let frameTime = CMTime(seconds: self.currentTime, preferredTimescale: 1000000)
+                    self.player.seek(to: frameTime, toleranceBefore: .zero, toleranceAfter: .zero)
                     self.player.play()
                 }
             })

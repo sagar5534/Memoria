@@ -8,7 +8,7 @@ struct VideoPlayerSlider: View {
             Button(action: {
                 playerVM.isPlaying ? playerVM.player.pause() : playerVM.player.play()
             }, label: {
-                Image(systemName: playerVM.isPlaying ? "pause.circle" : "play.circle")
+                Image(systemName: playerVM.isPlaying ? "pause" : "play")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 20)

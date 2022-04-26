@@ -172,12 +172,8 @@ struct HeroView: View {
     }
 
     private func openModal(_ item: Media) {
-        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) { self.selectedItem = item
-        }
-        if item.mediaType == 1 {
-            playerVM.setCurrentItem(item.path.toStaticURL())
-        } else if item.isLivePhoto {
-            playerVM.setCurrentItem(item.livePhotoPath!.toStaticURL())
+        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+            self.selectedItem = item
         }
     }
 }

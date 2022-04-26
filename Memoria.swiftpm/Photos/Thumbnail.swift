@@ -87,7 +87,11 @@ struct FullResImage: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 if item.mediaType == 0 {
                     state = .full
+                    if item.isLivePhoto {
+                        playerVM.setCurrentItem(item.livePhotoPath!.toStaticURL())
+                    }
                 } else {
+                    playerVM.setCurrentItem(item.path.toStaticURL())
                     state = .video
                 }
             }

@@ -92,7 +92,7 @@ struct SignInToServer: View {
 
     var body: some View {
         
-        var buttonWidth: CGFloat = {
+        let buttonWidth: CGFloat = {
            if UIDevice.current.userInterfaceIdiom == .phone {
                return UIScreen.main.bounds.width * 0.9
            } else {
