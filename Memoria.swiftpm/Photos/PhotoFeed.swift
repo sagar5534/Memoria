@@ -32,16 +32,17 @@ struct PhotoFeed: View {
                                         Color.clear
                                         if selectedItem?.id != photoGridData.groupedMedia[i][index].id {
                                             Thumbnail(media: photoGridData.groupedMedia[i][index])
+                                                .scaledToFill()
+                                                .layoutPriority(-1)
+                                                .contentShape(Circle())
                                                 .onTapGesture {
                                                     openModal(photoGridData.groupedMedia[i][index])
                                                 }
-                                                .scaledToFill()
-                                                .layoutPriority(-1)
                                         }
                                     }
                                     .clipped()
                                     .matchedGeometryEffect(id: photoGridData.groupedMedia[i][index].id, in: namespace)
-                                    //                                .zIndex(selectedItem?.id == photoGridData.groupedMedia[i][index].id ? 5 : 1)
+                                    .zIndex(selectedItem?.id == photoGridData.groupedMedia[i][index].id ? 5 : 1)
                                     .aspectRatio(1, contentMode: .fit)
                                     .id(photoGridData.groupedMedia[i][index].id)
                                     .overlay(alignment: .topTrailing) {
