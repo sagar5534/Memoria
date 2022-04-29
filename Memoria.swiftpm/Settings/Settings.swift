@@ -11,7 +11,9 @@ struct Settings: View {
     @AppStorage("userName") private var userName = "User"
     @AppStorage("userEmail") private var userEmail = "User@email.com"
     @AppStorage("signedIn") private var signedIn: Bool = false
-
+    @AppStorage("backupEnabled") private var backupEnabled = false
+    @AppStorage("cellularBackup") private var cellularBackup = false
+    
     @State private var showingSignOutAlert = false
 
     var body: some View {
@@ -56,12 +58,34 @@ struct Settings: View {
             }
 
             Section(header: Text("Backups")) {
-                NavigationLink(
-                    destination: BackupSync(),
-                    label: {
-                        Text("Backup & Sync")
+
+                    Toggle(isOn: $backupEnabled) {
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Backup & Sync")
+                            Text("Upload, view, organize & share your photos from any device")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                        }
                     }
-                )
+
+                    Toggle(isOn: $cellularBackup) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Back Up Over Cellular")
+                            Text("When not connected to WI-FI, use your cellular network to automatically back up to your Memoria Instance. This may cause you to exceed your cellular data plan.")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .disabled(!backupEnabled)
+                    
+                    Button(action: {
+                        print("Backup Forced")
+                    }, label: {
+                        Text("Backup Now")
+                    })
+                    .disabled(!backupEnabled)
+  
             }
 
             Section(header: Text("About")) {
@@ -112,7 +136,7 @@ private struct UserInfo: View {
     @FocusState private var textFieldFocused: Bool
 
     var body: some View {
-        Form {
+        List {
             Section {
                 VStack(alignment: .center) {
                     HStack {
@@ -185,60 +209,6 @@ private struct UserInfo: View {
     }
 }
 
-private struct BackupSync: View {
-    @AppStorage("backupEnabled") private var backupEnabled = false
-    @AppStorage("cellularBackup") private var cellularBackup = false
-
-    var body: some View {
-        List {
-            Section {
-                VStack {
-                    HStack {
-                        Text("Upload, view, organize & share your photos from any device")
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                    }
-
-                    Toggle(isOn: $backupEnabled) {
-                        Text("Backup & Sync")
-                    }
-                }
-                .padding(.vertical, 10)
-            }
-
-            Section {
-                VStack {
-                    HStack {
-                        Text("When not connected to WI-FI, use your cellular network to automatically back up to your Memoria Instance. This may cause you to exceed your cellular data plan.")
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                    }
-
-                    Toggle(isOn: $cellularBackup) {
-                        Text("Back Up Over Cellular")
-                    }
-                    .disabled(!backupEnabled)
-                }
-                .padding(.vertical, 10)
-            }
-
-            Section {
-                Button(action: {
-                    print("Backup Forced")
-                }, label: {
-                    Text("Backup Now")
-                })
-                .disabled(!backupEnabled)
-            }
-        }
-        .listStyle(InsetGroupedListStyle())
-        .navigationTitle("Backup & Sync")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
 private struct HelpSupport: View {
     var body: some View {
         List {
@@ -277,10 +247,6 @@ struct Settings_Previews: PreviewProvider {
 
         NavigationView {
             UserInfo()
-        }
-
-        NavigationView {
-            BackupSync()
         }
 
         NavigationView {
