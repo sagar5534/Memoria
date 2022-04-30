@@ -20,6 +20,7 @@ final class VideoPlayerModel: ObservableObject {
 
     init() {
         $isEditingCurrentTime
+            .dropFirst()
             .sink(receiveValue: { [weak self] isEditing in
                 guard let self = self else { return }
                 if isEditing {

@@ -123,13 +123,14 @@ private struct PressActions: ViewModifier {
             .onEnded { _ in
                 onPress()
             }
-        let hold = DragGesture(minimumDistance: 0)
+        let hold = DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onEnded { _ in
                 onRelease()
             }
         let sequenceGesture = longPress.sequenced(before: hold)
 
         content
+            .onTapGesture {} // Solves scrolling in the parent for live photos. Dont ask blame Apple
             .gesture(sequenceGesture)
     }
 }

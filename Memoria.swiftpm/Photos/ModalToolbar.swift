@@ -75,7 +75,7 @@ struct ModalToolbar: View {
             }
             .background(
                 LinearGradient(colors: [.black.opacity(0.5), .clear], startPoint: .top, endPoint: .bottom)
-                    .edgesIgnoringSafeArea(.top)
+                    .edgesIgnoringSafeArea([.top, .leading, .trailing])
             )
 
             Spacer()
@@ -125,7 +125,7 @@ struct ModalToolbar: View {
             }
             .background(
                 LinearGradient(colors: [.black.opacity(0.5), .clear], startPoint: .bottom, endPoint: .top)
-                    .edgesIgnoringSafeArea(.bottom)
+                    .edgesIgnoringSafeArea([.bottom, .leading, .trailing])
             )
         }
     }
