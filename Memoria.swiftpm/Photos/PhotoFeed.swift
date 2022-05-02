@@ -9,13 +9,17 @@ import SwiftUI
 
 struct PhotoFeed: View {
     let namespace: Namespace.ID
+    @EnvironmentObject var autoUploadService: AutoUploadService
     @ObservedObject var photoGridData: PhotoFeedData
     @Binding var selectedItem: Media?
     @Binding var scrollToTop: Bool
-    @State private var scaler: CGFloat = 120
+    
+    @State private var scaler = 3
+    @State private var isSquareAspect = true
 
     var body: some View {
-        let columns = [GridItem(.adaptive(minimum: scaler), spacing: 2)]
+
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: scaler)
 
         if photoGridData.isLoading {
             ProgressView().foregroundColor(.primary)
@@ -29,7 +33,8 @@ struct PhotoFeed: View {
                                     thumbnailIcon(
                                         namespace: namespace,
                                         media: photoGridData.groupedMedia[i][index],
-                                        isChosenMedia: selectedItem != nil && selectedItem!.id == photoGridData.groupedMedia[i][index].id
+                                        isChosenMedia: selectedItem != nil && selectedItem!.id == photoGridData.groupedMedia[i][index].id,
+                                        isSquareAspect: isSquareAspect
                                     )
                                     .onTapGesture {
                                         withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
@@ -51,6 +56,65 @@ struct PhotoFeed: View {
                     }
                 }
             }
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    HStack(alignment: .center, spacing: 12.0) {
+                        // ICloud Button
+                        if autoUploadService.running {
+                            Button(action: {}, label: {
+                                Image(systemName: "arrow.clockwise.icloud")
+                            })
+                            .foregroundColor(.primary)
+                        } else {
+                            Button(action: {
+                                autoUploadService.initiateAutoUpload {
+                                    photoGridData.fetchAllMedia()
+                                }
+                            }, label: {
+                                Image(systemName: "checkmark.icloud")
+                            })
+                            .foregroundColor(.primary)
+                        }
+
+                        // Menu Popup
+                        Menu {
+                            Button {zoomIn()} label: {
+                                Label("Zoom In", systemImage: "plus.magnifyingglass")
+                            }
+                            .disabled(scaler <= 1)
+
+                            Button {zoomOut()} label: {
+                                Label("Zoom Out", systemImage: "plus.magnifyingglass")
+                            }
+                            .disabled(scaler >= 7)
+
+                            Button {
+                                withAnimation {
+                                    isSquareAspect.toggle()
+                                }
+                            } label: {
+                                Label("Aspect", systemImage: "aspectratio")
+                            }
+
+                        } label: {
+                            Label("Menu", systemImage: "ellipsis.circle")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(.primary)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func zoomOut() {
+        withAnimation {
+            scaler = scaler + 2
+        }
+    }
+    private func zoomIn() {
+        withAnimation {
+            scaler = scaler - 2
         }
     }
 }
@@ -59,14 +123,14 @@ private struct thumbnailIcon: View {
     let namespace: Namespace.ID
     let media: Media
     @State var isChosenMedia: Bool
+    @State var isSquareAspect: Bool
 
     var body: some View {
         if !isChosenMedia {
             Color.clear
                 .overlay(
                     Thumbnail(media: media)
-                        .scaledToFill()
-                        .layoutPriority(-1)
+                        .aspectRatio(nil, contentMode: isSquareAspect ? .fill : .fit)
                         .contentShape(Circle())
                 )
                 .clipped()
@@ -95,6 +159,7 @@ private struct titleHeader: View {
             .font(.custom("OpenSans-SemiBold", size: 14))
             .foregroundColor(.primary)
             .padding(14)
+            .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

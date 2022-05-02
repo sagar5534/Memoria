@@ -91,27 +91,7 @@ struct HeroView: View {
                         selectedItem: $selectedItem,
                         scrollToTop: $scrollToTop
                     )
-                    .toolbar {
-                        ToolbarItemGroup(placement: .navigationBarTrailing) {
-                            HStack(alignment: .center, spacing: 12.0) {
-                                if autoUploadService.running {
-                                    Button(action: {}, label: {
-                                        Image(systemName: "arrow.clockwise.icloud")
-                                    })
-                                    .foregroundColor(.primary)
-                                } else {
-                                    Button(action: {
-                                        autoUploadService.initiateAutoUpload {
-                                            photoGridData.fetchAllMedia()
-                                        }
-                                    }, label: {
-                                        Image(systemName: "checkmark.icloud")
-                                    })
-                                    .foregroundColor(.primary)
-                                }
-                            }
-                        }
-                    }
+                    .environmentObject(autoUploadService)
                     .fontedNavigationBar()
                     .navigationTitle("Memoria")
                 }
