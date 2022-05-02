@@ -7,12 +7,17 @@
 
 import SwiftUI
 
+class HeroSettings: ObservableObject {
+    @Published var autoPlayLivePhoto = false
+}
+
 struct HeroView: View {
     @Namespace var namespace
 
     @ObservedObject var photoGridData = PhotoFeedData()
     @ObservedObject var autoUploadService = AutoUploadService()
     @StateObject private var playerVM = VideoPlayerModel()
+    @StateObject private var heroSettings = HeroSettings()
 
     @State private var tabSelected = 0
     @State private var selectedItem: Media? = nil
@@ -126,7 +131,6 @@ struct HeroView: View {
             ScrollView([.horizontal, .vertical], showsIndicators: false) {
                 FullResImage(item: self.selectedItem!)
                     .matchedGeometryEffect(id: self.selectedItem!.id, in: namespace)
-                    .environmentObject(playerVM)
                     .scaledToFit()
                     .clipped()
                     .background(GeometryGetter(rect: $selectedItemFrame))
@@ -149,13 +153,14 @@ struct HeroView: View {
             )
             .overlay(showModalToolbar ?
                 ModalToolbar(onCloseTap: closeModal, media: $selectedItem, showShareSheet: $showShareSheet)
-                .environmentObject(playerVM)
                 .sheet(isPresented: $showShareSheet) {
                     ShareSheet(activityItems: [])
                 }
                 : nil
             )
             .simultaneousGesture(dragGesture)
+            .environmentObject(playerVM)
+            .environmentObject(heroSettings)
             :
             nil
         )

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ModalToolbar: View {
     var onCloseTap: () -> Void = {}
+    @EnvironmentObject var playerVM: VideoPlayerModel
+    @EnvironmentObject var heroSettings: HeroSettings
     @Binding var media: Media?
     @Binding var showShareSheet: Bool
     @State private var showingDeleteAlert = false
@@ -34,8 +36,10 @@ struct ModalToolbar: View {
 
                 HStack(alignment: .center, spacing: 22) {
                     if media?.isLivePhoto ?? false {
-                        Button(action: {}, label: {
-                            Image(systemName: "play.circle")
+                        Button(action: {
+                            heroSettings.autoPlayLivePhoto.toggle()
+                        }, label: {
+                            Image(systemName: playerVM.isPlaying ? "pause.circle" : "play.circle")
                                 .resizable()
                                 .scaledToFit()
                         })

@@ -44,6 +44,7 @@ struct FullResImage: View {
     @State private var state: mediaState = .thumb
     @State private var liveURL: URL?
     @EnvironmentObject var playerVM: VideoPlayerModel
+    @EnvironmentObject var heroSettings: HeroSettings
 
     var body: some View {
         let thumbnailPath = (item.thumbnailPath ?? item.path)
@@ -82,6 +83,16 @@ struct FullResImage: View {
                 Color.clear
             }
         }
+        .onChange(of: heroSettings.autoPlayLivePhoto) { shouldPlay in
+            guard item.isLivePhoto else { return }
+            shouldPlay ?
+                withAnimation {
+                    state = .live
+                } :
+                withAnimation {
+                    state = .full
+                }
+        }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 if item.mediaType == 0 {
@@ -89,13 +100,21 @@ struct FullResImage: View {
                     if item.isLivePhoto {
                         playerVM.setCurrentItem(item.livePhotoPath!.toStaticURL())
                     }
+                    if heroSettings.autoPlayLivePhoto {
+                        withAnimation {
+                            state = .live
+                        }
+                    }
                 } else {
                     playerVM.setCurrentItem(item.path.toStaticURL())
                     state = .video
                 }
             }
         }
-        .if(item.isLivePhoto) { view in
+        .onDisappear {
+            playerVM.player.replaceCurrentItem(with: nil)
+        }
+        .if(item.isLivePhoto && !heroSettings.autoPlayLivePhoto) { view in
             view.modifier(PressActions(onPress: {
                 guard state != .live, item.isLivePhoto else { return }
                 withAnimation {
