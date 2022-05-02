@@ -20,13 +20,12 @@ class PhotoFeedData: ObservableObject {
     }
 
     func fetchAllMedia() {
-        
-        //Try a read
+        // Try a read
         if let data = JSONEncoder.loadJson(filename: "Output") {
-            self.groupedMedia = data
-            self.isLoading = false
+            groupedMedia = data
+            isLoading = false
         }
-        
+
         MNetworking.sharedInstance.getMedia {
             print("Fetching all data")
         } completion: { [self] data, _, _ in
@@ -54,16 +53,14 @@ class PhotoFeedData: ObservableObject {
             JSONEncoder.encode(from: groupedMedia)
         }
     }
-    
-    func json(from object:Any) -> String? {
+
+    func json(from object: Any) -> String? {
         guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
             return nil
         }
         return String(data: data, encoding: String.Encoding.utf8)
     }
-
 }
-
 
 extension JSONEncoder {
     static func encode<T: Encodable>(from data: T) {
@@ -72,43 +69,39 @@ extension JSONEncoder {
             jsonEncoder.outputFormatting = .prettyPrinted
             let json = try jsonEncoder.encode(data)
             let jsonString = String(data: json, encoding: .utf8)
-            
+
             saveToDocumentDirectory(jsonString)
-            
+
         } catch {
             print(error.localizedDescription)
         }
     }
-    
-    static private func saveToDocumentDirectory(_ jsonString: String?) {
+
+    private static func saveToDocumentDirectory(_ jsonString: String?) {
         guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         let fileURL = path.appendingPathComponent("Output.json")
-        
+
         do {
             try jsonString?.write(to: fileURL, atomically: true, encoding: .utf8)
         } catch {
             print(error.localizedDescription)
         }
-        
     }
-    
-    static func loadJson(filename fileName: String) -> SortedMediaCollection? {
-        
+
+    static func loadJson(filename _: String) -> SortedMediaCollection? {
         guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         let fileURL = path.appendingPathComponent("Output.json")
-        
+
 //        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: fileURL)
-                let decoder = JSONDecoder()
-                let jsonData = try decoder.decode(SortedMediaCollection.self, from: data)
-                return jsonData
-            } catch {
-                print("error:\(error)")
-            }
+        do {
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            let jsonData = try decoder.decode(SortedMediaCollection.self, from: data)
+            return jsonData
+        } catch {
+            print("error:\(error)")
+        }
 //        }
         return nil
     }
-    
 }
-

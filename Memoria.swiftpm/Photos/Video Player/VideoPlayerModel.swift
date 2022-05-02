@@ -26,7 +26,7 @@ final class VideoPlayerModel: ObservableObject {
                 if isEditing {
                     self.player.pause()
                 } else {
-                    let frameTime = CMTime(seconds: self.currentTime, preferredTimescale: 1000000)
+                    let frameTime = CMTime(seconds: self.currentTime, preferredTimescale: 1_000_000)
                     self.player.seek(to: frameTime, toleranceBefore: .zero, toleranceAfter: .zero)
                     self.player.play()
                 }

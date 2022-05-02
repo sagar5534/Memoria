@@ -13,7 +13,7 @@ struct Settings: View {
     @AppStorage("signedIn") private var signedIn: Bool = false
     @AppStorage("backupEnabled") private var backupEnabled = false
     @AppStorage("cellularBackup") private var cellularBackup = false
-    
+
     @State private var showingSignOutAlert = false
 
     var body: some View {
@@ -58,34 +58,31 @@ struct Settings: View {
             }
 
             Section(header: Text("Backups")) {
-
-                    Toggle(isOn: $backupEnabled) {
-                        
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Backup & Sync")
-                            Text("Upload, view, organize & share your photos from any device")
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
-                        }
+                Toggle(isOn: $backupEnabled) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Backup & Sync")
+                        Text("Upload, view, organize & share your photos from any device")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
                     }
+                }
 
-                    Toggle(isOn: $cellularBackup) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Back Up Over Cellular")
-                            Text("When not connected to WI-FI, use your cellular network to automatically back up to your Memoria Instance. This may cause you to exceed your cellular data plan.")
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
-                        }
+                Toggle(isOn: $cellularBackup) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Back Up Over Cellular")
+                        Text("When not connected to WI-FI, use your cellular network to automatically back up to your Memoria Instance. This may cause you to exceed your cellular data plan.")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
                     }
-                    .disabled(!backupEnabled)
-                    
-                    Button(action: {
-                        print("Backup Forced")
-                    }, label: {
-                        Text("Backup Now")
-                    })
-                    .disabled(!backupEnabled)
-  
+                }
+                .disabled(!backupEnabled)
+
+                Button(action: {
+                    print("Backup Forced")
+                }, label: {
+                    Text("Backup Now")
+                })
+                .disabled(!backupEnabled)
             }
 
             Section(header: Text("About")) {

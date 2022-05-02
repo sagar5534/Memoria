@@ -11,13 +11,12 @@ struct OnboardingScreen: View {
     @State private var selectedPage = 0
 
     var body: some View {
-        
         let buttonWidth: CGFloat = {
-           if UIDevice.current.userInterfaceIdiom == .phone {
-               return UIScreen.main.bounds.width * 0.9
-           } else {
-               return UIScreen.main.bounds.width * 0.5
-           }
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                return UIScreen.main.bounds.width * 0.9
+            } else {
+                return UIScreen.main.bounds.width * 0.5
+            }
         }()
 
         VStack {

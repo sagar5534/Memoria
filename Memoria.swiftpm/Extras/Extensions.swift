@@ -73,20 +73,18 @@ extension PHAsset {
 }
 
 struct ToggleScrollViewBounce: ViewModifier {
-
     func body(content: Content) -> some View {
         content
-        .onAppear {
-            UIScrollView.appearance().bounces = false
-        }
-        .onDisappear {
-            UIScrollView.appearance().bounces = true
-        }
+            .onAppear {
+                UIScrollView.appearance().bounces = false
+            }
+            .onDisappear {
+                UIScrollView.appearance().bounces = true
+            }
     }
 }
 
 extension View {
-    
     @ViewBuilder func `if`<Content: View>(_ condition: @autoclosure () -> Bool, transform: (Self) -> Content) -> some View {
         if condition() {
             transform(self)
@@ -94,7 +92,7 @@ extension View {
             self
         }
     }
-    
+
     func toggleScrollViewBounce() -> some View {
         modifier(ToggleScrollViewBounce())
     }

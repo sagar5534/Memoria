@@ -43,7 +43,6 @@ struct FullResImage: View {
     let item: Media
     @State private var state: mediaState = .thumb
     @State private var liveURL: URL?
-//    @State private var temp = false
     @EnvironmentObject var playerVM: VideoPlayerModel
 
     var body: some View {
@@ -100,12 +99,12 @@ struct FullResImage: View {
             view.modifier(PressActions(onPress: {
                 guard state != .live, item.isLivePhoto else { return }
                 withAnimation {
-//                    temp = true
                     state = .live
                 }
             }, onRelease: {
-//                temp = false
-                state = .full
+                withAnimation {
+                    state = .full
+                }
             }))
         }
     }
