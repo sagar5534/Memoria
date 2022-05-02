@@ -8,7 +8,7 @@
 import SwiftUI
 
 class HeroSettings: ObservableObject {
-    @Published var autoPlayLivePhoto = false
+    @AppStorage("autoPlayLivePhoto") var autoPlayLivePhoto: Bool = false
 }
 
 struct HeroView: View {
