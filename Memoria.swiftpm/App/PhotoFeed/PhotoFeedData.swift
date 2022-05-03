@@ -7,11 +7,13 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class PhotoFeedData: ObservableObject {
     @Published var allMedia = MediaCollection()
     @Published var groupedMedia = SortedMediaCollection()
     @Published var isLoading = true
+    @Published var isError = false
 
     private var cancellable: AnyCancellable?
 
@@ -29,7 +31,10 @@ class PhotoFeedData: ObservableObject {
         MNetworking.sharedInstance.getMedia {
             print("Fetching all data")
         } completion: { [self] data, _, _ in
-            guard data != nil else { return }
+            guard data != nil else {
+                isError = true
+                return
+            }
             let groupedDic = Dictionary(grouping: data!) { media -> String in
                 media.modificationDate.toDate()!.toString(withFormat: "ddMMyyyy")
             }
@@ -48,8 +53,12 @@ class PhotoFeedData: ObservableObject {
                 self.allMedia = data!
                 self.groupedMedia = groupedMedia
             }
-            self.isLoading = false
-
+            
+            withAnimation {
+                self.isLoading = false
+                self.isError = false
+            }
+            
             JSONEncoder.encode(from: groupedMedia)
         }
     }

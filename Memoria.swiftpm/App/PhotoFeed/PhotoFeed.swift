@@ -13,12 +13,11 @@ struct PhotoFeed: View {
     @ObservedObject var photoGridData: PhotoFeedData
     @Binding var selectedItem: Media?
     @Binding var scrollToTop: Bool
-    
+
     @State private var scaler = 3
     @State private var isSquareAspect = true
 
     var body: some View {
-
         let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: scaler)
 
         if photoGridData.isLoading {
@@ -78,12 +77,12 @@ struct PhotoFeed: View {
 
                         // Menu Popup
                         Menu {
-                            Button {zoomIn()} label: {
+                            Button { zoomIn() } label: {
                                 Label("Zoom In", systemImage: "plus.magnifyingglass")
                             }
                             .disabled(scaler <= 1)
 
-                            Button {zoomOut()} label: {
+                            Button { zoomOut() } label: {
                                 Label("Zoom Out", systemImage: "plus.magnifyingglass")
                             }
                             .disabled(scaler >= 7)
@@ -106,12 +105,13 @@ struct PhotoFeed: View {
             }
         }
     }
-    
+
     private func zoomOut() {
         withAnimation {
             scaler = scaler + 2
         }
     }
+
     private func zoomIn() {
         withAnimation {
             scaler = scaler - 2
