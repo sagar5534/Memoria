@@ -22,7 +22,7 @@ final class PlayerView: UIView {
     }
 }
 
-struct CustomVideoPlayer: UIViewRepresentable {
+struct VideoPlayer: UIViewRepresentable {
     @ObservedObject var playerVM: VideoPlayerModel
 
     func makeUIView(context _: Context) -> PlayerView {

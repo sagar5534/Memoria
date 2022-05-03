@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CustomTabBar: View {
+struct MTabBar: View {
     @Binding var tabSelected: Int
     @Binding var scrollToTop: Bool
     private let circleSize: CGFloat = 4
@@ -84,6 +84,6 @@ private struct NavBarItem: View {
 
 struct PhotosView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTabBar(tabSelected: .constant(0), scrollToTop: .constant(false))
+        MTabBar(tabSelected: .constant(0), scrollToTop: .constant(false))
     }
 }

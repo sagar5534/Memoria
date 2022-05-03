@@ -1,27 +1,23 @@
 //
-//  PhotoView.swift
-//  PhotoView
+//  SwiftUIView.swift
 //
-//  Created by Sagar on 2021-09-26.
+//
+//  Created by Sagar R Patel on 2022-05-03.
 //
 
 import SwiftUI
 
-class HeroSettings: ObservableObject {
+class ModalSettings: ObservableObject {
     @AppStorage("autoPlayLivePhoto") var autoPlayLivePhoto: Bool = false
 }
 
-struct HeroView: View {
-    @Namespace var namespace
+struct Modal: View {
+    let namespace: Namespace.ID
+    @Binding var selectedItem: Media?
 
-    @ObservedObject var photoGridData = PhotoFeedData()
-    @ObservedObject var autoUploadService = AutoUploadService()
+    @StateObject private var modalSettings = ModalSettings()
     @StateObject private var playerVM = VideoPlayerModel()
-    @StateObject private var heroSettings = HeroSettings()
 
-    @State private var tabSelected = 0
-    @State private var selectedItem: Media? = nil
-    @State private var scrollToTop: Bool = false
     @State private var showShareSheet = false
     @State private var showModalToolbar = true
     @State private var modalOffset = CGSize.zero
@@ -38,15 +34,15 @@ struct HeroView: View {
             }
         let dragGesture = DragGesture()
             .onChanged { gesture in
-//                if gesture.translation.width < 0 {
-//                    // left
-//                }
-//                if gesture.translation.width > 0 {
-//                    // right
-//                }
-//                if gesture.translation.height < 0 {
-//                    // up
-//                }
+                //                if gesture.translation.width < 0 {
+                //                    // left
+                //                }
+                //                if gesture.translation.width > 0 {
+                //                    // right
+                //                }
+                //                if gesture.translation.height < 0 {
+                //                    // up
+                //                }
                 if gesture.translation.height >= 0 && modalScale == 1 {
                     // down
                     self.modalOffset.height = gesture.translation.height
@@ -83,51 +79,7 @@ struct HeroView: View {
                 }
             }
 
-        // --------------------------------------------------------
-        // NavigationView with LazyVGrid
-        // --------------------------------------------------------
-        VStack(spacing: 0) {
-            switch tabSelected {
-            case 0:
-                NavigationView {
-                    PhotoFeed(
-                        namespace: namespace,
-                        photoGridData: photoGridData,
-                        selectedItem: $selectedItem,
-                        scrollToTop: $scrollToTop
-                    )
-                    .environmentObject(autoUploadService)
-                    .fontedNavigationBar()
-                    .navigationTitle("Memoria")
-                }
-                .navigationViewStyle(.stack)
-            case 1:
-                NavigationView {
-                    Text("For You")
-                        .defaultNavigationBar()
-                        .navigationTitle("For You")
-                }
-            case 2:
-                NavigationView {
-                    Text("Search")
-                        .defaultNavigationBar()
-                        .navigationTitle("Search")
-                }
-            case 3:
-                NavigationView {
-                    Settings()
-                        .defaultNavigationBar()
-                        .navigationTitle("Settings")
-                }
-            default:
-                EmptyView()
-            }
-
-            Divider()
-
-            CustomTabBar(tabSelected: $tabSelected, scrollToTop: $scrollToTop)
-        }
-        .overlay(self.selectedItem != nil ?
+        if self.selectedItem != nil {
             ScrollView([.horizontal, .vertical], showsIndicators: false) {
                 FullResImage(item: self.selectedItem!)
                     .matchedGeometryEffect(id: self.selectedItem!.id, in: namespace)
@@ -159,11 +111,9 @@ struct HeroView: View {
                 : nil
             )
             .simultaneousGesture(dragGesture)
+            .environmentObject(modalSettings)
             .environmentObject(playerVM)
-            .environmentObject(heroSettings)
-            :
-            nil
-        )
+        }
     }
 
     private func closeModal() {
@@ -179,7 +129,7 @@ struct HeroView: View {
     }
 }
 
-struct GeometryGetter: View {
+private struct GeometryGetter: View {
     @Binding var rect: CGRect
 
     var body: some View {
@@ -191,3 +141,9 @@ struct GeometryGetter: View {
         }
     }
 }
+
+// struct SwiftUIView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Modal(namespace: Namespace.ID, selectedItem: <#Binding<Media?>#>)
+//    }
+// }

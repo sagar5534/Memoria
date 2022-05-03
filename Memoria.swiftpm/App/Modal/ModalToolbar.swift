@@ -10,7 +10,7 @@ import SwiftUI
 struct ModalToolbar: View {
     var onCloseTap: () -> Void = {}
     @EnvironmentObject var playerVM: VideoPlayerModel
-    @EnvironmentObject var heroSettings: HeroSettings
+    @EnvironmentObject var heroSettings: ModalSettings
     @Binding var media: Media?
     @Binding var showShareSheet: Bool
     @State private var showingDeleteAlert = false

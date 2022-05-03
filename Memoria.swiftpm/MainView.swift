@@ -35,7 +35,7 @@ private struct MotherView: View {
     var body: some View {
         VStack {
             if signedIn {
-                HeroView()
+                Home()
                     .transition(.opacity)
             } else {
                 NavigationView {
