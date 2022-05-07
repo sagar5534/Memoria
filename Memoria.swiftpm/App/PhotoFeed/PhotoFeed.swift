@@ -29,7 +29,7 @@ struct PhotoFeed: View {
                         ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
                             Section(header: titleHeader(header: photoGridData.groupedMedia[i].first!.modificationDate.toDate()!.toString())) {
                                 ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { index in
-                                    thumbnailIcon(
+                                    feedThumbnailIcon(
                                         namespace: namespace,
                                         media: photoGridData.groupedMedia[i][index],
                                         isChosenMedia: selectedItem != nil && selectedItem!.id == photoGridData.groupedMedia[i][index].id,
@@ -119,12 +119,11 @@ struct PhotoFeed: View {
     }
 }
 
-private struct thumbnailIcon: View {
+struct feedThumbnailIcon: View {
     let namespace: Namespace.ID
-//    let media: Media
     @State var media: Media
     @State var isChosenMedia: Bool
-    @State var isSquareAspect: Bool
+    @State var isSquareAspect: Bool = true
 
     var body: some View {
         if !isChosenMedia {

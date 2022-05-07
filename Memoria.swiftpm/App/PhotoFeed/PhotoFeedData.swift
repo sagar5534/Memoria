@@ -12,6 +12,7 @@ import SwiftUI
 class PhotoFeedData: ObservableObject {
     @Published var allMedia = MediaCollection()
     @Published var groupedMedia = SortedMediaCollection()
+    @Published var albumMedia: Dictionary<Substring, [Media]> = [:]
     @Published var isLoading = true
     @Published var isError = false
 
@@ -47,6 +48,12 @@ class PhotoFeedData: ObservableObject {
                 groupedMedia.append(groupedDic[key]!)
             }
 
+            var albumDic = Dictionary(grouping: data!) { media in
+                media.path.split(separator: "/")[0]
+            }
+            
+            self.albumMedia = albumDic
+                        
             if self.groupedMedia == groupedMedia {
                 print("No refresh needed")
             } else {

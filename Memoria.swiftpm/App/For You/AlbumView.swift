@@ -10,17 +10,18 @@ import SwiftUI
 struct AlbumView: View {
     let namespace: Namespace.ID
     @EnvironmentObject var modalSettings: ModalSettings
+    @EnvironmentObject var photoGridData: PhotoFeedData
     @State private var scaler = 2
 
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: scaler)
-            
-        if modalSettings.selectedAlbum {
+
+        if !modalSettings.selectedAlbum.isEmpty {
             VStack(spacing: 0) {
                 HStack {
                     Button(action: {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                            modalSettings.selectedAlbum = false
+                        withAnimation(.spring(response: 0.20, dampingFraction: 0.8)) {
+                            modalSettings.selectedAlbum = ""
                         }
                     }, label: {
                         Image(systemName: "chevron.backward")
@@ -42,57 +43,43 @@ struct AlbumView: View {
                     .padding()
                     .contentShape(Rectangle())
                 }
-                
+
                 ScrollView {
-                    VStack {
-                        Group {
-                            Text("Hello")
-                                .font(.title)
-                                .foregroundColor(.primary)
-                                .padding()
-                                .padding(.top, 20)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                            Text("200 Items")
-                                .font(.caption)
-                                .foregroundColor(.primary)
-                                .padding(.horizontal)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        
-                        thumbnailIcon()
-                        
+                    VStack(spacing: 0) {
+                        Text(modalSettings.selectedAlbum)
+                            .font(.title)
+                            .foregroundColor(.primary)
+                            .padding()
+                            .padding(.top, 20)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        feedThumbnailIcon(
+                            namespace: namespace,
+                            media: photoGridData.albumMedia[Substring(modalSettings.selectedAlbum)]!.first!,
+                            isChosenMedia: false
+                        )
+                        .padding(.bottom, 2)
+
                         LazyVGrid(columns: columns, spacing: 2) {
-                            thumbnailIcon()
-                            thumbnailIcon()
-                            thumbnailIcon()
-                            thumbnailIcon()
-                            thumbnailIcon()
+                            ForEach(photoGridData.albumMedia[Substring(modalSettings.selectedAlbum)]!.dropFirst(), id: \.self) { media in
+                                feedThumbnailIcon(
+                                    namespace: namespace,
+                                    media: media,
+                                    isChosenMedia: modalSettings.selectedItem != nil && modalSettings.selectedItem!.id == media.id
+                                )
+                                .onTapGesture {
+                                    withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                                        modalSettings.selectedItem = media
+                                    }
+                                }
+                                .id(UUID())
+                            }
                         }
                     }
                 }
             }
-            .matchedGeometryEffect(id: 122, in: namespace)
+            .matchedGeometryEffect(id: modalSettings.selectedAlbum, in: namespace)
             .background(Color.white)
-        }
-    }
-}
-
-private struct thumbnailIcon: View {
-//    let namespace: Namespace.ID
-//    let media: Media
-
-    var body: some View {
-        VStack(spacing: 0) {
-            Color.clear
-                .overlay(
-                    Image("profile")
-                        .resizable()
-                        .aspectRatio(nil, contentMode: .fill)
-                        .contentShape(Circle())
-                )
-                .clipped()
-                .aspectRatio(1, contentMode: .fit)
         }
     }
 }

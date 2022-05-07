@@ -44,23 +44,27 @@ struct ForYou: View {
                 .padding(.top)
 
                 LazyVGrid(columns: columns, spacing: 16) {
-                    if !modalSettings.selectedAlbum {
-                        thumbnailIcon()
-                            .matchedGeometryEffect(id: 122, in: namespace)
-                            .onTapGesture {
-                                withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                                    modalSettings.selectedAlbum = true
+                    ForEach(Array(photoGridData.albumMedia.keys), id: \.self) { key in
+                        thumbnailIcon(
+                            namespace: namespace,
+                            key: String(key),
+                            media: photoGridData.albumMedia[key]!.first!,
+                            albumName: String(key),
+                            count: photoGridData.albumMedia[key]!.count,
+                            isChosenMedia: !modalSettings.selectedAlbum.isEmpty && modalSettings.selectedAlbum == String(key)
+                        )
+                        .onTapGesture {
+                            withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                                guard modalSettings.selectedAlbum.isEmpty else {
+                                    return
                                 }
+                                
+                                modalSettings.selectedAlbum = String(key)
                             }
-                    } else {
-                        Color.clear
-                            .clipped()
-                            .aspectRatio(1, contentMode: .fit)
+                        }
+                        .id(UUID())
                     }
-                    thumbnailIcon()
-                    thumbnailIcon()
-                    thumbnailIcon()
-                    thumbnailIcon()
+
                 }
                 .padding(.horizontal)
             }
@@ -77,27 +81,38 @@ struct ForYou: View {
 }
 
 private struct thumbnailIcon: View {
-//    let namespace: Namespace.ID
-//    let media: Media
+    let namespace: Namespace.ID
+    let key: String
+    let media: Media
+    let albumName: String
+    let count: Int
+    @State var isChosenMedia: Bool
 
     var body: some View {
         VStack {
-            Color.clear
-                .overlay(
-                    Image("profile")
-                        .resizable()
-                        .aspectRatio(nil, contentMode: .fill)
-                        .contentShape(Circle())
-                )
-                .clipped()
-                .aspectRatio(1, contentMode: .fit)
-                .cornerRadius(16)
+            if !isChosenMedia {
+                Color.clear
+                    .overlay(
+                        Thumbnail(media: media)
+                            .aspectRatio(nil, contentMode: .fill)
+                            .contentShape(Circle())
+                    )
+                    .clipped()
+                    .aspectRatio(1, contentMode: .fit)
+                    .cornerRadius(16)
+                    .matchedGeometryEffect(id: key, in: namespace)
+
+            } else {
+                Color.clear
+                    .clipped()
+                    .aspectRatio(1, contentMode: .fit)
+            }
 
             Group {
-                Text("Album Name")
+                Text(albumName)
                     .lineLimit(1)
 
-                Text("100 Items")
+                Text("\(count) Items")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }

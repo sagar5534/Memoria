@@ -9,7 +9,7 @@ import SwiftUI
 
 class ModalSettings: ObservableObject {
     @Published var selectedItem: Media? = nil
-    @Published var selectedAlbum = false
+    @Published var selectedAlbum: String = ""
     @AppStorage("autoPlayLivePhoto") var autoPlayLivePhoto: Bool = false
 }
 
