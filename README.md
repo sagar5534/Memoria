@@ -42,6 +42,7 @@ you can join us at the links below: http
 * [💬 Join the Discord](https://discord.gg/zTN6hEPH9u)
 
 
+
 ## :scroll: License
 
 Memoria is [GPL-3.0](LICENSE) Licensed.
