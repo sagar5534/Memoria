@@ -10,7 +10,7 @@ import SwiftUI
 struct PhotoFeed: View {
     let namespace: Namespace.ID
     @EnvironmentObject var autoUploadService: AutoUploadService
-    @ObservedObject var photoGridData: PhotoFeedData
+    @EnvironmentObject var photoGridData: PhotoFeedData
     @Binding var selectedItem: Media?
     @Binding var scrollToTop: Bool
 
@@ -121,7 +121,8 @@ struct PhotoFeed: View {
 
 private struct thumbnailIcon: View {
     let namespace: Namespace.ID
-    let media: Media
+//    let media: Media
+    @State var media: Media
     @State var isChosenMedia: Bool
     @State var isSquareAspect: Bool
 

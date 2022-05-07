@@ -11,6 +11,8 @@ struct ModalToolbar: View {
     var onCloseTap: () -> Void = {}
     @EnvironmentObject var playerVM: VideoPlayerModel
     @EnvironmentObject var heroSettings: ModalSettings
+    @EnvironmentObject var photoGrid: PhotoFeedData
+
     @Binding var media: Media?
     @Binding var showShareSheet: Bool
     @State private var showingDeleteAlert = false
@@ -50,7 +52,6 @@ struct ModalToolbar: View {
                     Button(action: {
                         guard media != nil else { return }
                         media!.isFavorite?.toggle()
-
                         MNetworking.sharedInstance.updateMedia(media: media!) {
                             print("Updating Media")
                         } completion: { result, _, _ in

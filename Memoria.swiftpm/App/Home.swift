@@ -12,9 +12,9 @@ struct Home: View {
 
     @ObservedObject var photoGridData = PhotoFeedData()
     @ObservedObject var autoUploadService = AutoUploadService()
+    @StateObject private var modalSettings = ModalSettings()
 
     @State private var tabSelected = 0
-    @State private var selectedItem: Media? = nil
     @State private var scrollToTop: Bool = false
 
     var body: some View {
@@ -25,8 +25,7 @@ struct Home: View {
                     NavigationView {
                         PhotoFeed(
                             namespace: namespace,
-                            photoGridData: photoGridData,
-                            selectedItem: $selectedItem,
+                            selectedItem: $modalSettings.selectedItem,
                             scrollToTop: $scrollToTop
                         )
                         .environmentObject(autoUploadService)
@@ -36,7 +35,9 @@ struct Home: View {
                     .navigationViewStyle(.stack)
                 case 1:
                     NavigationView {
-                        ForYou(photoGridData: photoGridData)
+                        ForYou(
+                            namespace: namespace
+                        )
                             .defaultNavigationBar()
                             .navigationTitle("For You")
                     }
@@ -68,8 +69,14 @@ struct Home: View {
             MTabBar(tabSelected: $tabSelected, scrollToTop: $scrollToTop)
         }
         .overlay(
-            Modal(namespace: namespace, selectedItem: $selectedItem)
+            AlbumView(namespace: namespace)
         )
+        .overlay(
+            Modal(namespace: namespace)
+        )
+        .environmentObject(modalSettings)
+        .environmentObject(photoGridData)
+
     }
 }
 

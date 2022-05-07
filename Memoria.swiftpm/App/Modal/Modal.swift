@@ -8,14 +8,15 @@
 import SwiftUI
 
 class ModalSettings: ObservableObject {
+    @Published var selectedItem: Media? = nil
+    @Published var selectedAlbum = false
     @AppStorage("autoPlayLivePhoto") var autoPlayLivePhoto: Bool = false
 }
 
 struct Modal: View {
     let namespace: Namespace.ID
-    @Binding var selectedItem: Media?
-
-    @StateObject private var modalSettings = ModalSettings()
+    
+    @EnvironmentObject var modalSettings: ModalSettings
     @StateObject private var playerVM = VideoPlayerModel()
 
     @State private var showShareSheet = false
@@ -79,10 +80,10 @@ struct Modal: View {
                 }
             }
 
-        if self.selectedItem != nil {
+        if modalSettings.selectedItem != nil {
             ScrollView([.horizontal, .vertical], showsIndicators: false) {
-                FullResImage(item: self.selectedItem!)
-                    .matchedGeometryEffect(id: self.selectedItem!.id, in: namespace)
+                FullResImage(item: modalSettings.selectedItem!)
+                    .matchedGeometryEffect(id: modalSettings.selectedItem!.id, in: namespace)
                     .scaledToFit()
                     .clipped()
                     .background(GeometryGetter(rect: $selectedItemFrame))
@@ -104,14 +105,13 @@ struct Modal: View {
                 .exclusively(before: toggleToolbarGesture)
             )
             .overlay(showModalToolbar ?
-                ModalToolbar(onCloseTap: closeModal, media: $selectedItem, showShareSheet: $showShareSheet)
+                     ModalToolbar(onCloseTap: closeModal, media: $modalSettings.selectedItem, showShareSheet: $showShareSheet)
                 .sheet(isPresented: $showShareSheet) {
                     ShareSheet(activityItems: [])
                 }
                 : nil
             )
             .simultaneousGesture(dragGesture)
-            .environmentObject(modalSettings)
             .environmentObject(playerVM)
         }
     }
@@ -120,7 +120,7 @@ struct Modal: View {
         modalScale = 1
         modalOffset = .zero
         showModalToolbar = true
-        withAnimation(.spring(response: 0.20, dampingFraction: 0.8)) { self.selectedItem = nil }
+        withAnimation(.spring(response: 0.20, dampingFraction: 0.8)) { modalSettings.selectedItem = nil }
     }
 
     // Constrains a value between the limits
@@ -141,9 +141,3 @@ private struct GeometryGetter: View {
         }
     }
 }
-
-// struct SwiftUIView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Modal(namespace: Namespace.ID, selectedItem: <#Binding<Media?>#>)
-//    }
-// }

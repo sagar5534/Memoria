@@ -52,6 +52,7 @@ class PhotoFeedData: ObservableObject {
             } else {
                 self.allMedia = data!
                 self.groupedMedia = groupedMedia
+                JSONEncoder.encode(from: groupedMedia)
             }
             
             withAnimation {
@@ -59,7 +60,6 @@ class PhotoFeedData: ObservableObject {
                 self.isError = false
             }
             
-            JSONEncoder.encode(from: groupedMedia)
         }
     }
 

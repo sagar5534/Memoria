@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ForYou: View {
-    @ObservedObject var photoGridData: PhotoFeedData
+    let namespace: Namespace.ID
+    @EnvironmentObject var photoGridData: PhotoFeedData
+    @EnvironmentObject var modalSettings: ModalSettings
+
     @State private var scaler = 2
     @State private var selection = "Most Recent Photos"
     let colors = ["Most Recent Photos", "Album Title"]
@@ -25,10 +28,10 @@ struct ForYou: View {
                         .font(.custom("OpenSans-Bold", size: 22))
                         .foregroundColor(.primary)
                     Spacer()
-                    
+
                     Label {
                         Picker("Sorting", selection: $selection, content: { // <2>
-                            ForEach(colors, id: \.self){
+                            ForEach(colors, id: \.self) {
                                 Text($0)
                             }
                         })
@@ -41,7 +44,19 @@ struct ForYou: View {
                 .padding(.top)
 
                 LazyVGrid(columns: columns, spacing: 16) {
-                    thumbnailIcon()
+                    if !modalSettings.selectedAlbum {
+                        thumbnailIcon()
+                            .matchedGeometryEffect(id: 122, in: namespace)
+                            .onTapGesture {
+                                withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                                    modalSettings.selectedAlbum = true
+                                }
+                            }
+                    } else {
+                        Color.clear
+                            .clipped()
+                            .aspectRatio(1, contentMode: .fit)
+                    }
                     thumbnailIcon()
                     thumbnailIcon()
                     thumbnailIcon()
