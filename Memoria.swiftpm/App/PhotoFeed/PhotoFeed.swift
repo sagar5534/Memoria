@@ -11,7 +11,7 @@ struct PhotoFeed: View {
     let namespace: Namespace.ID
     @EnvironmentObject var autoUploadService: AutoUploadService
     @EnvironmentObject var photoGridData: PhotoFeedData
-    @Binding var selectedItem: Media?
+    @EnvironmentObject var modalSettings: ModalSettings
     @Binding var scrollToTop: Bool
 
     @State private var scaler = 3
@@ -32,12 +32,12 @@ struct PhotoFeed: View {
                                     feedThumbnailIcon(
                                         namespace: namespace,
                                         media: photoGridData.groupedMedia[i][index],
-                                        isChosenMedia: selectedItem != nil && selectedItem!.id == photoGridData.groupedMedia[i][index].id,
+                                        isChosenMedia: modalSettings.selectedItem != nil && modalSettings.selectedItem!.id == photoGridData.groupedMedia[i][index].id,
                                         isSquareAspect: isSquareAspect
                                     )
                                     .onTapGesture {
                                         withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                                            selectedItem = photoGridData.groupedMedia[i][index]
+                                            modalSettings.selectedItem = photoGridData.groupedMedia[i][index]
                                         }
                                     }
                                 }

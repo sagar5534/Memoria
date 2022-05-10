@@ -25,7 +25,6 @@ struct Home: View {
                     NavigationView {
                         PhotoFeed(
                             namespace: namespace,
-                            selectedItem: $modalSettings.selectedItem,
                             scrollToTop: $scrollToTop
                         )
                         .environmentObject(autoUploadService)
