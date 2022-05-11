@@ -22,50 +22,38 @@ struct ForYou: View {
         if photoGridData.isLoading {
             ProgressView().foregroundColor(.primary)
         } else {
+            let data = photoGridData.albumMedia.sorted {
+                $0.value.first!.modificationDate.toDate()!.timeIntervalSince1970 > $1.value.first!.modificationDate.toDate()!.timeIntervalSince1970
+            }
+
             ScrollView {
-                HStack(alignment: .center) {
+                Section {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(data, id: \.key) { key, value in
+                            thumbnailIcon(
+                                namespace: namespace,
+                                key: String(key),
+                                media: value.first!,
+                                albumName: key,
+                                count: value.count,
+                                isChosenMedia: !modalSettings.selectedAlbum.isEmpty && modalSettings.selectedAlbum == String(key)
+                            )
+                            .onTapGesture {
+                                withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                                    guard modalSettings.selectedAlbum.isEmpty else { return }
+                                    modalSettings.selectedAlbum = key
+                                }
+                            }
+                            .id(UUID())
+                        }
+                    }
+                } header: {
                     Text("Albums")
                         .font(.custom("OpenSans-Bold", size: 22))
-                        .foregroundColor(.primary)
-                    Spacer()
-
-                    Label {
-                        Picker("Sorting", selection: $selection, content: { // <2>
-                            ForEach(colors, id: \.self) {
-                                Text($0)
-                            }
-                        })
-                    } icon: {
-                        Image(systemName: "arrow.up.arrow.down")
-                            .foregroundColor(.accentColor)
-                    }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.horizontal)
                 .padding(.top)
-
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(Array(photoGridData.albumMedia.keys), id: \.self) { key in
-                        thumbnailIcon(
-                            namespace: namespace,
-                            key: String(key),
-                            media: photoGridData.albumMedia[key]!.first!,
-                            albumName: String(key),
-                            count: photoGridData.albumMedia[key]!.count,
-                            isChosenMedia: !modalSettings.selectedAlbum.isEmpty && modalSettings.selectedAlbum == String(key)
-                        )
-                        .onTapGesture {
-                            withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                                guard modalSettings.selectedAlbum.isEmpty else {
-                                    return
-                                }
-
-                                modalSettings.selectedAlbum = String(key)
-                            }
-                        }
-                        .id(UUID())
-                    }
-                }
-                .padding(.horizontal)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
