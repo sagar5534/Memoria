@@ -15,7 +15,7 @@ class ModalSettings: ObservableObject {
 
 struct Modal: View {
     let namespace: Namespace.ID
-    
+
     @EnvironmentObject var modalSettings: ModalSettings
     @StateObject private var playerVM = VideoPlayerModel()
 
@@ -105,7 +105,7 @@ struct Modal: View {
                 .exclusively(before: toggleToolbarGesture)
             )
             .overlay(showModalToolbar ?
-                     ModalToolbar(onCloseTap: closeModal, media: $modalSettings.selectedItem, showShareSheet: $showShareSheet)
+                ModalToolbar(onCloseTap: closeModal, media: $modalSettings.selectedItem, showShareSheet: $showShareSheet)
                 .sheet(isPresented: $showShareSheet) {
                     ShareSheet(activityItems: [])
                 }

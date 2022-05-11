@@ -1,12 +1,12 @@
 //
 //  SwiftUIView.swift
-//  
+//
 //
 //  Created by Sagar R Patel on 2022-05-03.
 //
 
-import SwiftUI
 import CachedAsyncImage
+import SwiftUI
 
 private enum mediaState {
     case thumb

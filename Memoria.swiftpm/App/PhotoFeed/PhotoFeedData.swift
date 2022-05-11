@@ -12,7 +12,7 @@ import SwiftUI
 class PhotoFeedData: ObservableObject {
     @Published var allMedia = MediaCollection()
     @Published var groupedMedia = SortedMediaCollection()
-    @Published var albumMedia: Dictionary<String, [Media]> = [:]
+    @Published var albumMedia: [String: [Media]] = [:]
     @Published var isLoading = true
     @Published var isError = false
 
@@ -36,8 +36,8 @@ class PhotoFeedData: ObservableObject {
                 isError = true
                 return
             }
-            
-            //Feed View
+
+            // Feed View
             let groupedDic = Dictionary(grouping: data!) { media in
                 media.modificationDate.toDate()!.toString(withFormat: "yyyyMMdd")
             }
@@ -47,7 +47,7 @@ class PhotoFeedData: ObservableObject {
                 groupedMedia.append(groupedDic[key]!)
             }
 
-            //Albums View
+            // Albums View
             let albumDic = Dictionary(grouping: data!) { media in
                 media.path.split(separator: "/").first!.description
             }
@@ -55,12 +55,11 @@ class PhotoFeedData: ObservableObject {
             self.allMedia = data!
             self.groupedMedia = groupedMedia
             JSONEncoder.encode(from: groupedMedia)
-            
+
             withAnimation {
                 self.isLoading = false
                 self.isError = false
             }
-            
         }
     }
 

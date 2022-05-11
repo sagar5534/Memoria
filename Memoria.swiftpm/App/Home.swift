@@ -37,8 +37,8 @@ struct Home: View {
                         ForYou(
                             namespace: namespace
                         )
-                            .defaultNavigationBar()
-                            .navigationTitle("For You")
+                        .defaultNavigationBar()
+                        .navigationTitle("For You")
                     }
                     .navigationViewStyle(.stack)
                 case 2:
@@ -75,7 +75,6 @@ struct Home: View {
         )
         .environmentObject(modalSettings)
         .environmentObject(photoGridData)
-
     }
 }
 

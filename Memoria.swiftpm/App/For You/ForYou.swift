@@ -58,13 +58,12 @@ struct ForYou: View {
                                 guard modalSettings.selectedAlbum.isEmpty else {
                                     return
                                 }
-                                
+
                                 modalSettings.selectedAlbum = String(key)
                             }
                         }
                         .id(UUID())
                     }
-
                 }
                 .padding(.horizontal)
             }

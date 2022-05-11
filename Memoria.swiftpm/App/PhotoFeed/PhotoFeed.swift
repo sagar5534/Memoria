@@ -16,7 +16,7 @@ struct PhotoFeed: View {
 
     @State private var scaler = 3
     @State private var isSquareAspect = true
-    
+
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: scaler)
 
