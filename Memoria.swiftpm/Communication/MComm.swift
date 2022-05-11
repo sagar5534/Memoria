@@ -17,6 +17,7 @@ public class MComm: SessionDelegate {
     internal lazy var session: Alamofire.Session = {
         let configuration = URLSessionConfiguration.af.default
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        configuration.timeoutIntervalForRequest = 10
         return Alamofire.Session(
             configuration: configuration,
             delegate: self,

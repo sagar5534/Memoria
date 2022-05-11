@@ -16,7 +16,7 @@ struct PhotoFeed: View {
 
     @State private var scaler = 3
     @State private var isSquareAspect = true
-
+    
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: scaler)
 
@@ -26,23 +26,22 @@ struct PhotoFeed: View {
             ScrollView {
                 ScrollViewReader { proxy in
                     LazyVGrid(columns: columns, spacing: 2) {
-                        ForEach(photoGridData.groupedMedia.indices, id: \.self) { i in
-                            Section(header: titleHeader(header: photoGridData.groupedMedia[i].first!.modificationDate.toDate()!.toString())) {
-                                ForEach(photoGridData.groupedMedia[i].indices, id: \.self) { index in
+                        ForEach($photoGridData.groupedMedia, id: \.self) { $group in
+                            Section(header: titleHeader(header: group.first?.modificationDate.toDate()?.toString() ?? "")) {
+                                ForEach($group, id: \.self) { $media in
                                     feedThumbnailIcon(
                                         namespace: namespace,
-                                        media: photoGridData.groupedMedia[i][index],
-                                        isChosenMedia: modalSettings.selectedItem != nil && modalSettings.selectedItem!.id == photoGridData.groupedMedia[i][index].id,
+                                        media: media,
+                                        isChosenMedia: modalSettings.selectedItem != nil && modalSettings.selectedItem!.id == media.id,
                                         isSquareAspect: isSquareAspect
                                     )
                                     .onTapGesture {
                                         withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                                            modalSettings.selectedItem = photoGridData.groupedMedia[i][index]
+                                            modalSettings.selectedItem = media
                                         }
                                     }
                                 }
                             }
-                            .id(UUID())
                         }
                     }
                     .onChange(of: scrollToTop) { target in

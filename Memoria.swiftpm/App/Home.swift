@@ -10,9 +10,9 @@ import SwiftUI
 struct Home: View {
     @Namespace var namespace
 
-    @ObservedObject var photoGridData = PhotoFeedData()
-    @ObservedObject var autoUploadService = AutoUploadService()
-    @StateObject private var modalSettings = ModalSettings()
+    @StateObject var photoGridData = PhotoFeedData()
+    @StateObject var autoUploadService = AutoUploadService()
+    @StateObject var modalSettings = ModalSettings()
 
     @State private var tabSelected = 0
     @State private var scrollToTop: Bool = false

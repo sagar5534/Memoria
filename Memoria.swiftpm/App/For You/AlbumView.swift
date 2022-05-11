@@ -55,13 +55,13 @@ struct AlbumView: View {
 
                         feedThumbnailIcon(
                             namespace: namespace,
-                            media: photoGridData.albumMedia[Substring(modalSettings.selectedAlbum)]!.first!,
+                            media: photoGridData.albumMedia[modalSettings.selectedAlbum]!.first!,
                             isChosenMedia: false
                         )
                         .padding(.bottom, 2)
 
                         LazyVGrid(columns: columns, spacing: 2) {
-                            ForEach(photoGridData.albumMedia[Substring(modalSettings.selectedAlbum)]!.dropFirst(), id: \.self) { media in
+                            ForEach(photoGridData.albumMedia[modalSettings.selectedAlbum]!.dropFirst(), id: \.self) { media in
                                 feedThumbnailIcon(
                                     namespace: namespace,
                                     media: media,

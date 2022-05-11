@@ -12,7 +12,7 @@ import SwiftUI
 class PhotoFeedData: ObservableObject {
     @Published var allMedia = MediaCollection()
     @Published var groupedMedia = SortedMediaCollection()
-    @Published var albumMedia: Dictionary<Substring, [Media]> = [:]
+    @Published var albumMedia: Dictionary<String, [Media]> = [:]
     @Published var isLoading = true
     @Published var isError = false
 
@@ -36,31 +36,25 @@ class PhotoFeedData: ObservableObject {
                 isError = true
                 return
             }
-            let groupedDic = Dictionary(grouping: data!) { media -> String in
-                media.modificationDate.toDate()!.toString(withFormat: "ddMMyyyy")
+            
+            //Feed View
+            let groupedDic = Dictionary(grouping: data!) { media in
+                media.modificationDate.toDate()!.toString(withFormat: "yyyyMMdd")
             }
-
+            let keys = groupedDic.keys.sorted().reversed()
             var groupedMedia = SortedMediaCollection()
-            let keys = groupedDic.keys.sorted { first, second in
-                first.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970 > second.toDate(withFormat: "ddMMyyyy")!.timeIntervalSince1970
-            }
             keys.forEach { key in
                 groupedMedia.append(groupedDic[key]!)
             }
 
-            var albumDic = Dictionary(grouping: data!) { media in
-                media.path.split(separator: "/")[0]
+            //Albums View
+            let albumDic = Dictionary(grouping: data!) { media in
+                media.path.split(separator: "/").first!.description
             }
-            
             self.albumMedia = albumDic
-                        
-            if self.groupedMedia == groupedMedia {
-                print("No refresh needed")
-            } else {
-                self.allMedia = data!
-                self.groupedMedia = groupedMedia
-                JSONEncoder.encode(from: groupedMedia)
-            }
+            self.allMedia = data!
+            self.groupedMedia = groupedMedia
+            JSONEncoder.encode(from: groupedMedia)
             
             withAnimation {
                 self.isLoading = false
