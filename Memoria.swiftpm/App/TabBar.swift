@@ -57,7 +57,7 @@ struct MTabBar: View {
         .padding(.vertical, 8)
         .padding(.top, 5)
         .frame(height: UITabBarController().tabBar.frame.size.height)
-        .background(.background)
+        .background(Color.myBackground)
     }
 }
 

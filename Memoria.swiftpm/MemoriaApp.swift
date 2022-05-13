@@ -12,6 +12,8 @@ import SwiftUI
 struct MemoriaApp: App {
     init() {
         registerFont("Pacifico-Regular", fileExtension: "ttf")
+        UITableView.appearance().backgroundColor = .myBackground
+        UITableViewCell.appearance().backgroundColor = .myBackground
     }
 
     var body: some Scene {

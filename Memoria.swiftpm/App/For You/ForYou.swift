@@ -51,6 +51,7 @@ struct ForYou: View {
                     Text("Albums")
                         .font(.custom("OpenSans-Bold", size: 22))
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.bottom, 5)
                 }
                 .padding(.horizontal)
                 .padding(.top)

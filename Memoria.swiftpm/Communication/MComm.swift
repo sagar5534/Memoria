@@ -91,6 +91,7 @@ public class MComm: SessionDelegate {
                 switch response.result {
                 case let .failure(error):
                     let resultError = MCommErrors().getError(error: error, httResponse: response.response)
+                    print("Upload Error", resultError, error)
                     queue.async { completionHandler("nil", error, resultError.errorCode, resultError.description ?? "") }
                 case .success:
                     queue.async { completionHandler("nil", nil, nil, nil) }
@@ -118,6 +119,7 @@ public class MComm: SessionDelegate {
                 switch response.result {
                 case let .failure(error):
                     let resultError = MCommErrors().getError(error: error, httResponse: response.response)
+                    print("Download Saved Assets", resultError, error)
                     queue.async { completionHandler(nil, error, resultError.errorCode, resultError.description ?? "") }
                 case .success:
                     queue.async { completionHandler(response.value, nil, nil, nil) }
@@ -142,6 +144,7 @@ public class MComm: SessionDelegate {
                 switch response.result {
                 case let .failure(error):
                     let resultError = MCommErrors().getError(error: error, httResponse: response.response)
+                    print("Get Media Error", resultError, error)
                     queue.async { completionHandler(nil, error, resultError.errorCode, resultError.description ?? "") }
                 case .success:
                     queue.async { completionHandler(response.value, nil, nil, nil) }
@@ -167,6 +170,7 @@ public class MComm: SessionDelegate {
                 switch response.result {
                 case let .failure(error):
                     let resultError = MCommErrors().getError(error: error, httResponse: response.response)
+                    print("Update Media Error", resultError, error)
                     queue.async { completionHandler(nil, error, resultError.errorCode, resultError.description ?? "") }
                 case .success:
                     queue.async { completionHandler(response.value, nil, nil, nil) }

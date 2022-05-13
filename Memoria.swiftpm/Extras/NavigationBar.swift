@@ -11,7 +11,7 @@ import UIKit
 struct DefaultNavigationBar: ViewModifier {
     init() {
         let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = UIColor.myBackground
         UINavigationBar.appearance().standardAppearance = navBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
     }
@@ -27,7 +27,7 @@ struct FontedNavigationBar: ViewModifier {
         let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Pacifico-Regular", size: 26)!]
         let navBarAppearance = UINavigationBarAppearance()
 
-        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = UIColor.myBackground
         navBarAppearance.titlePositionAdjustment.vertical = 1
         navBarAppearance.titleTextAttributes = attributes
         navBarAppearance.largeTitleTextAttributes = largeAttributes
@@ -45,9 +45,14 @@ struct FontedNavigationBar: ViewModifier {
 extension View {
     func fontedNavigationBar() -> some View {
         modifier(FontedNavigationBar())
+            .background(Color.myBackground)
+
     }
 
     func defaultNavigationBar() -> some View {
         modifier(DefaultNavigationBar())
+            .background(Color.myBackground)
+
     }
 }
+

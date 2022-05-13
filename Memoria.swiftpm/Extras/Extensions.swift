@@ -97,3 +97,22 @@ extension View {
         modifier(ToggleScrollViewBounce())
     }
 }
+
+extension Color {
+    static let myBackground = Color(UIColor.myBackground)
+}
+
+extension UIColor {
+    public static var myBackground: UIColor = {
+            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                if UITraitCollection.userInterfaceStyle == .dark {
+                    /// Return the color for Dark Mode
+                    return UIColor.secondarySystemBackground
+                } else {
+                    /// Return the color for Light Mode
+                    return UIColor.systemBackground
+                }
+            }
+        
+    }()
+}

@@ -47,21 +47,14 @@ struct AlbumView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         Text(modalSettings.selectedAlbum)
-                            .font(.title)
+                            .font(.custom("OpenSans-Bold", size: 26))
                             .foregroundColor(.primary)
                             .padding()
-                            .padding(.top, 20)
+                            .padding(.top)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        feedThumbnailIcon(
-                            namespace: namespace,
-                            media: photoGridData.albumMedia[modalSettings.selectedAlbum]!.first!,
-                            isChosenMedia: false
-                        )
-                        .padding(.bottom, 2)
-
                         LazyVGrid(columns: columns, spacing: 2) {
-                            ForEach(photoGridData.albumMedia[modalSettings.selectedAlbum]!.dropFirst(), id: \.self) { media in
+                            ForEach(photoGridData.albumMedia[modalSettings.selectedAlbum]!, id: \.self) { media in
                                 feedThumbnailIcon(
                                     namespace: namespace,
                                     media: media,
@@ -79,7 +72,7 @@ struct AlbumView: View {
                 }
             }
             .matchedGeometryEffect(id: modalSettings.selectedAlbum, in: namespace)
-            .background(Color.white)
+            .background(Color.init(UIColor.secondarySystemBackground))
         }
     }
 }

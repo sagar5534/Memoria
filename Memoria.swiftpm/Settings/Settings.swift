@@ -106,7 +106,7 @@ struct Settings: View {
                 )
             }
         }
-        .listStyle(InsetListStyle())
+        .listStyle(.grouped)
         .alert(isPresented: $showingSignOutAlert) {
             Alert(
                 title: Text("Are you sure you want to sign out?"),
