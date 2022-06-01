@@ -10,7 +10,7 @@ import SwiftUI
 struct Home: View {
     @Namespace var namespace
 
-    @StateObject var photoGridData = PhotoFeedData()
+    @StateObject var homeModel = HomeModel()
     @StateObject var autoUploadService = AutoUploadService()
     @StateObject var modalSettings = ModalSettings()
 
@@ -43,7 +43,7 @@ struct Home: View {
                     .navigationViewStyle(.stack)
                 case 2:
                     NavigationView {
-                        Text("Search")
+                        Color.myBackground.overlay(Text("Search Coming Soon"))
                             .defaultNavigationBar()
                             .navigationTitle("Search")
                     }
@@ -58,7 +58,7 @@ struct Home: View {
                 }
             }
             .overlay(alignment: .bottom, content: {
-                if photoGridData.isError {
+                if homeModel.isError {
                     ErrorMessage()
                 }
             })
@@ -74,7 +74,7 @@ struct Home: View {
             Modal(namespace: namespace)
         )
         .environmentObject(modalSettings)
-        .environmentObject(photoGridData)
+        .environmentObject(homeModel)
     }
 }
 

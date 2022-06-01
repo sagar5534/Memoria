@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ForYou: View {
     let namespace: Namespace.ID
-    @EnvironmentObject var photoGridData: PhotoFeedData
+    @EnvironmentObject var homeModel: HomeModel
     @EnvironmentObject var modalSettings: ModalSettings
 
     @State private var scaler = 2
@@ -19,10 +19,10 @@ struct ForYou: View {
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: scaler)
 
-        if photoGridData.isLoading {
+        if homeModel.isLoading {
             ProgressView().foregroundColor(.primary)
         } else {
-            let data = photoGridData.albumMedia.sorted {
+            let data = homeModel.albumMedia.sorted {
                 $0.value.first!.modificationDate.toDate()!.timeIntervalSince1970 > $1.value.first!.modificationDate.toDate()!.timeIntervalSince1970
             }
 

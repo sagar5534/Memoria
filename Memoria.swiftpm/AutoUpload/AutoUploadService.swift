@@ -5,53 +5,94 @@
 //  Created by Sagar Patel on 2021-08-07.
 //
 
+import Combine
 import MobileCoreServices
 import Photos
 import SwiftUI
 
 class AutoUploadService: ObservableObject {
     static let sharedInstance = AutoUploadService()
-    @AppStorage("backupEnabled") private var backupEnabled = false
-//    @AppStorage("cellularBackup") private var cellularBackup = false
+    private var service = Service.shared
+    private var cancellableSet: Set<AnyCancellable> = []
+    private var serviceIsRunning = false
 
-    private var uploadList: [FileUpload] = []
-    @Published var running: Bool = false
+    @Published var isUploading: Bool = false
+    @Published var currentFileUpload: FileUpload? = nil
+    @Published var UploadedCount = 0.0
+    @Published var ToUploadCount = 0.0
+    
+
+    @AppStorage("backupEnabled") private var backupEnabled = false
+    @AppStorage("cellularBackup") private var cellularBackup = false
 
     func initiateAutoUpload(onComplete: @escaping () -> Void) {
-        if running {
-            print("Automatic Upload: Already Running")
-            return
-        }
-        running = true
-
-        guard backupEnabled else {
-            running = false
-            return
-        }
-
+        guard !serviceIsRunning, backupEnabled else { return }
         // TODO: Check if on cellular and allowed
 
-        if backupEnabled {
-            askAuthorizationPhotoLibrary { hasPermission in
-                if hasPermission {
-                    self.createUploadList { uploadList in
-                        guard uploadList != nil, uploadList!.count > 0 else {
-                            self.running = false
-                            return
-                        }
-                        MNetworking.sharedInstance.upload(uploadList: uploadList!) { success, failed in
-                            print("Uploading Finished:", success, "Uploaded /", failed, "Failed")
-                            self.running = false
-                            onComplete()
+        serviceIsRunning = true
+
+        askAuthorizationPhotoLibrary { hasPermission in
+            if hasPermission {
+                self.createUploadList { uploadList in
+                    guard uploadList != nil, uploadList!.count > 0 else {
+                        self.serviceIsRunning = false
+                        return
+                    }
+                    self.ToUploadCount = Double(uploadList!.count)
+
+                    withAnimation {
+                        self.isUploading = true
+                    }
+
+                    let uploadQueue = DispatchQueue.global(qos: .default)
+                    let uploadGroup = DispatchGroup()
+                    let uploadSemaphore = DispatchSemaphore(value: 1)
+
+                    uploadQueue.async(group: uploadGroup) { [weak self] in
+                        guard let self = self else { return }
+
+                        for file in uploadList! {
+                            uploadGroup.enter()
+                            uploadSemaphore.wait()
+
+                            // Do this code in main thread
+                            DispatchQueue.main.async {
+                                withAnimation {
+                                    self.currentFileUpload = file
+                                }
+                            }
+
+                            self.service.uploadMedia(file: file)
+                                .sink { dataResponse in
+                                    if dataResponse.error != nil {
+                                        print("Upload Error", dataResponse.error)
+                                    }
+                                    withAnimation {
+                                        self.UploadedCount += 1
+                                    }
+                                    uploadGroup.leave()
+                                    uploadSemaphore.signal()
+                                }
+                                .store(in: &self.cancellableSet)
                         }
                     }
-                } else {
-                    self.backupEnabled = false
-                    self.running = false
+
+                    uploadGroup.notify(queue: .main) {
+                        print("Upload Completed")
+                        withAnimation {
+                            self.isUploading = false
+                        }
+                        onComplete()
+                        self.UploadedCount = 0
+                        self.ToUploadCount = 0
+                        self.currentFileUpload = nil
+                        self.serviceIsRunning = false
+                    }
                 }
+            } else {
+                self.backupEnabled = false
+                self.serviceIsRunning = false
             }
-        } else {
-            running = false
         }
     }
 
@@ -80,15 +121,18 @@ class AutoUploadService: ObservableObject {
                 let assetResources = PHAssetResource.assetResources(for: asset)
                 var fileUpload = self.createFileUpload()
 
-                var filename = ((assetResources.first?.originalFilename ?? "File") as NSString).deletingPathExtension
-                filename = filename.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "File"
+                let filename = ((assetResources.first?.originalFilename ?? "File") as NSString)
+                    .deletingPathExtension
+                    .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "File"
+                let creationDate = asset.creationDate ?? Date()
+                let modificationDate = asset.modificationDate ?? creationDate
 
                 fileUpload.assetId = asset.localIdentifier
                 fileUpload.filename = filename
                 fileUpload.mediaType = asset.mediaType.rawValue
                 fileUpload.mediaSubType = Int(asset.mediaSubtypes.rawValue)
-                fileUpload.creationDate = asset.creationDate ?? Date()
-                fileUpload.modificationDate = asset.modificationDate ?? fileUpload.creationDate
+                fileUpload.creationDate = creationDate
+                fileUpload.modificationDate = modificationDate
                 fileUpload.duration = asset.duration
                 fileUpload.isFavorite = asset.isFavorite
                 fileUpload.isHidden = asset.isHidden
@@ -135,6 +179,7 @@ class AutoUploadService: ObservableObject {
 
                 default:
                     print("Asset does not identify as Video or Image", asset)
+                    myGroup.leave()
                 }
             }
 
@@ -160,23 +205,23 @@ class AutoUploadService: ObservableObject {
                     var pendingAssets: [PHAsset] = []
                     let assets: PHFetchResult<PHAsset> = PHAsset.fetchAssets(in: assetCollection.firstObject!, options: fetchOptions)
 
-                    MNetworking.sharedInstance.downloadSavedAssets {
-                        // Start
-                    } completion: { uploadedAssets, errorCode, errorDesc in
-
-                        guard uploadedAssets != nil else {
-                            print("Download Saved Assets Error: ", errorCode as Any, errorDesc as Any)
-                            completion(pendingAssets)
-                            return
-                        }
-                        let uploadedAssets = uploadedAssets
-                        assets.enumerateObjects { asset, _, _ in
-                            if !(uploadedAssets?.contains(asset.localIdentifier) ?? false) {
-                                pendingAssets.append(asset)
+                    self.service.fetchAllAssetId()
+                        .sink { dataResponse in
+                            guard dataResponse.value != nil else {
+                                completion(pendingAssets)
+                                return
                             }
+                            print("Fetched Asset Ids", dataResponse.value!.count, "Items")
+
+                            let uploadedAssets = dataResponse.value
+                            assets.enumerateObjects { asset, _, _ in
+                                if !(uploadedAssets?.contains(asset.localIdentifier) ?? false) {
+                                    pendingAssets.append(asset)
+                                }
+                            }
+                            completion(pendingAssets)
                         }
-                        completion(pendingAssets)
-                    }
+                        .store(in: &self.cancellableSet)
 
                 } else {
                     completion(nil)
@@ -219,7 +264,8 @@ class AutoUploadService: ObservableObject {
             duration: 0,
             isFavorite: false,
             isHidden: false,
-            isLivePhoto: false
+            isLivePhoto: false,
+            source: .ios
         )
     }
 }

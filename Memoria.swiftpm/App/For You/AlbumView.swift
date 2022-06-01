@@ -10,7 +10,7 @@ import SwiftUI
 struct AlbumView: View {
     let namespace: Namespace.ID
     @EnvironmentObject var modalSettings: ModalSettings
-    @EnvironmentObject var photoGridData: PhotoFeedData
+    @EnvironmentObject var homeModel: HomeModel
     @State private var scaler = 2
 
     var body: some View {
@@ -54,7 +54,7 @@ struct AlbumView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         LazyVGrid(columns: columns, spacing: 2) {
-                            ForEach(photoGridData.albumMedia[modalSettings.selectedAlbum]!, id: \.self) { media in
+                            ForEach(homeModel.albumMedia[modalSettings.selectedAlbum]!, id: \.id) { media in
                                 feedThumbnailIcon(
                                     namespace: namespace,
                                     media: media,

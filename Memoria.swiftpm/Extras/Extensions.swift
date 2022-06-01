@@ -20,10 +20,7 @@ extension String {
     }
 
     func toStaticURL() -> URL {
-        let server = MCommConstants.makeRequestURL(endpoint: .staticMedia)
-        let path = replacingOccurrences(of: "\\", with: #"/"#)
-            .addingPercentEncoding(withAllowedCharacters: .alphanumerics)
-        return URL(string: #"\#(server)/\#(path!)"#)!
+        return Service.makeEndpoint(endpoint: .staticMedia).appendingPathComponent(self)
     }
 }
 

@@ -5,18 +5,19 @@
 //  Created by Sagar on 2021-08-31.
 //
 
+import Alamofire
 import Combine
 import Foundation
 import SwiftUI
-
-class PhotoFeedData: ObservableObject {
-    @Published var allMedia = MediaCollection()
-    @Published var groupedMedia = SortedMediaCollection()
+class HomeModel: ObservableObject {
+//    @Published var allMedia = MediaCollection()
+    @Published var groupedMedia: [[Media]] = []
     @Published var albumMedia: [String: [Media]] = [:]
     @Published var isLoading = true
     @Published var isError = false
 
-    private var cancellable: AnyCancellable?
+    private var service = Service.shared
+    private var cancellableSet: Set<AnyCancellable> = []
 
     init() {
         fetchAllMedia()
@@ -29,38 +30,39 @@ class PhotoFeedData: ObservableObject {
             isLoading = false
         }
 
-        MNetworking.sharedInstance.getMedia {
-            print("Fetching all data")
-        } completion: { [self] data, _, _ in
-            guard data != nil else {
-                isError = true
+        let publisher = service.fetchAllMedia()
+            .share()
+
+        publisher.sink { response in
+            self.isLoading = false
+
+            guard response.error == nil else {
+                self.isError = true
                 return
             }
 
-            // Feed View
-            let groupedDic = Dictionary(grouping: data!) { media in
+            let groupedDic = Dictionary(grouping: response.value!) { media in
                 media.modificationDate.toDate()!.toString(withFormat: "yyyyMMdd")
             }
             let keys = groupedDic.keys.sorted().reversed()
-            var groupedMedia = SortedMediaCollection()
+            var groupedMedia = [[Media]]()
             keys.forEach { key in
                 groupedMedia.append(groupedDic[key]!)
             }
+            self.groupedMedia = groupedMedia
+            JSONEncoder.encode(from: groupedMedia)
+        }
+        .store(in: &cancellableSet)
 
-            // Albums View
-            let albumDic = Dictionary(grouping: data!) { media in
+        publisher.sink { response in
+            guard response.error == nil else { return }
+
+            let albumDic = Dictionary(grouping: response.value!) { media in
                 media.path.split(separator: "/").first!.description
             }
             self.albumMedia = albumDic
-            self.allMedia = data!
-            self.groupedMedia = groupedMedia
-            JSONEncoder.encode(from: groupedMedia)
-
-            withAnimation {
-                self.isLoading = false
-                self.isError = false
-            }
         }
+        .store(in: &cancellableSet)
     }
 
     func json(from object: Any) -> String? {
@@ -97,7 +99,7 @@ extension JSONEncoder {
         }
     }
 
-    static func loadJson(filename _: String) -> SortedMediaCollection? {
+    static func loadJson(filename _: String) -> [[Media]]? {
         guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         let fileURL = path.appendingPathComponent("Output.json")
 
@@ -105,7 +107,7 @@ extension JSONEncoder {
         do {
             let data = try Data(contentsOf: fileURL)
             let decoder = JSONDecoder()
-            let jsonData = try decoder.decode(SortedMediaCollection.self, from: data)
+            let jsonData = try decoder.decode([[Media]].self, from: data)
             return jsonData
         } catch {
             print("error:\(error)")

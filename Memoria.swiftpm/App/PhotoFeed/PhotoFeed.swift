@@ -10,7 +10,7 @@ import SwiftUI
 struct PhotoFeed: View {
     let namespace: Namespace.ID
     @EnvironmentObject var autoUploadService: AutoUploadService
-    @EnvironmentObject var photoGridData: PhotoFeedData
+    @EnvironmentObject var homeModel: HomeModel
     @EnvironmentObject var modalSettings: ModalSettings
     @Binding var scrollToTop: Bool
 
@@ -20,24 +20,26 @@ struct PhotoFeed: View {
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: scaler)
 
-        if photoGridData.isLoading {
-            ProgressView().foregroundColor(.primary)
-        } else {
-            ScrollView {
+        ScrollView {
+            AutoUploadProgress()
+            if homeModel.isLoading || homeModel.groupedMedia.isEmpty {
+                EmptyPageViews
+            } else {
                 ScrollViewReader { proxy in
-                    LazyVGrid(columns: columns, spacing: 2) {
-                        ForEach($photoGridData.groupedMedia, id: \.self) { $group in
+                    EmptyView().id(0)
+                    LazyVGrid(columns: columns, spacing: 2, pinnedViews: .sectionHeaders) {
+                        ForEach(homeModel.groupedMedia, id: \.self) { group in
                             Section(header: titleHeader(header: group.first?.modificationDate.toDate()?.toString() ?? "")) {
-                                ForEach($group, id: \.self) { $media in
+                                ForEach(group, id: \.self) { eachMedia in
                                     feedThumbnailIcon(
                                         namespace: namespace,
-                                        media: media,
-                                        isChosenMedia: modalSettings.selectedItem != nil && modalSettings.selectedItem!.id == media.id,
+                                        media: eachMedia,
+                                        isChosenMedia: modalSettings.selectedItem != nil && modalSettings.selectedItem!.id == eachMedia.id,
                                         isSquareAspect: isSquareAspect
                                     )
                                     .onTapGesture {
                                         withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                                            modalSettings.selectedItem = media
+                                            modalSettings.selectedItem = eachMedia
                                         }
                                     }
                                 }
@@ -45,62 +47,88 @@ struct PhotoFeed: View {
                         }
                     }
                     .onChange(of: scrollToTop) { target in
-                        if target {
-                            scrollToTop.toggle()
-                            withAnimation {
-                                proxy.scrollTo(0, anchor: .top)
-                            }
+                        guard target else { return }
+                        scrollToTop.toggle()
+                        withAnimation {
+                            proxy.scrollTo(0, anchor: .top)
                         }
                     }
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) { ToolbarView }
                 }
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    HStack(alignment: .center, spacing: 12.0) {
-                        // ICloud Button
-                        if autoUploadService.running {
-                            Button(action: {}, label: {
-                                Image(systemName: "arrow.clockwise.icloud")
-                            })
-                            .foregroundColor(.primary)
-                        } else {
-                            Button(action: {
-                                autoUploadService.initiateAutoUpload {
-                                    photoGridData.fetchAllMedia()
-                                }
-                            }, label: {
-                                Image(systemName: "checkmark.icloud")
-                            })
-                            .foregroundColor(.primary)
-                        }
+        }
+        .onAppear {
+            autoUploadService.initiateAutoUpload {
+                withAnimation {
+                    homeModel.fetchAllMedia()
+                }
+            }
+        }
+    }
 
-                        // Menu Popup
-                        Menu {
-                            Button { zoomIn() } label: {
-                                Label("Zoom In", systemImage: "plus.magnifyingglass")
-                            }
-                            .disabled(scaler <= 1)
+    @ViewBuilder
+    var EmptyPageViews: some View {
+        if homeModel.isLoading {
+            ProgressView().foregroundColor(.primary)
+        } else if homeModel.groupedMedia.isEmpty {
+            VStack(alignment: .center) {
+                Image(systemName: "plus")
+                    .resizable()
+                    .frame(width: 40, height: 40, alignment: .center)
+                    .foregroundColor(.secondary)
+                    .padding()
 
-                            Button { zoomOut() } label: {
-                                Label("Zoom Out", systemImage: "plus.magnifyingglass")
-                            }
-                            .disabled(scaler >= 7)
+                Text("Looks Empty Here")
+                    .font(.title3)
+                    .foregroundColor(.secondary)
+                Text("Begin uploading your photos")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
 
-                            Button {
-                                withAnimation {
-                                    isSquareAspect.toggle()
-                                }
-                            } label: {
-                                Label("Aspect", systemImage: "aspectratio")
-                            }
-
-                        } label: {
-                            Label("Menu", systemImage: "ellipsis.circle")
-                                .labelStyle(.iconOnly)
-                                .foregroundColor(.primary)
-                        }
+    @ViewBuilder
+    var ToolbarView: some View {
+        HStack(alignment: .center, spacing: 12.0) {
+            // ICloud Button
+            Button(action: {
+                autoUploadService.initiateAutoUpload {
+                    withAnimation {
+                        homeModel.fetchAllMedia()
                     }
                 }
+            }, label: {
+                Image(systemName: "checkmark.icloud")
+            })
+            .foregroundColor(.primary)
+
+            // Menu Popup
+            Menu {
+                Button { zoomIn() } label: {
+                    Label("Zoom In", systemImage: "plus.magnifyingglass")
+                }
+                .disabled(scaler <= 1)
+
+                Button { zoomOut() } label: {
+                    Label("Zoom Out", systemImage: "plus.magnifyingglass")
+                }
+                .disabled(scaler >= 7)
+
+                Button {
+                    withAnimation {
+                        isSquareAspect.toggle()
+                    }
+                } label: {
+                    Label("Aspect", systemImage: "aspectratio")
+                }
+
+            } label: {
+                Label("Menu", systemImage: "ellipsis.circle")
+                    .labelStyle(.iconOnly)
+                    .foregroundColor(.primary)
             }
         }
     }
@@ -136,7 +164,7 @@ struct feedThumbnailIcon: View {
                 .aspectRatio(1, contentMode: .fit)
                 .matchedGeometryEffect(id: media.id, in: namespace)
                 .overlay(alignment: .topTrailing) {
-                    if media.mediaType == 1 {
+                    if media.mediaType == .video {
                         VideoOverlay(duration: media.duration?.secondsToString(style: .positional) ?? "")
                     } else if media.isFavorite == true {
                         FavoriteOverlay()
@@ -160,6 +188,7 @@ private struct titleHeader: View {
             .padding(14)
             .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.myBackground)
     }
 }
 

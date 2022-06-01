@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 // MARK: - RefreshToken
 
@@ -43,5 +44,29 @@ struct User: Codable {
 // MARK: - HealthCheck
 
 struct HealthCheck: Codable {
-    let status: String?
+    let status: HealthCheckStatus?
+}
+
+enum HealthCheckStatus: String, Codable {
+    case Healthy = "healthy"
+    case Unhealthy = "unhealthy"
+}
+
+// MARK: - Login
+
+struct Login: Encodable {
+    let username: String
+    let password: String
+}
+
+// MARK: - Network Errors
+
+struct NetworkError: Error {
+    let initialError: AFError
+    let backendError: BackendError?
+}
+
+struct BackendError: Codable, Error {
+    var status: String
+    var message: String
 }

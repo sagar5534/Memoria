@@ -71,7 +71,7 @@ struct FullResImage: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                if item.mediaType == 0 {
+                if item.mediaType == .photo {
                     state = .full
                     if item.isLivePhoto {
                         playerVM.setCurrentItem(item.livePhotoPath!.toStaticURL())

@@ -1,10 +1,10 @@
 
 import Foundation
-import UIKit
+//import UIKit
 
 // MARK: - Media
 
-struct Media: Encodable, Decodable, Hashable {
+struct Media: Identifiable, Codable, Hashable {
     let id, path: String
     let source: Source
     let livePhotoPath, thumbnailPath: String?
@@ -12,7 +12,8 @@ struct Media: Encodable, Decodable, Hashable {
     var isHidden, isFavorite: Bool?
     let duration: Double?
     let modificationDate, creationDate: String
-    let mediaSubType, mediaType: Int?
+    let mediaSubType: Int?
+    let mediaType: MediaType?
     let assetID, filename: String
     let user: String?
     let v: Int?
@@ -32,31 +33,25 @@ enum Source: String, Codable {
     case ios = "IOS"
 }
 
-typealias MediaCollection = [Media]
-typealias SortedMediaCollection = [[Media]]
-
-// MARK: - AssetIds
-
-typealias AssetCollection = [String]
+enum MediaType: Int, Codable {
+    case photo = 1
+    case video = 2
+}
 
 // MARK: - FileUpload
 
 struct FileUpload {
     var url: URL?
     var livePhotoUrl: URL?
-
     var assetId: String
     var filename: String
-
     var mediaType: Int
     var mediaSubType: Int
-
     var creationDate: Date
     var modificationDate: Date
-
     var duration: Double
-
     var isFavorite: Bool
     var isHidden: Bool
     var isLivePhoto: Bool
+    var source: Source
 }
